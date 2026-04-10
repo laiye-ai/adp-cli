@@ -1,2 +1,2 @@
 # adp-cli
-CLI and skills for Laiye ADP (Agentic Document Processing) that enables agents to perform parsing, classification, extraction, validation on any type of documents with high accuracy..
+The official Laiye ADP (Agentic Document Processing) CLI and skills built for humans and agents. It enables agents to perform parsing, classification, extraction, validation on any type of documents with high accuracy.
