@@ -1,0 +1,22 @@
+# Binaries
+*.exe
+dist/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Config (contains secrets)
+.adp/
+
+# Test output
+test_data/
+
+# Claude Code
+.claude/
