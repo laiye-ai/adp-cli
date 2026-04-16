@@ -1,0 +1,45 @@
+{
+  "name": "adp-cli",
+  "version": "1.0.0",
+  "description": "Official CLI for Laiye ADP (Agentic Document Processing) - document parsing and intelligent extraction",
+  "keywords": [
+    "adp",
+    "laiye",
+    "document",
+    "parsing",
+    "extraction",
+    "ocr",
+    "cli"
+  ],
+  "homepage": "https://github.com/laiye-ai/adp-cli",
+  "bugs": {
+    "url": "https://github.com/laiye-ai/adp-cli/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/laiye-ai/adp-cli.git"
+  },
+  "license": "SEE LICENSE IN license.md",
+  "bin": {
+    "adp": "./bin/adp"
+  },
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "os": [
+    "win32",
+    "linux",
+    "darwin"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "files": [
+    "bin/.gitkeep",
+    "scripts/postinstall.js"
+  ]
+}

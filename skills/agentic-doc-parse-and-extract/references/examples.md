@@ -4,11 +4,13 @@
 
   ```bash
   # Linux & Mac
-  curl -fsSL https://raw.githubusercontent.com/Laiye-ADP/adp-cli/master/scripts/adp-init.sh | bash
+  curl -fsSL https://raw.githubusercontent.com/laiye-ai/adp-cli/main/scripts/adp-init.sh | bash
 
-  # windows
-  Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Laiye-ADP/adp-cli/master/scripts/adp-init.ps1" -OutFile adp-init.ps1 
-  .\adp-init.ps1 
+  # Windows (PowerShell)
+  irm https://raw.githubusercontent.com/laiye-ai/adp-cli/main/scripts/adp-init.ps1 | iex
+
+  # Or via npm (all platforms)
+  npm install -g adp-cli
   ```
 
 ## 2. Configure API Key and Base URL
