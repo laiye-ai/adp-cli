@@ -1,0 +1,852 @@
+[
+  {
+    "field_name": "公司代码",
+    "field_type": "string",
+    "field_prompt": "提取公司代码或股票代码"
+  },
+  {
+    "field_name": "报表日期",
+    "field_type": "date",
+    "field_prompt": "提取报表日期"
+  },
+  {
+    "field_name": "截止日期",
+    "field_type": "date",
+    "field_prompt": "提取报表截止日期"
+  },
+  {
+    "field_name": "报表合并类型",
+    "field_type": "string",
+    "field_prompt": "提取报表合并类型(合并报表/母公司报表)"
+  },
+  {
+    "field_name": "报表来源",
+    "field_type": "string",
+    "field_prompt": "提取报表来源"
+  },
+  {
+    "field_name": "公告日期",
+    "field_type": "date",
+    "field_prompt": "提取公告发布日期"
+  },
+  {
+    "field_name": "货币资金",
+    "field_type": "string",
+    "field_prompt": "提取货币资金金额"
+  },
+  {
+    "field_name": "交易性金融资产",
+    "field_type": "string",
+    "field_prompt": "提取交易性金融资产金额"
+  },
+  {
+    "field_name": "短期投资净额",
+    "field_type": "string",
+    "field_prompt": "提取短期投资净额"
+  },
+  {
+    "field_name": "应收票据",
+    "field_type": "string",
+    "field_prompt": "提取应收票据金额"
+  },
+  {
+    "field_name": "应收股利",
+    "field_type": "string",
+    "field_prompt": "提取应收股利金额"
+  },
+  {
+    "field_name": "应收利息",
+    "field_type": "string",
+    "field_prompt": "提取应收利息金额"
+  },
+  {
+    "field_name": "应收账款净额",
+    "field_type": "string",
+    "field_prompt": "提取应收账款净额"
+  },
+  {
+    "field_name": "其他应收款净额",
+    "field_type": "string",
+    "field_prompt": "提取其他应收款净额"
+  },
+  {
+    "field_name": "预付账款",
+    "field_type": "string",
+    "field_prompt": "提取预付账款金额"
+  },
+  {
+    "field_name": "应收补贴款",
+    "field_type": "string",
+    "field_prompt": "提取应收补贴款金额"
+  },
+  {
+    "field_name": "预缴税金",
+    "field_type": "string",
+    "field_prompt": "提取预缴税金金额"
+  },
+  {
+    "field_name": "内部应收款",
+    "field_type": "string",
+    "field_prompt": "提取内部应收款金额"
+  },
+  {
+    "field_name": "买入返售金融资产",
+    "field_type": "string",
+    "field_prompt": "提取买入返售金融资产金额"
+  },
+  {
+    "field_name": "应收内部单位款",
+    "field_type": "string",
+    "field_prompt": "提取应收内部单位款金额"
+  },
+  {
+    "field_name": "应收关联企业款",
+    "field_type": "string",
+    "field_prompt": "提取应收关联企业款金额"
+  },
+  {
+    "field_name": "期货保证金",
+    "field_type": "string",
+    "field_prompt": "提取期货保证金金额"
+  },
+  {
+    "field_name": "应收席位费",
+    "field_type": "string",
+    "field_prompt": "提取应收席位费金额"
+  },
+  {
+    "field_name": "存货(净额)",
+    "field_type": "string",
+    "field_prompt": "提取存货净额"
+  },
+  {
+    "field_name": "待摊费用",
+    "field_type": "string",
+    "field_prompt": "提取待摊费用金额"
+  },
+  {
+    "field_name": "待处理流动资产净损失",
+    "field_type": "string",
+    "field_prompt": "提取待处理流动资产净损失"
+  },
+  {
+    "field_name": "一年内到期的长期债权投资",
+    "field_type": "string",
+    "field_prompt": "提取一年内到期的长期债权投资"
+  },
+  {
+    "field_name": "一年内到期的非流动资产",
+    "field_type": "string",
+    "field_prompt": "提取一年内到期的非流动资产金额"
+  },
+  {
+    "field_name": "其他流动资产",
+    "field_type": "string",
+    "field_prompt": "提取其他流动资产金额"
+  },
+  {
+    "field_name": "流动资产合计",
+    "field_type": "string",
+    "field_prompt": "提取流动资产合计金额"
+  },
+  {
+    "field_name": "可供出售金融资产",
+    "field_type": "string",
+    "field_prompt": "提取可供出售金融资产金额"
+  },
+  {
+    "field_name": "股权分置流通权",
+    "field_type": "string",
+    "field_prompt": "提取股权分置流通权金额"
+  },
+  {
+    "field_name": "持有至到期投资",
+    "field_type": "string",
+    "field_prompt": "提取持有至到期投资金额"
+  },
+  {
+    "field_name": "投资性房地产",
+    "field_type": "string",
+    "field_prompt": "提取投资性房地产金额"
+  },
+  {
+    "field_name": "长期应收款",
+    "field_type": "string",
+    "field_prompt": "提取长期应收款金额"
+  },
+  {
+    "field_name": "长期股权投资净额",
+    "field_type": "string",
+    "field_prompt": "提取长期股权投资净额"
+  },
+  {
+    "field_name": "长期债权投资净额",
+    "field_type": "string",
+    "field_prompt": "提取长期债权投资净额"
+  },
+  {
+    "field_name": "其他长期投资净额",
+    "field_type": "string",
+    "field_prompt": "提取其他长期投资净额"
+  },
+  {
+    "field_name": "固定资产净额",
+    "field_type": "string",
+    "field_prompt": "提取固定资产净额"
+  },
+  {
+    "field_name": "工程物资",
+    "field_type": "string",
+    "field_prompt": "提取工程物资金额"
+  },
+  {
+    "field_name": "在建工程",
+    "field_type": "string",
+    "field_prompt": "提取在建工程金额"
+  },
+  {
+    "field_name": "固定资产清理",
+    "field_type": "string",
+    "field_prompt": "提取固定资产清理金额"
+  },
+  {
+    "field_name": "生产性生物资产",
+    "field_type": "string",
+    "field_prompt": "提取生产性生物资产金额"
+  },
+  {
+    "field_name": "油气资产",
+    "field_type": "string",
+    "field_prompt": "提取油气资产金额"
+  },
+  {
+    "field_name": "待处理固定资产净损失",
+    "field_type": "string",
+    "field_prompt": "提取待处理固定资产净损失"
+  },
+  {
+    "field_name": "无形资产",
+    "field_type": "string",
+    "field_prompt": "提取无形资产金额"
+  },
+  {
+    "field_name": "开发支出",
+    "field_type": "string",
+    "field_prompt": "提取开发支出金额"
+  },
+  {
+    "field_name": "商誉",
+    "field_type": "string",
+    "field_prompt": "提取商誉金额"
+  },
+  {
+    "field_name": "开办费",
+    "field_type": "string",
+    "field_prompt": "提取开办费金额"
+  },
+  {
+    "field_name": "递延资产",
+    "field_type": "string",
+    "field_prompt": "提取递延资产金额"
+  },
+  {
+    "field_name": "长期待摊费用",
+    "field_type": "string",
+    "field_prompt": "提取长期待摊费用金额"
+  },
+  {
+    "field_name": "其他长期资产",
+    "field_type": "string",
+    "field_prompt": "提取其他长期资产金额"
+  },
+  {
+    "field_name": "递延所得税资产",
+    "field_type": "string",
+    "field_prompt": "提取递延所得税资产金额"
+  },
+  {
+    "field_name": "递延税款借项",
+    "field_type": "string",
+    "field_prompt": "提取递延税款借项金额"
+  },
+  {
+    "field_name": "其他非流动资产",
+    "field_type": "string",
+    "field_prompt": "提取其他非流动资产金额"
+  },
+  {
+    "field_name": "非流动资产合计",
+    "field_type": "string",
+    "field_prompt": "提取非流动资产合计金额"
+  },
+  {
+    "field_name": "资产总计",
+    "field_type": "string",
+    "field_prompt": "提取资产总计金额"
+  },
+  {
+    "field_name": "短期借款",
+    "field_type": "string",
+    "field_prompt": "提取短期借款金额"
+  },
+  {
+    "field_name": "交易性金融负债",
+    "field_type": "string",
+    "field_prompt": "提取交易性金融负债金额"
+  },
+  {
+    "field_name": "应付票据",
+    "field_type": "string",
+    "field_prompt": "提取应付票据金额"
+  },
+  {
+    "field_name": "应付账款",
+    "field_type": "string",
+    "field_prompt": "提取应付账款金额"
+  },
+  {
+    "field_name": "预收账款",
+    "field_type": "string",
+    "field_prompt": "提取预收账款金额"
+  },
+  {
+    "field_name": "代销商品款",
+    "field_type": "string",
+    "field_prompt": "提取代销商品款金额"
+  },
+  {
+    "field_name": "应付职工薪酬",
+    "field_type": "string",
+    "field_prompt": "提取应付职工薪酬金额"
+  },
+  {
+    "field_name": "应付福利费",
+    "field_type": "string",
+    "field_prompt": "提取应付福利费金额"
+  },
+  {
+    "field_name": "应付工资",
+    "field_type": "string",
+    "field_prompt": "提取应付工资金额"
+  },
+  {
+    "field_name": "应付股利",
+    "field_type": "string",
+    "field_prompt": "提取应付股利金额"
+  },
+  {
+    "field_name": "应交税费",
+    "field_type": "string",
+    "field_prompt": "提取应交税费金额"
+  },
+  {
+    "field_name": "应付利息",
+    "field_type": "string",
+    "field_prompt": "提取应付利息金额"
+  },
+  {
+    "field_name": "应交税金",
+    "field_type": "string",
+    "field_prompt": "提取应交税金金额"
+  },
+  {
+    "field_name": "待扣税金",
+    "field_type": "string",
+    "field_prompt": "提取待扣税金金额"
+  },
+  {
+    "field_name": "其他应交款",
+    "field_type": "string",
+    "field_prompt": "提取其他应交款金额"
+  },
+  {
+    "field_name": "内部应付款",
+    "field_type": "string",
+    "field_prompt": "提取内部应付款金额"
+  },
+  {
+    "field_name": "应付内部单位款",
+    "field_type": "string",
+    "field_prompt": "提取应付内部单位款金额"
+  },
+  {
+    "field_name": "应付关联企业款",
+    "field_type": "string",
+    "field_prompt": "提取应付关联企业款金额"
+  },
+  {
+    "field_name": "其他应付款",
+    "field_type": "string",
+    "field_prompt": "提取其他应付款金额"
+  },
+  {
+    "field_name": "应付短期债券",
+    "field_type": "string",
+    "field_prompt": "提取应付短期债券金额"
+  },
+  {
+    "field_name": "预提费用",
+    "field_type": "string",
+    "field_prompt": "提取预提费用金额"
+  },
+  {
+    "field_name": "工程结算",
+    "field_type": "string",
+    "field_prompt": "提取工程结算金额"
+  },
+  {
+    "field_name": "国内票证结算",
+    "field_type": "string",
+    "field_prompt": "提取国内票证结算金额"
+  },
+  {
+    "field_name": "国际票证结算",
+    "field_type": "string",
+    "field_prompt": "提取国际票证结算金额"
+  },
+  {
+    "field_name": "预计负债",
+    "field_type": "string",
+    "field_prompt": "提取预计负债金额"
+  },
+  {
+    "field_name": "一年内到期的非流动负债",
+    "field_type": "string",
+    "field_prompt": "提取一年内到期的非流动负债金额"
+  },
+  {
+    "field_name": "递延收益",
+    "field_type": "string",
+    "field_prompt": "提取递延收益金额"
+  },
+  {
+    "field_name": "一年内到期的长期负债",
+    "field_type": "string",
+    "field_prompt": "提取一年内到期的长期负债金额"
+  },
+  {
+    "field_name": "其他流动负债",
+    "field_type": "string",
+    "field_prompt": "提取其他流动负债金额"
+  },
+  {
+    "field_name": "职工奖励及福利基金",
+    "field_type": "string",
+    "field_prompt": "提取职工奖励及福利基金金额"
+  },
+  {
+    "field_name": "流动负债合计",
+    "field_type": "string",
+    "field_prompt": "提取流动负债合计金额"
+  },
+  {
+    "field_name": "长期借款",
+    "field_type": "string",
+    "field_prompt": "提取长期借款金额"
+  },
+  {
+    "field_name": "应付债券",
+    "field_type": "string",
+    "field_prompt": "提取应付债券金额"
+  },
+  {
+    "field_name": "长期应付款",
+    "field_type": "string",
+    "field_prompt": "提取长期应付款金额"
+  },
+  {
+    "field_name": "专项应付款",
+    "field_type": "string",
+    "field_prompt": "提取专项应付款金额"
+  },
+  {
+    "field_name": "住房周转金",
+    "field_type": "string",
+    "field_prompt": "提取住房周转金金额"
+  },
+  {
+    "field_name": "递延税款贷项",
+    "field_type": "string",
+    "field_prompt": "提取递延税款贷项金额"
+  },
+  {
+    "field_name": "递延收益(长期负债)",
+    "field_type": "string",
+    "field_prompt": "提取递延收益(长期负债)金额"
+  },
+  {
+    "field_name": "递延利息收入",
+    "field_type": "string",
+    "field_prompt": "提取递延利息收入金额"
+  },
+  {
+    "field_name": "递延所得税负债",
+    "field_type": "string",
+    "field_prompt": "提取递延所得税负债金额"
+  },
+  {
+    "field_name": "其他非流动负债",
+    "field_type": "string",
+    "field_prompt": "提取其他非流动负债金额"
+  },
+  {
+    "field_name": "非流动负债合计",
+    "field_type": "string",
+    "field_prompt": "提取非流动负债合计金额"
+  },
+  {
+    "field_name": "负债合计",
+    "field_type": "string",
+    "field_prompt": "提取负债合计金额"
+  },
+  {
+    "field_name": "实收资本(或股本)",
+    "field_type": "string",
+    "field_prompt": "提取实收资本或股本金额"
+  },
+  {
+    "field_name": "减:已归还投资",
+    "field_type": "string",
+    "field_prompt": "提取已归还投资金额"
+  },
+  {
+    "field_name": "资本公积金",
+    "field_type": "string",
+    "field_prompt": "提取资本公积金金额"
+  },
+  {
+    "field_name": "股本净额",
+    "field_type": "string",
+    "field_prompt": "提取股本净额"
+  },
+  {
+    "field_name": "盈余公积",
+    "field_type": "string",
+    "field_prompt": "提取盈余公积金额"
+  },
+  {
+    "field_name": "专项储备",
+    "field_type": "string",
+    "field_prompt": "提取专项储备金额"
+  },
+  {
+    "field_name": "减:库存股",
+    "field_type": "string",
+    "field_prompt": "提取库存股金额"
+  },
+  {
+    "field_name": "集体福利基金",
+    "field_type": "string",
+    "field_prompt": "提取集体福利基金金额"
+  },
+  {
+    "field_name": "未确认的投资损失",
+    "field_type": "string",
+    "field_prompt": "提取未确认的投资损失"
+  },
+  {
+    "field_name": "未分配利润",
+    "field_type": "string",
+    "field_prompt": "提取未分配利润金额"
+  },
+  {
+    "field_name": "外币报表折算差额",
+    "field_type": "string",
+    "field_prompt": "提取外币报表折算差额"
+  },
+  {
+    "field_name": "归属于母公司所有者权益合计",
+    "field_type": "string",
+    "field_prompt": "提取归属于母公司所有者权益合计金额"
+  },
+  {
+    "field_name": "股东权益合计",
+    "field_type": "string",
+    "field_prompt": "提取股东权益合计金额"
+  },
+  {
+    "field_name": "少数股东权益",
+    "field_type": "string",
+    "field_prompt": "提取少数股东权益金额"
+  },
+  {
+    "field_name": "负债和股东权益总计",
+    "field_type": "string",
+    "field_prompt": "提取负债和股东权益总计金额"
+  },
+  {
+    "field_name": "预计负债(长期负债)",
+    "field_type": "string",
+    "field_prompt": "提取预计负债(长期负债)金额"
+  },
+  {
+    "field_name": "以公允价值计量且其变动计入当期损益的金融资产",
+    "field_type": "string",
+    "field_prompt": "提取以公允价值计量且其变动计入当期损益的金融资产金额"
+  },
+  {
+    "field_name": "划分为持有待售的资产",
+    "field_type": "string",
+    "field_prompt": "提取划分为持有待售的资产金额"
+  },
+  {
+    "field_name": "以公允价值计量且其变动计入当期损益的金融负债",
+    "field_type": "string",
+    "field_prompt": "提取以公允价值计量且其变动计入当期损益的金融负债金额"
+  },
+  {
+    "field_name": "划分为持有待售的负债",
+    "field_type": "string",
+    "field_prompt": "提取划分为持有待售的负债金额"
+  },
+  {
+    "field_name": "应付债券:优先股",
+    "field_type": "string",
+    "field_prompt": "提取应付债券优先股金额"
+  },
+  {
+    "field_name": "应付债券:永续债",
+    "field_type": "string",
+    "field_prompt": "提取应付债券永续债金额"
+  },
+  {
+    "field_name": "长期应付职工薪酬",
+    "field_type": "string",
+    "field_prompt": "提取长期应付职工薪酬金额"
+  },
+  {
+    "field_name": "其他权益工具",
+    "field_type": "string",
+    "field_prompt": "提取其他权益工具金额"
+  },
+  {
+    "field_name": "其他权益工具:优先股",
+    "field_type": "string",
+    "field_prompt": "提取其他权益工具优先股金额"
+  },
+  {
+    "field_name": "其他权益工具:永续债",
+    "field_type": "string",
+    "field_prompt": "提取其他权益工具永续债金额"
+  },
+  {
+    "field_name": "其他综合收益",
+    "field_type": "string",
+    "field_prompt": "提取其他综合收益金额"
+  },
+  {
+    "field_name": "结算备付金",
+    "field_type": "string",
+    "field_prompt": "提取结算备付金金额"
+  },
+  {
+    "field_name": "拆出资金",
+    "field_type": "string",
+    "field_prompt": "提取拆出资金金额"
+  },
+  {
+    "field_name": "应收保费",
+    "field_type": "string",
+    "field_prompt": "提取应收保费金额"
+  },
+  {
+    "field_name": "应收分保账款",
+    "field_type": "string",
+    "field_prompt": "提取应收分保账款金额"
+  },
+  {
+    "field_name": "应收分保合同准备金",
+    "field_type": "string",
+    "field_prompt": "提取应收分保合同准备金金额"
+  },
+  {
+    "field_name": "应收出口退税",
+    "field_type": "string",
+    "field_prompt": "提取应收出口退税金额"
+  },
+  {
+    "field_name": "发放委托贷款及垫款",
+    "field_type": "string",
+    "field_prompt": "提取发放委托贷款及垫款金额"
+  },
+  {
+    "field_name": "向中央银行借款",
+    "field_type": "string",
+    "field_prompt": "提取向中央银行借款金额"
+  },
+  {
+    "field_name": "吸收存款及同业存放",
+    "field_type": "string",
+    "field_prompt": "提取吸收存款及同业存放金额"
+  },
+  {
+    "field_name": "拆入资金",
+    "field_type": "string",
+    "field_prompt": "提取拆入资金金额"
+  },
+  {
+    "field_name": "卖出回购金融资产款",
+    "field_type": "string",
+    "field_prompt": "提取卖出回购金融资产款金额"
+  },
+  {
+    "field_name": "应付手续费及佣金",
+    "field_type": "string",
+    "field_prompt": "提取应付手续费及佣金金额"
+  },
+  {
+    "field_name": "应付分保账款",
+    "field_type": "string",
+    "field_prompt": "提取应付分保账款金额"
+  },
+  {
+    "field_name": "保险合同准备金",
+    "field_type": "string",
+    "field_prompt": "提取保险合同准备金金额"
+  },
+  {
+    "field_name": "代理买卖证券款",
+    "field_type": "string",
+    "field_prompt": "提取代理买卖证券款金额"
+  },
+  {
+    "field_name": "代理承销证券款",
+    "field_type": "string",
+    "field_prompt": "提取代理承销证券款金额"
+  },
+  {
+    "field_name": "一般风险准备",
+    "field_type": "string",
+    "field_prompt": "提取一般风险准备金额"
+  },
+  {
+    "field_name": "拟分配现金股利",
+    "field_type": "string",
+    "field_prompt": "提取拟分配现金股利金额"
+  },
+  {
+    "field_name": "应收票据及应收账款",
+    "field_type": "string",
+    "field_prompt": "提取应收票据及应收账款金额"
+  },
+  {
+    "field_name": "应付票据及应付账款",
+    "field_type": "string",
+    "field_prompt": "提取应付票据及应付账款金额"
+  },
+  {
+    "field_name": "持有待售资产",
+    "field_type": "string",
+    "field_prompt": "提取持有待售资产金额"
+  },
+  {
+    "field_name": "持有待售负债",
+    "field_type": "string",
+    "field_prompt": "提取持有待售负债金额"
+  },
+  {
+    "field_name": "其中:应收票据",
+    "field_type": "string",
+    "field_prompt": "提取其中应收票据金额"
+  },
+  {
+    "field_name": "其中:应付股利",
+    "field_type": "string",
+    "field_prompt": "提取其中应付股利金额"
+  },
+  {
+    "field_name": "其中:应收账款",
+    "field_type": "string",
+    "field_prompt": "提取其中应收账款金额"
+  },
+  {
+    "field_name": "其中:应收股利",
+    "field_type": "string",
+    "field_prompt": "提取其中应收股利金额"
+  },
+  {
+    "field_name": "其中:应收利息",
+    "field_type": "string",
+    "field_prompt": "提取其中应收利息金额"
+  },
+  {
+    "field_name": "其中:应付票据",
+    "field_type": "string",
+    "field_prompt": "提取其中应付票据金额"
+  },
+  {
+    "field_name": "其中:应付账款",
+    "field_type": "string",
+    "field_prompt": "提取其中应付账款金额"
+  },
+  {
+    "field_name": "其中:应付利息",
+    "field_type": "string",
+    "field_prompt": "提取其中应付利息金额"
+  },
+  {
+    "field_name": "衍生金融资产",
+    "field_type": "string",
+    "field_prompt": "提取衍生金融资产金额"
+  },
+  {
+    "field_name": "应收款项融资",
+    "field_type": "string",
+    "field_prompt": "提取应收款项融资金额"
+  },
+  {
+    "field_name": "合同资产",
+    "field_type": "string",
+    "field_prompt": "提取合同资产金额"
+  },
+  {
+    "field_name": "债权投资",
+    "field_type": "string",
+    "field_prompt": "提取债权投资金额"
+  },
+  {
+    "field_name": "其他债权投资",
+    "field_type": "string",
+    "field_prompt": "提取其他债权投资金额"
+  },
+  {
+    "field_name": "其他权益工具投资",
+    "field_type": "string",
+    "field_prompt": "提取其他权益工具投资金额"
+  },
+  {
+    "field_name": "其他非流动金融资产",
+    "field_type": "string",
+    "field_prompt": "提取其他非流动金融资产金额"
+  },
+  {
+    "field_name": "使用权资产",
+    "field_type": "string",
+    "field_prompt": "提取使用权资产金额"
+  },
+  {
+    "field_name": "租赁负债",
+    "field_type": "string",
+    "field_prompt": "提取租赁负债金额"
+  },
+  {
+    "field_name": "衍生金融负债",
+    "field_type": "string",
+    "field_prompt": "提取衍生金融负债金额"
+  },
+  {
+    "field_name": "合同负债",
+    "field_type": "string",
+    "field_prompt": "提取合同负债金额"
+  },
+  {
+    "field_name": "发放贷款及垫款-流动资产",
+    "field_type": "string",
+    "field_prompt": "提取发放贷款及垫款-流动资产金额"
+  },
+  {
+    "field_name": "非正常经营项目收益调整",
+    "field_type": "string",
+    "field_prompt": "提取非正常经营项目收益调整金额"
+  }
+]

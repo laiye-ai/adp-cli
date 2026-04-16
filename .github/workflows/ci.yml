@@ -22,11 +22,11 @@ jobs:
         run: go build -o adp .
 
       - name: Run offline E2E tests
-        run: bash test_data/test.sh
+        run: bash tests/test.sh
 
       - name: Run full E2E tests (with API)
         if: env.ADP_API_KEY != ''
         env:
           ADP_API_KEY: ${{ secrets.ADP_API_KEY }}
           ADP_API_BASE_URL: ${{ secrets.ADP_API_BASE_URL }}
-        run: bash test_data/test.sh
+        run: bash tests/test.sh

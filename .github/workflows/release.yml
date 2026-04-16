@@ -7,7 +7,6 @@ on:
 
 permissions:
   contents: write
-  id-token: write  # Required for npm provenance
 
 jobs:
   release:
@@ -60,6 +59,10 @@ jobs:
       - name: Sync package.json version and publish to npm
         run: |
           npm version ${{ steps.version.outputs.VERSION_NO_V }} --no-git-tag-version
-          npm publish --provenance --access public
+          if [[ "${{ steps.version.outputs.VERSION_NO_V }}" == *"-"* ]]; then
+            npm publish --access public --tag beta
+          else
+            npm publish --access public
+          fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

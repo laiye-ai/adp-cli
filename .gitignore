@@ -16,7 +16,7 @@ Thumbs.db
 .adp/
 
 # Test output
-test_data/
+tests/test_report.txt
 
 # Claude Code
 .claude/

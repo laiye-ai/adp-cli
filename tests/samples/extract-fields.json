@@ -1,0 +1,22 @@
+[
+	{
+		"field_name": "发票号码",
+		"field_type": "string",
+		"field_prompt": "提取发票左上角编号"
+	},
+	{
+		"field_name": "开票日期",
+		"field_type": "date",
+		"field_prompt": "提取发票开具日期"
+	},
+	{
+		"field_name": "商品明细",
+		"field_type": "table",
+		"field_prompt": null,
+		"sub_fields": [
+            {"field_name": "合同编号", "field_type": "string", "field_prompt": "提取合同编号"},
+            {"field_name": "签订日期", "field_type": "date", "field_prompt": "提取签订日期"}
+        ]
+
+	}
+]

@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/laiye-ai/adp-cli/internal/i18n"
+	"github.com/laiye-ai/adp-cli/internal/updater"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"github.com/rs/zerolog"
@@ -12,6 +13,8 @@ import (
 )
 
 var version = "dev"
+
+var updateCheckDone <-chan string
 
 var (
 	jsonMode   bool
@@ -61,6 +64,17 @@ Supports document parsing, content extraction, and async task querying.`,
 		// Sync flags to formatter
 		formatterOut.SetJSONMode(jsonMode)
 		formatterOut.SetQuietMode(quietMode)
+
+		// Start async version check (result handled in PersistentPostRun)
+		updateCheckDone = updater.CheckAndNotify(version, quietMode, jsonMode)
+	},
+	PersistentPostRun: func(cmd *cobra.Command, args []string) {
+		// Wait for version check and print notice after command output
+		if updateCheckDone != nil {
+			if msg := <-updateCheckDone; msg != "" {
+				fmt.Fprint(os.Stderr, msg)
+			}
+		}
 	},
 }
 
