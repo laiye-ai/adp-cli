@@ -24,9 +24,33 @@ ADP CLI 是来也科技 [ADP（Agentic Document Processing）](https://adp.laiye
 
 ## 快速开始
 
+## 快速开始
+
 ### 安装
 
-从 [GitHub Releases](https://github.com/laiye-ai/adp-cli/releases) 下载对应平台的预编译二进制文件，或从源码构建：
+**方式一：npm 安装（推荐）**
+
+```bash
+npm install -g agentic-doc-parse-and-extract-cli
+```
+
+**方式二：Shell 脚本（Linux / macOS）**
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/laiye-ai/adp-cli/main/scripts/adp-init.sh | bash
+```
+
+**方式三：PowerShell（Windows）**
+
+```powershell
+irm https://raw.githubusercontent.com/laiye-ai/adp-cli/main/scripts/adp-init.ps1 | iex
+```
+
+**方式四：手动下载**
+
+从 [GitHub Releases](https://github.com/laiye-ai/adp-cli/releases) 下载对应平台的预编译二进制文件。
+
+**方式五：源码构建**
 
 ```bash
 git clone https://github.com/laiye-ai/adp-cli.git
@@ -137,11 +161,11 @@ make build-all VERSION=v1.0.0
 
 | 平台 | 文件名 |
 |------|--------|
-| Windows amd64 | `adp-windows-amd64.exe` |
-| Windows arm64 | `adp-windows-arm64.exe` |
-| Linux amd64 | `adp-linux-amd64` |
+| Windows x64 | `adp-win32-x64.exe` |
+| Windows arm64 | `adp-win32-arm64.exe` |
+| Linux x64 | `adp-linux-x64` |
 | Linux arm64 | `adp-linux-arm64` |
-| macOS amd64 | `adp-darwin-amd64` |
+| macOS x64 | `adp-darwin-x64` |
 | macOS arm64 | `adp-darwin-arm64` |
 
 版本号通过构建时注入：`-ldflags "-X github.com/laiye-ai/adp-cli/cmd.version=v1.0.0"`
@@ -154,13 +178,13 @@ make build-all VERSION=v1.0.0
 
 ```bash
 # 离线测试（无需 API Key）
-bash test_data/test.sh
+bash tests/test.sh
 
 # 完整测试（需配置 API 凭据）
-ADP_API_KEY=<key> ADP_API_BASE_URL=<url> bash test_data/test.sh
+ADP_API_KEY=<key> ADP_API_BASE_URL=<url> bash tests/test.sh
 ```
 
-测试报告输出到 `test_data/test_report.txt`。
+测试报告输出到 `tests/test_report.txt`。
 
 测试覆盖 40 个用例，包括：
 - 版本和帮助信息
@@ -177,7 +201,7 @@ ADP_API_KEY=<key> ADP_API_BASE_URL=<url> bash test_data/test.sh
 项目配置了 GitHub Actions：
 
 - **CI**（`.github/workflows/ci.yml`）— push/PR 到 main 时触发，运行构建和 E2E 测试
-- **Release**（`.github/workflows/release.yml`）— 推送 `v*` tag 时触发，交叉编译并创建 GitHub Release
+- **Release**（`.github/workflows/release.yml`）— 推送 `v*` tag 时触发，交叉编译、创建 GitHub Release 并自动发布到 npm
 
 ## 项目结构
 
@@ -185,7 +209,7 @@ ADP_API_KEY=<key> ADP_API_BASE_URL=<url> bash test_data/test.sh
 adp-cli/
 ├── main.go                  # 入口
 ├── cmd/                     # 命令定义（cobra）
-│   ├── root.go              # 根命令、全局参数、i18n
+│   ├── root.go              # 根命令、全局参数、i18n、版本检查
 │   ├── config.go            # config 子命令
 │   ├── appid.go             # app-id 子命令
 │   ├── parse.go             # parse 子命令
@@ -200,8 +224,16 @@ adp-cli/
 │   ├── formatter/formatter.go # 输出格式化
 │   ├── i18n/i18n.go         # 国际化
 │   ├── errors/errors.go     # 错误分类与退出码
-│   └── file/file_handler.go # 文件处理与校验
-├── test_data/               # E2E 测试数据与脚本
+│   ├── file/file_handler.go # 文件处理与校验
+│   └── updater/updater.go   # 版本更新检查
+├── scripts/
+│   ├── postinstall.js       # npm 安装后自动下载二进制
+│   ├── adp-init.sh          # Linux/macOS 一键安装脚本
+│   └── adp-init.ps1         # Windows 一键安装脚本
+├── tests/
+│   ├── test.sh              # E2E 测试脚本
+│   └── samples/             # 测试样本文件
+├── package.json             # npm 包配置
 ├── Makefile                 # 跨平台构建
 ├── .github/workflows/       # CI/CD
 └── go.mod
@@ -213,6 +245,7 @@ adp-cli/
 - 配置文件：`~/.adp/config.json`
 - API Key 加密存储（AES-256-GCM），密钥文件：`~/.adp/key.enc`
 - 应用缓存：`~/.adp/app_cache.json`
+- 版本检查缓存：`~/.adp/version_check.json`（每 24 小时更新一次）
 
 ## 环境变量
 
@@ -242,8 +275,14 @@ ADP CLI is the official command-line tool (Go edition) for [Laiye ADP (Agentic D
 ### Quick Start
 
 ```bash
-# Install
-go build -o adp .
+# Install (npm)
+npm install -g agentic-doc-parse-and-extract-cli
+
+# Install (Linux/macOS)
+curl -fsSL https://raw.githubusercontent.com/laiye-ai/adp-cli/main/scripts/adp-init.sh | bash
+
+# Install (Windows PowerShell)
+irm https://raw.githubusercontent.com/laiye-ai/adp-cli/main/scripts/adp-init.ps1 | iex
 
 # Configure
 adp config set --api-key <your-api-key>
@@ -267,8 +306,9 @@ adp credit
 - Batch processing with directory recursion and concurrent workers
 - Sync and async processing modes
 - English / Chinese interface (`--lang` flag or `ADP_LANG` env var)
-- Cross-platform static binaries (Windows / Linux / macOS, amd64 / arm64)
+- Cross-platform static binaries (Windows / Linux / macOS, x64 / arm64)
 - AES-256-GCM encrypted API key storage
+- Auto update notification (checks every 24 hours, non-blocking)
 
 ### Supported Formats
 
@@ -288,10 +328,10 @@ make build-all VERSION=v1.0.0
 
 ```bash
 # Offline tests (no API key needed)
-bash test_data/test.sh
+bash tests/test.sh
 
 # Full tests
-ADP_API_KEY=<key> ADP_API_BASE_URL=<url> bash test_data/test.sh
+ADP_API_KEY=<key> ADP_API_BASE_URL=<url> bash tests/test.sh
 ```
 
 ### License
