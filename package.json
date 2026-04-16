@@ -1,5 +1,5 @@
 {
-  "name": "adp-cli",
+  "name": "agentic-doc-parse-and-extract-cli",
   "version": "1.0.0",
   "description": "Official CLI for Laiye ADP (Agentic Document Processing) - document parsing and intelligent extraction",
   "keywords": [

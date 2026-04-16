@@ -228,5 +228,6 @@ main().catch((err) => {
   console.error(`[adp-cli] You can install manually:`);
   console.error(`[adp-cli]   Linux/macOS : curl -fsSL https://raw.githubusercontent.com/laiye-ai/adp-cli/main/scripts/adp-init.sh | bash`);
   console.error(`[adp-cli]   Windows     : irm https://raw.githubusercontent.com/laiye-ai/adp-cli/main/scripts/adp-init.ps1 | iex`);
+  console.error(`[adp-cli]   npm         : npm install -g agentic-doc-parse-and-extract-cli`);
   process.exit(0); // Exit 0 to not break npm install
 });
