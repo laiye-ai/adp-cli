@@ -91,8 +91,7 @@ function Main {
     Log "Extracting..."
     Expand-Archive -Path $archivePath -DestinationPath $tmpDir -Force
 
-    # Binary inside zip: adp-win32-x64.exe
-    $extractedBin = Join-Path $tmpDir "adp-${platform}-${arch}.exe"
+    $extractedBin = Join-Path $tmpDir "adp.exe"
     if (-not (Test-Path $extractedBin)) {
       Err "Extracted binary not found at $extractedBin"
       exit 1

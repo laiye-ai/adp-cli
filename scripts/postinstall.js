@@ -202,13 +202,11 @@ async function main() {
 
     if (PLATFORM === 'win32') {
       extractZip(archivePath, tmpDir);
-      // Binary inside zip: adp-win32-x64.exe
-      const extracted = path.join(tmpDir, `adp-${PLATFORM}-${ARCH}.exe`);
+      const extracted = path.join(tmpDir, 'adp.exe');
       fs.renameSync(extracted, BIN_PATH);
     } else {
       extractTarGz(archivePath, tmpDir);
-      // Binary inside tar.gz: adp-linux-x64 or adp-darwin-arm64 etc.
-      const extracted = path.join(tmpDir, `adp-${PLATFORM}-${ARCH}`);
+      const extracted = path.join(tmpDir, 'adp');
       fs.renameSync(extracted, BIN_PATH);
       fs.chmodSync(BIN_PATH, 0o755);
     }

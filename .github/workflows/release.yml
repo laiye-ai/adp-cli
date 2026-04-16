@@ -36,17 +36,16 @@ jobs:
         run: make build-all VERSION=${{ steps.version.outputs.VERSION }}
 
       - name: List build artifacts
-        run: ls -la dist/
+        run: ls -laR dist/
 
       - name: Package artifacts
         run: |
           cd dist
-          for f in adp-win32-*.exe; do
-            zip "${f%.exe}.zip" "$f" && rm "$f"
+          for dir in win32-*; do
+            zip "adp-${dir}.zip" -j "${dir}/adp.exe" && rm -rf "$dir"
           done
-          for f in adp-linux-* adp-darwin-*; do
-            [[ "$f" == *.tar.gz ]] && continue
-            tar czf "${f}.tar.gz" "$f" && rm "$f"
+          for dir in linux-* darwin-*; do
+            tar czf "adp-${dir}.tar.gz" -C "$dir" adp && rm -rf "$dir"
           done
           ls -la
 

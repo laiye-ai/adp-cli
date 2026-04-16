@@ -92,7 +92,7 @@ main() {
     install_dest="${INSTALL_DIR}/${BINARY_NAME}"
   fi
 
-  mv "${tmp_dir}/adp-${os}-${arch}" "$install_dest"
+  mv "${tmp_dir}/adp" "$install_dest"
   chmod +x "$install_dest"
 
   log "Installed adp to ${install_dest}"
