@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
+	"github.com/laiye-ai/adp-cli/internal/errors"
 	"github.com/laiye-ai/adp-cli/internal/i18n"
 )
 
@@ -22,11 +23,13 @@ var extractLocalCmd = &cobra.Command{
 		path := args[0]
 		appID, _ := cmd.Flags().GetString("app-id")
 		asyncMode, _ := cmd.Flags().GetBool("async")
+		noWait, _ := cmd.Flags().GetBool("no-wait")
 		export, _ := cmd.Flags().GetString("export")
 		timeout, _ := cmd.Flags().GetInt("timeout")
 		concurrency, _ := cmd.Flags().GetInt("concurrency")
+		retry, _ := cmd.Flags().GetInt("retry")
 
-		processLocalFiles(path, appID, asyncMode, export, timeout, concurrency, "extract")
+		processLocalFiles(path, appID, asyncMode, noWait, export, timeout, concurrency, retry, "extract")
 	},
 }
 
@@ -40,12 +43,14 @@ var extractURLCmd = &cobra.Command{
 		urlArg := args[0]
 		appID, _ := cmd.Flags().GetString("app-id")
 		asyncMode, _ := cmd.Flags().GetBool("async")
+		noWait, _ := cmd.Flags().GetBool("no-wait")
 		export, _ := cmd.Flags().GetString("export")
 		timeout, _ := cmd.Flags().GetInt("timeout")
 		concurrency, _ := cmd.Flags().GetInt("concurrency")
+		retry, _ := cmd.Flags().GetInt("retry")
 
 		urls := resolveURLInput(urlArg)
-		processURLs(urls, appID, asyncMode, export, timeout, concurrency, "extract")
+		processURLs(urls, appID, asyncMode, noWait, export, timeout, concurrency, retry, "extract")
 	},
 }
 
@@ -58,12 +63,14 @@ var extractBase64Cmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		appID, _ := cmd.Flags().GetString("app-id")
 		asyncMode, _ := cmd.Flags().GetBool("async")
+		noWait, _ := cmd.Flags().GetBool("no-wait")
 		export, _ := cmd.Flags().GetString("export")
 		timeout, _ := cmd.Flags().GetInt("timeout")
 		fileName, _ := cmd.Flags().GetString("file-name")
 		concurrency, _ := cmd.Flags().GetInt("concurrency")
+		retry, _ := cmd.Flags().GetInt("retry")
 
-		processBase64(args, appID, fileName, asyncMode, export, timeout, concurrency, "extract")
+		processBase64(args, appID, fileName, asyncMode, noWait, export, timeout, concurrency, retry, "extract")
 	},
 }
 
@@ -72,14 +79,26 @@ var extractQueryCmd = &cobra.Command{
 	Use:   "query",
 	Short: i18n.T("extract_query_title"),
 	Long:  i18n.T("extract_query_title"),
-	Args:  cobra.ExactArgs(1),
+	Args:  cobra.ArbitraryArgs,
 	Run: func(cmd *cobra.Command, args []string) {
-		taskID := args[0]
 		watch, _ := cmd.Flags().GetBool("watch")
+		taskFile, _ := cmd.Flags().GetString("file")
 		export, _ := cmd.Flags().GetString("export")
 		timeout, _ := cmd.Flags().GetInt("timeout")
+		concurrency, _ := cmd.Flags().GetInt("concurrency")
 
-		queryTask(taskID, watch, export, timeout, "extract")
+		if taskFile == "" && len(args) == 0 {
+			formatterOut.ExitWithError(errors.NewCLIError(
+				"Either task IDs or --file must be provided",
+				errors.ErrorTypeParam,
+				errors.ExitParameterError,
+				false,
+				"Provide task IDs as arguments or use --file to load from a JSON file.",
+				nil,
+			))
+		}
+
+		queryTasks(args, watch, taskFile, export, timeout, concurrency, "extract")
 	},
 }
 
@@ -94,30 +113,38 @@ func init() {
 	// extract local flags
 	extractLocalCmd.Flags().String("app-id", "", i18n.T("option_app_id_extract"))
 	extractLocalCmd.Flags().Bool("async", false, i18n.T("option_async"))
+	extractLocalCmd.Flags().Bool("no-wait", false, i18n.T("option_no_wait"))
 	extractLocalCmd.Flags().String("export", "", i18n.T("option_export"))
 	extractLocalCmd.Flags().Int("timeout", 900, i18n.T("option_timeout"))
 	extractLocalCmd.Flags().Int("concurrency", 1, i18n.T("option_concurrency"))
+	extractLocalCmd.Flags().Int("retry", 0, i18n.T("option_retry"))
 	extractLocalCmd.MarkFlagRequired("app-id")
 
 	// extract url flags
 	extractURLCmd.Flags().String("app-id", "", i18n.T("option_app_id_extract"))
 	extractURLCmd.Flags().Bool("async", false, i18n.T("option_async"))
+	extractURLCmd.Flags().Bool("no-wait", false, i18n.T("option_no_wait"))
 	extractURLCmd.Flags().String("export", "", i18n.T("option_export"))
 	extractURLCmd.Flags().Int("timeout", 900, i18n.T("option_timeout"))
 	extractURLCmd.Flags().Int("concurrency", 1, i18n.T("option_concurrency"))
+	extractURLCmd.Flags().Int("retry", 0, i18n.T("option_retry"))
 	extractURLCmd.MarkFlagRequired("app-id")
 
 	// extract base64 flags
 	extractBase64Cmd.Flags().String("app-id", "", i18n.T("option_app_id_extract"))
 	extractBase64Cmd.Flags().Bool("async", false, i18n.T("option_async"))
+	extractBase64Cmd.Flags().Bool("no-wait", false, i18n.T("option_no_wait"))
 	extractBase64Cmd.Flags().String("export", "", i18n.T("option_export"))
 	extractBase64Cmd.Flags().Int("timeout", 900, i18n.T("option_timeout"))
 	extractBase64Cmd.Flags().String("file-name", "document", i18n.T("option_file_name"))
 	extractBase64Cmd.Flags().Int("concurrency", 1, i18n.T("option_concurrency"))
+	extractBase64Cmd.Flags().Int("retry", 0, i18n.T("option_retry"))
 	extractBase64Cmd.MarkFlagRequired("app-id")
 
 	// extract query flags
 	extractQueryCmd.Flags().Bool("watch", false, i18n.T("option_watch"))
+	extractQueryCmd.Flags().String("file", "", i18n.T("option_task_file"))
 	extractQueryCmd.Flags().String("export", "", i18n.T("option_export"))
 	extractQueryCmd.Flags().Int("timeout", 900, i18n.T("option_watch_timeout"))
+	extractQueryCmd.Flags().Int("concurrency", 1, i18n.T("option_concurrency"))
 }

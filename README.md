@@ -13,8 +13,10 @@ ADP CLI 是来也科技 [ADP（Agentic Document Processing）](https://adp.laiye
 - **文档解析** — 将 PDF、图片、Office 文档转换为结构化数据
 - **智能抽取** — 基于大模型提取发票、订单、证件等关键字段
 - **自定义应用** — 创建和管理个性化抽取应用
-- **批量处理** — 支持文件夹递归、URL 列表、并发处理
-- **同步/异步** — 支持同步等待和异步任务查询两种模式
+- **批量处理** — 支持文件夹递归、URL 列表、并发处理，每文件独立结果输出
+- **同步/异步** — 支持同步等待和异步任务查询两种模式（query 支持批量 task-id 和 `--file`）
+- **两阶段异步** — `--async --no-wait` 仅提交任务输出 task-id 列表，配合 `query --file` 实现断点续传
+- **可靠性** — 可重试错误自动指数退避重试（`--retry`），精细化退出码
 - **多语言** — 中英文界面自动切换（`--lang` 或 `ADP_LANG` 环境变量）
 - **跨平台** — Windows / Linux / macOS，静态编译无依赖
 
@@ -83,14 +85,25 @@ adp parse local ./invoice.pdf --app-id <app-id>
 # 抽取关键字段
 adp extract local ./invoice.pdf --app-id <app-id>
 
-# 批量处理目录
+# 批量处理目录（结果自动写入 adp_results_<timestamp>/ 目录）
 adp parse local ./documents/ --app-id <app-id> --async
+
+# 批量处理并指定输出目录
+adp parse local ./documents/ --app-id <app-id> --export ./output/
+
+# 两阶段异步（提交与查询分离，支持断点续传）
+adp extract local ./documents/ --app-id <app-id> --async --no-wait --export tasks.json
+adp extract query --watch --file tasks.json
 
 # 从 URL 处理
 adp extract url https://example.com/file.pdf --app-id <app-id>
 
-# 查询异步任务
+# 查询异步任务（支持多个 task-id）
 adp parse query <task-id>
+adp parse query <task-id-1> <task-id-2> <task-id-3> --watch
+
+# 失败自动重试（最多重试 2 次）
+adp parse local ./documents/ --app-id <app-id> --retry 2
 
 # 查看剩余积分
 adp credit
@@ -109,11 +122,11 @@ adp credit
 | `adp parse local <path>` | 解析本地文件/目录 |
 | `adp parse url <url>` | 解析远程文件（支持 URL 列表文件） |
 | `adp parse base64 <data>` | 解析 Base64 编码内容 |
-| `adp parse query <task-id>` | 查询异步解析任务 |
+| `adp parse query <task-id...>` | 查询异步解析任务（支持多个或 `--file`） |
 | `adp extract local <path>` | 抽取本地文件/目录 |
 | `adp extract url <url>` | 抽取远程文件 |
 | `adp extract base64 <data>` | 抽取 Base64 编码内容 |
-| `adp extract query <task-id>` | 查询异步抽取任务 |
+| `adp extract query <task-id...>` | 查询异步抽取任务（支持多个或 `--file`） |
 | `adp custom-app create` | 创建自定义抽取应用 |
 | `adp custom-app update` | 更新自定义应用配置 |
 | `adp custom-app get-config` | 查看应用配置 |
@@ -137,9 +150,73 @@ adp credit
 |------|------|
 | `--app-id` | 应用 ID（parse/extract 必填） |
 | `--async` | 异步模式 |
-| `--export <path>` | 导出结果到文件 |
+| `--no-wait` | 仅提交任务，不等待结果（与 `--async` 配合使用） |
+| `--export <path>` | 导出结果（单文件为文件路径，批量为输出目录） |
 | `--timeout <seconds>` | 超时时间（默认 900 秒） |
 | `--concurrency <n>` | 并发数（免费用户最大 1，付费用户最大 2） |
+| `--retry <n>` | 可重试错误的重试次数（默认 0） |
+| `--file <path>` | 从 JSON 文件读取任务 ID（`--no-wait` 的输出文件，query 专用） |
+
+### 批量处理
+
+批量处理时（多文件/多 URL），CLI 会为每个输入文件生成独立的结果文件，便于 Agent 按需读取：
+
+```
+adp_results_20250417_153020/
+├── _summary.json              # 汇总（总数、成功数、失败数、各文件状态）
+├── invoice_01.pdf.json        # 成功的结果
+├── contract_02.docx.json
+└── report_03.pdf.error.json   # 失败的错误信息
+```
+
+- **`--export <dir>`** — 指定输出目录
+- **不传 `--export`** — 自动创建 `adp_results_<timestamp>/` 目录
+- **单文件** — 保持原有行为（直接输出到 stdout 或 `--export` 指定的文件）
+
+### 两阶段异步（`--no-wait`）
+
+默认的 `--async` 模式会提交任务后自动轮询等待结果，适合 Agent 调用。如果需要断点续传或手动控制查询时机，可以使用两阶段模式：
+
+**阶段 1：提交任务**
+
+```bash
+adp extract local ./documents/ --app-id <app-id> --async --no-wait --export tasks.json
+```
+
+输出 JSON 数组，包含每个文件的 task-id：
+
+```json
+[
+  {"path": "invoice.pdf", "task_id": "task_abc123"},
+  {"path": "contract.pdf", "task_id": "task_def456"}
+]
+```
+
+**阶段 2：查询结果**
+
+```bash
+# 从文件读取 task-id 并轮询等待
+adp extract query --watch --file tasks.json
+
+# 也可以导出结果到目录
+adp extract query --watch --file tasks.json --export ./results/
+```
+
+即使 CLI 中途崩溃，tasks.json 中的 task-id 不会丢失，随时可用 `query --file` 恢复。
+
+### 退出码
+
+| 退出码 | 含义 |
+|--------|------|
+| `0` | 全部成功 |
+| `1` | 全部失败 / 系统错误 |
+| `2` | 参数错误 |
+| `3` | 资源未找到 |
+| `4` | 权限拒绝 |
+| `5` | 冲突 |
+| `6` | 部分失败（批量处理中部分任务失败） |
+
+完整的错误码分类规则、匹配优先级和重试机制请参考 [错误码文档](docs/error-codes.md)。
 
 ## 构建
 
@@ -214,6 +291,7 @@ adp-cli/
 │   ├── appid.go             # app-id 子命令
 │   ├── parse.go             # parse 子命令
 │   ├── extract.go           # extract 子命令
+│   ├── batch.go             # 批量处理引擎（并发、重试、独立文件输出）
 │   ├── customapp.go         # custom-app 子命令
 │   ├── credit.go            # credit 子命令
 │   ├── schema.go            # schema 子命令
@@ -294,6 +372,10 @@ adp parse local ./invoice.pdf --app-id <app-id>
 # Extract key fields
 adp extract local ./invoice.pdf --app-id <app-id>
 
+# Two-phase async (submit + query separately, resumable)
+adp extract local ./docs/ --app-id <app-id> --async --no-wait --export tasks.json
+adp extract query --watch --file tasks.json
+
 # Check credits
 adp credit
 ```
@@ -303,7 +385,11 @@ adp credit
 - Document parsing (PDF, images, Office formats) to structured data
 - Intelligent extraction of key fields (invoices, orders, certificates)
 - Custom extraction applications with AI-powered field recommendation
-- Batch processing with directory recursion and concurrent workers
+- Batch processing with per-file result output, directory recursion, and concurrent workers
+- Automatic retry with exponential backoff for transient errors (`--retry`)
+- Batch task-id querying for async workflows
+- Two-phase async mode (`--no-wait` + `query --file`) for resumable batch processing
+- Fine-grained exit codes (0 = all success, 6 = partial failure, 1 = all failed) — see [Error Codes](docs/error-codes.md)
 - Sync and async processing modes
 - English / Chinese interface (`--lang` flag or `ADP_LANG` env var)
 - Cross-platform static binaries (Windows / Linux / macOS, x64 / arm64)

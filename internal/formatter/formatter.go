@@ -180,16 +180,26 @@ func (f *Formatter) PrintProgress(current, total int, message string) {
 	if f.quietMode {
 		return
 	}
+	if !f.isTTY || f.jsonMode {
+		// JSON Lines format for Agent consumption
+		progress := map[string]interface{}{
+			"type":    "progress",
+			"current": current,
+			"total":   total,
+		}
+		if message != "" {
+			progress["file"] = message
+		}
+		jsonBytes, _ := json.Marshal(progress)
+		fmt.Fprintln(os.Stderr, string(jsonBytes))
+		return
+	}
 	percentage := float64(current) / float64(total) * 100
 	progress := fmt.Sprintf("[%d/%d] %.1f%%", current, total, percentage)
 	if message != "" {
 		progress += fmt.Sprintf(" - %s", message)
 	}
-	if f.isTTY {
-		fmt.Fprintf(os.Stderr, "\033[36m%s\033[0m\n", progress)
-	} else {
-		fmt.Fprintf(os.Stderr, "%s\n", progress)
-	}
+	fmt.Fprintf(os.Stderr, "\033[36m%s\033[0m\n", progress)
 }
 
 // PrintTaskResult prints task result

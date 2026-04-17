@@ -18,6 +18,9 @@ Thumbs.db
 
 # Test output
 tests/test_report.txt
+tests/test_result.json
+tests/*_tasks.json
+adp_results_*/
 
 # Claude Code
 .claude/

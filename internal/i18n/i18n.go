@@ -46,8 +46,11 @@ var Translations = map[string]map[string]string{
 		"option_timeout":           "Timeout for sync mode (seconds)",
 		"option_concurrency":       "Concurrency for batch processing. Default: 1. Free users max=1, paid users max=2. Other values will not take effect.",
 		"option_file_name":        "File name (default: document)",
+		"option_retry":             "Number of retries for retryable errors (default: 0)",
 		"option_watch":             "Watch task until completion",
 		"option_watch_timeout":    "Timeout for watch mode (seconds)",
+		"option_no_wait":          "Submit tasks only, do not wait for results (use with --async)",
+		"option_task_file":        "Read task IDs from JSON file (output of --no-wait)",
 
 		// Extract command
 		"extract_description":      "Document extraction.",
@@ -139,6 +142,7 @@ var Translations = map[string]map[string]string{
 		"invalid_url_format":        "Invalid URL format: %s",
 		"failed_to_process_url":     "Failed to process URL: %s - %s",
 		"task_completed":            "Task completed",
+		"submitting_tasks":         "Submitting %d task(s)",
 		"error_invalid_concurrency": "Free users: 1, paid users: 2",
 		"error_not_paid_user":       "You are a free user, maximum concurrency is 1",
 	},
@@ -176,8 +180,11 @@ var Translations = map[string]map[string]string{
 		"option_timeout":           "同步模式超时时间（秒）",
 		"option_concurrency":       "批量处理时的并发数。默认：1。免费用户最大为1，付费用户最大为2。输入其他数值，并发将不生效，请等待处理。",
 		"option_file_name":        "文件名（默认: document）",
+		"option_retry":             "可重试错误的重试次数（默认：0）",
 		"option_watch":             "监视任务直到完成",
 		"option_watch_timeout":    "监视模式超时时间（秒）",
+		"option_no_wait":          "仅提交任务，不等待结果（与 --async 配合使用）",
+		"option_task_file":        "从 JSON 文件读取任务 ID（--no-wait 的输出文件）",
 
 		// Extract command
 		"extract_description":       "文档抽取。",
@@ -269,6 +276,7 @@ var Translations = map[string]map[string]string{
 		"invalid_url_format":        "无效的 URL 格式: %s",
 		"failed_to_process_url":     "处理 URL 失败: %s - %s",
 		"task_completed":            "任务完成",
+		"submitting_tasks":         "正在提交 %d 个任务",
 		"error_invalid_concurrency": "免费用户：1，付费用户：2",
 		"error_not_paid_user":       "您是免费用户，最大并发数为1",
 	},

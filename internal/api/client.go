@@ -66,7 +66,6 @@ func (c *Client) request(method, endpoint string, data interface{}) (map[string]
 		}
 		body = bytes.NewBuffer(jsonData)
 	}
-
 	req, err := http.NewRequest(method, url, body)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %w", err)

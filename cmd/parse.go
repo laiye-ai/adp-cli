@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"sync"
 
 	"github.com/spf13/cobra"
 	"github.com/laiye-ai/adp-cli/internal/api"
@@ -31,11 +30,13 @@ var parseLocalCmd = &cobra.Command{
 		path := args[0]
 		appID, _ := cmd.Flags().GetString("app-id")
 		asyncMode, _ := cmd.Flags().GetBool("async")
+		noWait, _ := cmd.Flags().GetBool("no-wait")
 		export, _ := cmd.Flags().GetString("export")
 		timeout, _ := cmd.Flags().GetInt("timeout")
 		concurrency, _ := cmd.Flags().GetInt("concurrency")
+		retry, _ := cmd.Flags().GetInt("retry")
 
-		processLocalFiles(path, appID, asyncMode, export, timeout, concurrency, "parse")
+		processLocalFiles(path, appID, asyncMode, noWait, export, timeout, concurrency, retry, "parse")
 	},
 }
 
@@ -49,12 +50,14 @@ var parseURLCmd = &cobra.Command{
 		urlArg := args[0]
 		appID, _ := cmd.Flags().GetString("app-id")
 		asyncMode, _ := cmd.Flags().GetBool("async")
+		noWait, _ := cmd.Flags().GetBool("no-wait")
 		export, _ := cmd.Flags().GetString("export")
 		timeout, _ := cmd.Flags().GetInt("timeout")
 		concurrency, _ := cmd.Flags().GetInt("concurrency")
+		retry, _ := cmd.Flags().GetInt("retry")
 
 		urls := resolveURLInput(urlArg)
-		processURLs(urls, appID, asyncMode, export, timeout, concurrency, "parse")
+		processURLs(urls, appID, asyncMode, noWait, export, timeout, concurrency, retry, "parse")
 	},
 }
 
@@ -67,12 +70,14 @@ var parseBase64Cmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		appID, _ := cmd.Flags().GetString("app-id")
 		asyncMode, _ := cmd.Flags().GetBool("async")
+		noWait, _ := cmd.Flags().GetBool("no-wait")
 		export, _ := cmd.Flags().GetString("export")
 		timeout, _ := cmd.Flags().GetInt("timeout")
 		fileName, _ := cmd.Flags().GetString("file-name")
 		concurrency, _ := cmd.Flags().GetInt("concurrency")
+		retry, _ := cmd.Flags().GetInt("retry")
 
-		processBase64(args, appID, fileName, asyncMode, export, timeout, concurrency, "parse")
+		processBase64(args, appID, fileName, asyncMode, noWait, export, timeout, concurrency, retry, "parse")
 	},
 }
 
@@ -81,14 +86,26 @@ var parseQueryCmd = &cobra.Command{
 	Use:   "query",
 	Short: i18n.T("parse_query_title"),
 	Long:  i18n.T("parse_query_title"),
-	Args:  cobra.ExactArgs(1),
+	Args:  cobra.ArbitraryArgs,
 	Run: func(cmd *cobra.Command, args []string) {
-		taskID := args[0]
 		watch, _ := cmd.Flags().GetBool("watch")
+		taskFile, _ := cmd.Flags().GetString("file")
 		export, _ := cmd.Flags().GetString("export")
 		timeout, _ := cmd.Flags().GetInt("timeout")
+		concurrency, _ := cmd.Flags().GetInt("concurrency")
 
-		queryTask(taskID, watch, export, timeout, "parse")
+		if taskFile == "" && len(args) == 0 {
+			formatterOut.ExitWithError(errors.NewCLIError(
+				"Either task IDs or --file must be provided",
+				errors.ErrorTypeParam,
+				errors.ExitParameterError,
+				false,
+				"Provide task IDs as arguments or use --file to load from a JSON file.",
+				nil,
+			))
+		}
+
+		queryTasks(args, watch, taskFile, export, timeout, concurrency, "parse")
 	},
 }
 
@@ -103,32 +120,40 @@ func init() {
 	// parse local flags
 	parseLocalCmd.Flags().String("app-id", "", i18n.T("option_app_id_parse"))
 	parseLocalCmd.Flags().Bool("async", false, i18n.T("option_async"))
+	parseLocalCmd.Flags().Bool("no-wait", false, i18n.T("option_no_wait"))
 	parseLocalCmd.Flags().String("export", "", i18n.T("option_export"))
 	parseLocalCmd.Flags().Int("timeout", 900, i18n.T("option_timeout"))
 	parseLocalCmd.Flags().Int("concurrency", 1, i18n.T("option_concurrency"))
+	parseLocalCmd.Flags().Int("retry", 0, i18n.T("option_retry"))
 	parseLocalCmd.MarkFlagRequired("app-id")
 
 	// parse url flags
 	parseURLCmd.Flags().String("app-id", "", i18n.T("option_app_id_parse"))
 	parseURLCmd.Flags().Bool("async", false, i18n.T("option_async"))
+	parseURLCmd.Flags().Bool("no-wait", false, i18n.T("option_no_wait"))
 	parseURLCmd.Flags().String("export", "", i18n.T("option_export"))
 	parseURLCmd.Flags().Int("timeout", 900, i18n.T("option_timeout"))
 	parseURLCmd.Flags().Int("concurrency", 1, i18n.T("option_concurrency"))
+	parseURLCmd.Flags().Int("retry", 0, i18n.T("option_retry"))
 	parseURLCmd.MarkFlagRequired("app-id")
 
 	// parse base64 flags
 	parseBase64Cmd.Flags().String("app-id", "", i18n.T("option_app_id_parse"))
 	parseBase64Cmd.Flags().Bool("async", false, i18n.T("option_async"))
+	parseBase64Cmd.Flags().Bool("no-wait", false, i18n.T("option_no_wait"))
 	parseBase64Cmd.Flags().String("export", "", i18n.T("option_export"))
 	parseBase64Cmd.Flags().Int("timeout", 900, i18n.T("option_timeout"))
 	parseBase64Cmd.Flags().String("file-name", "document", i18n.T("option_file_name"))
 	parseBase64Cmd.Flags().Int("concurrency", 1, i18n.T("option_concurrency"))
+	parseBase64Cmd.Flags().Int("retry", 0, i18n.T("option_retry"))
 	parseBase64Cmd.MarkFlagRequired("app-id")
 
 	// parse query flags
 	parseQueryCmd.Flags().Bool("watch", false, i18n.T("option_watch"))
+	parseQueryCmd.Flags().String("file", "", i18n.T("option_task_file"))
 	parseQueryCmd.Flags().String("export", "", i18n.T("option_export"))
 	parseQueryCmd.Flags().Int("timeout", 900, i18n.T("option_watch_timeout"))
+	parseQueryCmd.Flags().Int("concurrency", 1, i18n.T("option_concurrency"))
 }
 
 const (
@@ -164,10 +189,11 @@ func validateConcurrency(client *api.Client, concurrency int) int {
 	return freeLimit
 }
 
-func processLocalFiles(pathStr, appID string, asyncMode bool, exportPath string, timeout, concurrency int, mode string) {
+// initClientWithConfig loads config and creates an API client, exiting on error
+func initClientWithConfig(mode string) (*api.Client, *config.Config) {
 	cfg, err := config.Load()
 	if err != nil {
-		cliErr := errors.ClassifyException(err, mode+" local")
+		cliErr := errors.ClassifyException(err, mode)
 		formatterOut.ExitWithError(cliErr)
 	}
 
@@ -185,10 +211,15 @@ func processLocalFiles(pathStr, appID string, asyncMode bool, exportPath string,
 
 	client, err := api.NewClient(cfg)
 	if err != nil {
-		cliErr := errors.ClassifyException(err, mode+" local")
+		cliErr := errors.ClassifyException(err, mode)
 		formatterOut.ExitWithError(cliErr)
 	}
 
+	return client, cfg
+}
+
+func processLocalFiles(pathStr, appID string, asyncMode, noWait bool, exportPath string, timeout, concurrency, maxRetry int, mode string) {
+	client, _ := initClientWithConfig(mode + " local")
 	concurrency = validateConcurrency(client, concurrency)
 
 	fileHandler := file.New()
@@ -211,123 +242,60 @@ func processLocalFiles(pathStr, appID string, asyncMode bool, exportPath string,
 		formatterOut.ExitWithError(cliErr)
 	}
 
-	formatterOut.PrintInfo(fmt.Sprintf(i18n.T("processing_files"), len(validFiles)))
-
-	if concurrency < 1 {
-		concurrency = 1
-	}
-
-	type fileJob struct {
-		index    int
-		filePath string
-		fileName string
-	}
-	jobs := make(chan fileJob, len(validFiles))
-	results := make([]map[string]interface{}, len(validFiles))
-	var wg sync.WaitGroup
-
-	// Start N workers
-	for w := 0; w < concurrency; w++ {
-		wg.Add(1)
-		go func() {
-			defer wg.Done()
-			for job := range jobs {
-				var result map[string]interface{}
-				var err error
-
-				if mode == "parse" {
-					if asyncMode {
-						taskID, e := client.ParseAsync("", appID, job.filePath, "", job.fileName)
-						if e != nil {
-							err = e
-						} else {
-							formatterOut.PrintProgress(job.index+1, len(validFiles), fmt.Sprintf("%s TaskID:%s", job.fileName, taskID))
-							result, err = client.WaitForTask(taskID, client.QueryParseTask, timeout, 2)
-						}
-					} else {
-						formatterOut.PrintProgress(job.index+1, len(validFiles), job.fileName)
-						result, err = client.ParseSync("", appID, job.filePath, "", job.fileName)
-					}
-				} else {
-					if asyncMode {
-						taskID, e := client.ExtractAsync("", appID, job.filePath, "", job.fileName, nil)
-						if e != nil {
-							err = e
-						} else {
-							formatterOut.PrintProgress(job.index+1, len(validFiles), fmt.Sprintf("%s TaskID:%s", job.fileName, taskID))
-							result, err = client.WaitForTask(taskID, client.QueryExtractTask, timeout, 2)
-						}
-					} else {
-						formatterOut.PrintProgress(job.index+1, len(validFiles), job.fileName)
-						result, err = client.ExtractSync("", appID, job.filePath, "", job.fileName, nil)
-					}
-				}
-
-				if err != nil {
-					formatterOut.PrintError(fmt.Sprintf(i18n.T("failed_to_process"), job.fileName, err.Error()))
-				} else {
-					results[job.index] = result
-				}
-			}
-		}()
-	}
-
-	// Send jobs
+	// Build batch jobs
+	jobs := make([]BatchJob, len(validFiles))
 	for i, filePath := range validFiles {
-		jobs <- fileJob{index: i, filePath: filePath, fileName: filepath.Base(filePath)}
+		jobs[i] = BatchJob{Index: i, Name: filepath.Base(filePath)}
 	}
-	close(jobs)
 
-	wg.Wait()
-
-	// Collect non-nil results in order
-	var orderedResults []map[string]interface{}
-	for _, r := range results {
-		if r != nil {
-			orderedResults = append(orderedResults, r)
+	// noWait mode: submit only, output task IDs
+	if asyncMode && noWait {
+		submitFn := func(job BatchJob) (string, error) {
+			filePath := validFiles[job.Index]
+			fileName := job.Name
+			if mode == "parse" {
+				return client.ParseAsync("", appID, filePath, "", fileName)
+			}
+			return client.ExtractAsync("", appID, filePath, "", fileName, nil)
 		}
+		batchSubmit(jobs, concurrency, submitFn, exportPath)
+		return
 	}
 
-	if exportPath != "" {
-		if len(orderedResults) == 1 {
-			fileHandler.WriteJSONOutput(orderedResults[0], exportPath)
-		} else {
-			fileHandler.WriteJSONOutput(map[string]interface{}{"results": orderedResults}, exportPath)
+	processFn := func(job BatchJob) (map[string]interface{}, error) {
+		filePath := validFiles[job.Index]
+		fileName := job.Name
+		if mode == "parse" {
+			if asyncMode {
+				taskID, err := client.ParseAsync("", appID, filePath, "", fileName)
+				if err != nil {
+					return nil, err
+				}
+				formatterOut.PrintInfo(fmt.Sprintf("%s (task_id: %s)", fileName, taskID))
+				return client.WaitForTask(taskID, client.QueryParseTask, timeout, 2)
+			}
+			return client.ParseSync("", appID, filePath, "", fileName)
 		}
-		formatterOut.PrintSuccess(fmt.Sprintf(i18n.T("results_exported_to"), exportPath))
-	} else {
-		formatterOut.PrintJSON(orderedResults)
+		// extract
+		if asyncMode {
+			taskID, err := client.ExtractAsync("", appID, filePath, "", fileName, nil)
+			if err != nil {
+				return nil, err
+			}
+			formatterOut.PrintInfo(fmt.Sprintf("%s (task_id: %s)", fileName, taskID))
+			return client.WaitForTask(taskID, client.QueryExtractTask, timeout, 2)
+		}
+		return client.ExtractSync("", appID, filePath, "", fileName, nil)
 	}
+
+	results := batchProcess(jobs, concurrency, maxRetry, processFn, exportPath)
+	exitWithBatchResults(results)
 }
 
-func processURLs(urls []string, appID string, asyncMode bool, exportPath string, timeout, concurrency int, mode string) {
-	cfg, err := config.Load()
-	if err != nil {
-		cliErr := errors.ClassifyException(err, mode+" url")
-		formatterOut.ExitWithError(cliErr)
-	}
-
-	if !config.IsConfigured(cfg) {
-		cliErr := errors.NewCLIError(
-			i18n.T("error_not_configured"),
-			errors.ErrorTypeSystem,
-			errors.ExitGeneralError,
-			false,
-			"Run 'adp config set' to configure your API key and base URL.",
-			nil,
-		)
-		formatterOut.ExitWithError(cliErr)
-	}
-
-	client, err := api.NewClient(cfg)
-	if err != nil {
-		cliErr := errors.ClassifyException(err, mode+" url")
-		formatterOut.ExitWithError(cliErr)
-	}
-
+func processURLs(urls []string, appID string, asyncMode, noWait bool, exportPath string, timeout, concurrency, maxRetry int, mode string) {
+	client, _ := initClientWithConfig(mode + " url")
 	concurrency = validateConcurrency(client, concurrency)
 
-	fileHandler := file.New()
 	var validURLs []string
 	for _, url := range urls {
 		if !file.IsValidURL(url) {
@@ -349,243 +317,179 @@ func processURLs(urls []string, appID string, asyncMode bool, exportPath string,
 		formatterOut.ExitWithError(cliErr)
 	}
 
-	formatterOut.PrintInfo(fmt.Sprintf(i18n.T("processing_urls"), len(validURLs)))
-
-	if concurrency < 1 {
-		concurrency = 1
-	}
-
-	type urlJob struct {
-		index int
-		url   string
-	}
-	jobs := make(chan urlJob, len(validURLs))
-	results := make([]map[string]interface{}, len(validURLs))
-	var wg sync.WaitGroup
-
-	for w := 0; w < concurrency; w++ {
-		wg.Add(1)
-		go func() {
-			defer wg.Done()
-			for job := range jobs {
-				var result map[string]interface{}
-				var err error
-
-				if mode == "parse" {
-					if asyncMode {
-						taskID, e := client.ParseAsync(job.url, appID, "", "", "")
-						if e != nil {
-							err = e
-						} else {
-							formatterOut.PrintProgress(job.index+1, len(validURLs), fmt.Sprintf("%s TaskID:%s", job.url, taskID))
-							result, err = client.WaitForTask(taskID, client.QueryParseTask, timeout, 2)
-						}
-					} else {
-						formatterOut.PrintProgress(job.index+1, len(validURLs), job.url)
-						result, err = client.ParseSync(job.url, appID, "", "", "")
-					}
-				} else {
-					if asyncMode {
-						taskID, e := client.ExtractAsync(job.url, appID, "", "", "", nil)
-						if e != nil {
-							err = e
-						} else {
-							formatterOut.PrintProgress(job.index+1, len(validURLs), fmt.Sprintf("%s TaskID:%s", job.url, taskID))
-							result, err = client.WaitForTask(taskID, client.QueryExtractTask, timeout, 2)
-						}
-					} else {
-						formatterOut.PrintProgress(job.index+1, len(validURLs), job.url)
-						result, err = client.ExtractSync(job.url, appID, "", "", "", nil)
-					}
-				}
-
-				if err != nil {
-					formatterOut.PrintError(fmt.Sprintf(i18n.T("failed_to_process_url"), job.url, err.Error()))
-				} else {
-					results[job.index] = result
-				}
-			}
-		}()
-	}
-
+	// Build batch jobs — use url_001 style naming for result files
+	jobs := make([]BatchJob, len(validURLs))
 	for i, url := range validURLs {
-		jobs <- urlJob{index: i, url: url}
+		jobs[i] = BatchJob{Index: i, Name: fmt.Sprintf("url_%03d", i+1)}
+		_ = url // url is captured via validURLs[job.Index] in processFn/submitFn
 	}
-	close(jobs)
 
-	wg.Wait()
-
-	var orderedResults []map[string]interface{}
-	for _, r := range results {
-		if r != nil {
-			orderedResults = append(orderedResults, r)
+	// noWait mode: submit only, output task IDs
+	if asyncMode && noWait {
+		submitFn := func(job BatchJob) (string, error) {
+			url := validURLs[job.Index]
+			if mode == "parse" {
+				return client.ParseAsync(url, appID, "", "", "")
+			}
+			return client.ExtractAsync(url, appID, "", "", "", nil)
 		}
+		batchSubmit(jobs, concurrency, submitFn, exportPath)
+		return
 	}
 
-	if exportPath != "" {
-		if len(orderedResults) == 1 {
-			fileHandler.WriteJSONOutput(orderedResults[0], exportPath)
-		} else {
-			fileHandler.WriteJSONOutput(map[string]interface{}{"results": orderedResults}, exportPath)
+	processFn := func(job BatchJob) (map[string]interface{}, error) {
+		url := validURLs[job.Index]
+		if mode == "parse" {
+			if asyncMode {
+				taskID, err := client.ParseAsync(url, appID, "", "", "")
+				if err != nil {
+					return nil, err
+				}
+				formatterOut.PrintInfo(fmt.Sprintf("%s (task_id: %s)", job.Name, taskID))
+				return client.WaitForTask(taskID, client.QueryParseTask, timeout, 2)
+			}
+			return client.ParseSync(url, appID, "", "", "")
 		}
-		formatterOut.PrintSuccess(fmt.Sprintf(i18n.T("results_exported_to"), exportPath))
-	} else {
-		formatterOut.PrintJSON(orderedResults)
+		if asyncMode {
+			taskID, err := client.ExtractAsync(url, appID, "", "", "", nil)
+			if err != nil {
+				return nil, err
+			}
+			formatterOut.PrintInfo(fmt.Sprintf("%s (task_id: %s)", job.Name, taskID))
+			return client.WaitForTask(taskID, client.QueryExtractTask, timeout, 2)
+		}
+		return client.ExtractSync(url, appID, "", "", "", nil)
 	}
+
+	results := batchProcess(jobs, concurrency, maxRetry, processFn, exportPath)
+	exitWithBatchResults(results)
 }
 
-func processBase64(b64Strings []string, appID, fileName string, asyncMode bool, exportPath string, timeout, concurrency int, mode string) {
-	cfg, err := config.Load()
-	if err != nil {
-		cliErr := errors.ClassifyException(err, mode+" base64")
-		formatterOut.ExitWithError(cliErr)
-	}
-
-	if !config.IsConfigured(cfg) {
-		cliErr := errors.NewCLIError(
-			i18n.T("error_not_configured"),
-			errors.ErrorTypeSystem,
-			errors.ExitGeneralError,
-			false,
-			"Run 'adp config set' to configure your API key and base URL.",
-			nil,
-		)
-		formatterOut.ExitWithError(cliErr)
-	}
-
-	client, err := api.NewClient(cfg)
-	if err != nil {
-		cliErr := errors.ClassifyException(err, mode+" base64")
-		formatterOut.ExitWithError(cliErr)
-	}
-
+func processBase64(b64Strings []string, appID, fileName string, asyncMode, noWait bool, exportPath string, timeout, concurrency, maxRetry int, mode string) {
+	client, _ := initClientWithConfig(mode + " base64")
 	concurrency = validateConcurrency(client, concurrency)
 
-	fileHandler := file.New()
-
-	formatterOut.PrintInfo(fmt.Sprintf(i18n.T("processing_files"), len(b64Strings)))
-
-	if concurrency < 1 {
-		concurrency = 1
-	}
-
-	type b64Job struct {
-		index         int
-		b64           string
-		currentFileName string
-	}
-	jobs := make(chan b64Job, len(b64Strings))
-	results := make([]map[string]interface{}, len(b64Strings))
-	var wg sync.WaitGroup
-
-	for w := 0; w < concurrency; w++ {
-		wg.Add(1)
-		go func() {
-			defer wg.Done()
-			for job := range jobs {
-				var result map[string]interface{}
-				var err error
-
-				if mode == "parse" {
-					if asyncMode {
-						taskID, e := client.ParseAsync("", appID, "", job.b64, job.currentFileName)
-						if e != nil {
-							err = e
-						} else {
-							formatterOut.PrintProgress(job.index+1, len(b64Strings), fmt.Sprintf("%s TaskID:%s", job.currentFileName, taskID))
-							result, err = client.WaitForTask(taskID, client.QueryParseTask, timeout, 2)
-						}
-					} else {
-						formatterOut.PrintProgress(job.index+1, len(b64Strings), job.currentFileName)
-						result, err = client.ParseSync("", appID, "", job.b64, job.currentFileName)
-					}
-				} else {
-					if asyncMode {
-						taskID, e := client.ExtractAsync("", appID, "", job.b64, job.currentFileName, nil)
-						if e != nil {
-							err = e
-						} else {
-							formatterOut.PrintProgress(job.index+1, len(b64Strings), fmt.Sprintf("%s TaskID:%s", job.currentFileName, taskID))
-							result, err = client.WaitForTask(taskID, client.QueryExtractTask, timeout, 2)
-						}
-					} else {
-						formatterOut.PrintProgress(job.index+1, len(b64Strings), job.currentFileName)
-						result, err = client.ExtractSync("", appID, "", job.b64, job.currentFileName, nil)
-					}
-				}
-
-				if err != nil {
-					formatterOut.PrintError(fmt.Sprintf(i18n.T("failed_to_process"), job.currentFileName, err.Error()))
-				} else {
-					results[job.index] = result
-				}
-			}
-		}()
-	}
-
-	for i, b64 := range b64Strings {
-		currentFileName := fileName
+	// Build batch jobs
+	jobs := make([]BatchJob, len(b64Strings))
+	for i := range b64Strings {
+		name := fileName
 		if len(b64Strings) > 1 {
-			currentFileName = fmt.Sprintf("%s_%d", fileName, i+1)
+			name = fmt.Sprintf("%s_%d", fileName, i+1)
 		}
-		jobs <- b64Job{index: i, b64: b64, currentFileName: currentFileName}
-	}
-	close(jobs)
-
-	wg.Wait()
-
-	var orderedResults []map[string]interface{}
-	for _, r := range results {
-		if r != nil {
-			orderedResults = append(orderedResults, r)
-		}
+		jobs[i] = BatchJob{Index: i, Name: name}
 	}
 
-	if exportPath != "" {
-		if len(orderedResults) == 1 {
-			fileHandler.WriteJSONOutput(orderedResults[0], exportPath)
-		} else {
-			fileHandler.WriteJSONOutput(map[string]interface{}{"results": orderedResults}, exportPath)
+	// noWait mode: submit only, output task IDs
+	if asyncMode && noWait {
+		submitFn := func(job BatchJob) (string, error) {
+			b64 := b64Strings[job.Index]
+			currentFileName := job.Name
+			if mode == "parse" {
+				return client.ParseAsync("", appID, "", b64, currentFileName)
+			}
+			return client.ExtractAsync("", appID, "", b64, currentFileName, nil)
 		}
-		formatterOut.PrintSuccess(fmt.Sprintf(i18n.T("results_exported_to"), exportPath))
-	} else {
-		formatterOut.PrintJSON(orderedResults)
+		batchSubmit(jobs, concurrency, submitFn, exportPath)
+		return
 	}
+
+	processFn := func(job BatchJob) (map[string]interface{}, error) {
+		b64 := b64Strings[job.Index]
+		currentFileName := job.Name
+		if mode == "parse" {
+			if asyncMode {
+				taskID, err := client.ParseAsync("", appID, "", b64, currentFileName)
+				if err != nil {
+					return nil, err
+				}
+				formatterOut.PrintInfo(fmt.Sprintf("%s (task_id: %s)", currentFileName, taskID))
+				return client.WaitForTask(taskID, client.QueryParseTask, timeout, 2)
+			}
+			return client.ParseSync("", appID, "", b64, currentFileName)
+		}
+		if asyncMode {
+			taskID, err := client.ExtractAsync("", appID, "", b64, currentFileName, nil)
+			if err != nil {
+				return nil, err
+			}
+			formatterOut.PrintInfo(fmt.Sprintf("%s (task_id: %s)", currentFileName, taskID))
+			return client.WaitForTask(taskID, client.QueryExtractTask, timeout, 2)
+		}
+		return client.ExtractSync("", appID, "", b64, currentFileName, nil)
+	}
+
+	results := batchProcess(jobs, concurrency, maxRetry, processFn, exportPath)
+	exitWithBatchResults(results)
 }
 
-func queryTask(taskID string, watch bool, exportPath string, timeout int, mode string) {
-	cfg, err := config.Load()
-	if err != nil {
-		cliErr := errors.ClassifyException(err, mode+" query")
-		formatterOut.ExitWithError(cliErr)
+func queryTasks(taskIDs []string, watch bool, taskFile, exportPath string, timeout, concurrency int, mode string) {
+	// Load tasks from file if --file is specified
+	var taskNames map[string]string // taskID -> path (display name)
+	if taskFile != "" {
+		tasks, err := loadTasksFromFile(taskFile)
+		if err != nil {
+			cliErr := errors.ClassifyException(err, mode+" query")
+			formatterOut.ExitWithError(cliErr)
+		}
+		taskNames = make(map[string]string, len(tasks))
+		taskIDs = make([]string, 0, len(tasks))
+		for _, t := range tasks {
+			taskIDs = append(taskIDs, t.TaskID)
+			taskNames[t.TaskID] = t.Path
+		}
 	}
 
-	if !config.IsConfigured(cfg) {
-		cliErr := errors.NewCLIError(
-			i18n.T("error_not_configured"),
-			errors.ErrorTypeSystem,
-			errors.ExitGeneralError,
-			false,
-			"Run 'adp config set' to configure your API key and base URL.",
-			nil,
-		)
-		formatterOut.ExitWithError(cliErr)
+	client, _ := initClientWithConfig(mode + " query")
+
+	if len(taskIDs) == 1 {
+		// Single task query: preserve existing behavior
+		querySingleTask(client, taskIDs[0], watch, exportPath, timeout, mode)
+		return
 	}
 
-	client, err := api.NewClient(cfg)
-	if err != nil {
-		cliErr := errors.ClassifyException(err, mode+" query")
-		formatterOut.ExitWithError(cliErr)
-	}
+	// Multi task query: use batch processing
+	concurrency = validateConcurrency(client, concurrency)
 
-	var result map[string]interface{}
 	var queryFunc func(string) (map[string]interface{}, error)
-
 	if mode == "parse" {
 		queryFunc = client.QueryParseTask
 	} else {
 		queryFunc = client.QueryExtractTask
 	}
+
+	jobs := make([]BatchJob, len(taskIDs))
+	for i, id := range taskIDs {
+		name := id
+		if taskNames != nil {
+			if p, ok := taskNames[id]; ok && p != "" {
+				name = p
+			}
+		}
+		jobs[i] = BatchJob{Index: i, Name: name}
+	}
+
+	processFn := func(job BatchJob) (map[string]interface{}, error) {
+		taskID := taskIDs[job.Index]
+		if watch {
+			return client.WaitForTask(taskID, queryFunc, timeout, 2)
+		}
+		return queryFunc(taskID)
+	}
+
+	results := batchProcess(jobs, concurrency, 0, processFn, exportPath)
+	exitWithBatchResults(results)
+}
+
+func querySingleTask(client *api.Client, taskID string, watch bool, exportPath string, timeout int, mode string) {
+	var queryFunc func(string) (map[string]interface{}, error)
+	if mode == "parse" {
+		queryFunc = client.QueryParseTask
+	} else {
+		queryFunc = client.QueryExtractTask
+	}
+
+	var result map[string]interface{}
+	var err error
 
 	if watch {
 		result, err = client.WaitForTask(taskID, queryFunc, timeout, 2)
@@ -612,11 +516,9 @@ func queryTask(taskID string, watch bool, exportPath string, timeout int, mode s
 }
 
 // resolveURLInput checks if the input is a local file path containing URLs or a direct URL.
-// If it's a file, reads and returns the URLs from the file; otherwise returns it as a single URL.
 func resolveURLInput(input string) []string {
 	info, err := os.Stat(input)
 	if err == nil && !info.IsDir() {
-		// Input is an existing file — read URLs from it
 		fh := file.New()
 		urls, err := fh.ReadURLListFile(input)
 		if err != nil {
@@ -643,6 +545,5 @@ func resolveURLInput(input string) []string {
 		}
 		return urls
 	}
-	// Not a file — treat as a single URL
 	return []string{input}
 }

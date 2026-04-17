@@ -80,9 +80,11 @@ func GetFullSchema() map[string]interface{} {
 						"options": []map[string]interface{}{
 							{"name": "app-id", "type": "string", "required": true, "description": i18n.T("option_app_id_parse")},
 							{"name": "async", "type": "boolean", "default": false, "description": i18n.T("option_async")},
+							{"name": "no-wait", "type": "boolean", "default": false, "description": i18n.T("option_no_wait")},
 							{"name": "export", "type": "string", "required": false, "description": i18n.T("option_export")},
 							{"name": "timeout", "type": "integer", "default": 900, "description": i18n.T("option_timeout")},
 							{"name": "concurrency", "type": "integer", "default": 1, "description": i18n.T("option_concurrency")},
+							{"name": "retry", "type": "integer", "default": 0, "description": i18n.T("option_retry")},
 						},
 					},
 					"url": map[string]interface{}{
@@ -92,9 +94,11 @@ func GetFullSchema() map[string]interface{} {
 						"options": []map[string]interface{}{
 							{"name": "app-id", "type": "string", "required": true, "description": i18n.T("option_app_id_parse")},
 							{"name": "async", "type": "boolean", "default": false, "description": i18n.T("option_async")},
+							{"name": "no-wait", "type": "boolean", "default": false, "description": i18n.T("option_no_wait")},
 							{"name": "export", "type": "string", "required": false, "description": i18n.T("option_export")},
 							{"name": "timeout", "type": "integer", "default": 900, "description": i18n.T("option_timeout")},
 							{"name": "concurrency", "type": "integer", "default": 1, "description": i18n.T("option_concurrency")},
+							{"name": "retry", "type": "integer", "default": 0, "description": i18n.T("option_retry")},
 						},
 					},
 					"base64": map[string]interface{}{
@@ -104,20 +108,24 @@ func GetFullSchema() map[string]interface{} {
 						"options": []map[string]interface{}{
 							{"name": "app-id", "type": "string", "required": true, "description": i18n.T("option_app_id_parse")},
 							{"name": "async", "type": "boolean", "default": false, "description": i18n.T("option_async")},
+							{"name": "no-wait", "type": "boolean", "default": false, "description": i18n.T("option_no_wait")},
 							{"name": "export", "type": "string", "required": false, "description": i18n.T("option_export")},
 							{"name": "timeout", "type": "integer", "default": 900, "description": i18n.T("option_timeout")},
 							{"name": "file-name", "type": "string", "default": "document", "description": i18n.T("option_file_name")},
 							{"name": "concurrency", "type": "integer", "default": 1, "description": i18n.T("option_concurrency")},
+							{"name": "retry", "type": "integer", "default": 0, "description": i18n.T("option_retry")},
 						},
 					},
 					"query": map[string]interface{}{
 						"description":   i18n.T("parse_query_title"),
-						"arguments":     []string{"task-id"},
-						"required_args": 1,
+						"arguments":     []string{"task-ids"},
+						"required_args": 0,
 						"options": []map[string]interface{}{
 							{"name": "watch", "type": "boolean", "default": false, "description": i18n.T("option_watch")},
+							{"name": "file", "type": "string", "required": false, "description": i18n.T("option_task_file")},
 							{"name": "export", "type": "string", "required": false, "description": i18n.T("option_export")},
 							{"name": "timeout", "type": "integer", "default": 900, "description": i18n.T("option_watch_timeout")},
+							{"name": "concurrency", "type": "integer", "default": 1, "description": i18n.T("option_concurrency")},
 						},
 					},
 				},
@@ -132,9 +140,11 @@ func GetFullSchema() map[string]interface{} {
 						"options": []map[string]interface{}{
 							{"name": "app-id", "type": "string", "required": true, "description": i18n.T("option_app_id_extract")},
 							{"name": "async", "type": "boolean", "default": false, "description": i18n.T("option_async")},
+							{"name": "no-wait", "type": "boolean", "default": false, "description": i18n.T("option_no_wait")},
 							{"name": "export", "type": "string", "required": false, "description": i18n.T("option_export")},
 							{"name": "timeout", "type": "integer", "default": 900, "description": i18n.T("option_timeout")},
 							{"name": "concurrency", "type": "integer", "default": 1, "description": i18n.T("option_concurrency")},
+							{"name": "retry", "type": "integer", "default": 0, "description": i18n.T("option_retry")},
 						},
 					},
 					"url": map[string]interface{}{
@@ -144,9 +154,11 @@ func GetFullSchema() map[string]interface{} {
 						"options": []map[string]interface{}{
 							{"name": "app-id", "type": "string", "required": true, "description": i18n.T("option_app_id_extract")},
 							{"name": "async", "type": "boolean", "default": false, "description": i18n.T("option_async")},
+							{"name": "no-wait", "type": "boolean", "default": false, "description": i18n.T("option_no_wait")},
 							{"name": "export", "type": "string", "required": false, "description": i18n.T("option_export")},
 							{"name": "timeout", "type": "integer", "default": 900, "description": i18n.T("option_timeout")},
 							{"name": "concurrency", "type": "integer", "default": 1, "description": i18n.T("option_concurrency")},
+							{"name": "retry", "type": "integer", "default": 0, "description": i18n.T("option_retry")},
 						},
 					},
 					"base64": map[string]interface{}{
@@ -156,20 +168,24 @@ func GetFullSchema() map[string]interface{} {
 						"options": []map[string]interface{}{
 							{"name": "app-id", "type": "string", "required": true, "description": i18n.T("option_app_id_extract")},
 							{"name": "async", "type": "boolean", "default": false, "description": i18n.T("option_async")},
+							{"name": "no-wait", "type": "boolean", "default": false, "description": i18n.T("option_no_wait")},
 							{"name": "export", "type": "string", "required": false, "description": i18n.T("option_export")},
 							{"name": "timeout", "type": "integer", "default": 900, "description": i18n.T("option_timeout")},
 							{"name": "file-name", "type": "string", "default": "document", "description": i18n.T("option_file_name")},
 							{"name": "concurrency", "type": "integer", "default": 1, "description": i18n.T("option_concurrency")},
+							{"name": "retry", "type": "integer", "default": 0, "description": i18n.T("option_retry")},
 						},
 					},
 					"query": map[string]interface{}{
 						"description":   i18n.T("extract_query_title"),
-						"arguments":     []string{"task-id"},
-						"required_args": 1,
+						"arguments":     []string{"task-ids"},
+						"required_args": 0,
 						"options": []map[string]interface{}{
 							{"name": "watch", "type": "boolean", "default": false, "description": i18n.T("option_watch")},
+							{"name": "file", "type": "string", "required": false, "description": i18n.T("option_task_file")},
 							{"name": "export", "type": "string", "required": false, "description": i18n.T("option_export")},
 							{"name": "timeout", "type": "integer", "default": 900, "description": i18n.T("option_watch_timeout")},
+							{"name": "concurrency", "type": "integer", "default": 1, "description": i18n.T("option_concurrency")},
 						},
 					},
 				},
