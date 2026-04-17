@@ -10,10 +10,12 @@ agentic-doc-parse-and-extract is an official command-line tool released by Laiye
 
 ### Core Workflow
 1. **Install dependencies**: On first execution, install the ADP CLI tool and dependencies by following the instructions in [references/examples.md](references/examples.md).
-2. **Authentication**: On first execution, run `adp config get` to verify credentials. If no valid configuration exists, prompt the user to provide an API Key.
-3. **Check Application**: On first execution, retrieve the application list via `adp app-id list`. For subsequent executions, prioritize `adp app-id cache` (cached in context). If the cache is unavailable, refresh it by calling `adp app-id list` again.
-4. **Execute**: Run `adp extract url <URL> --app-id <ID>` or `adp parse url <URL> --app-id <ID>`.
-5. **Query**: Check results asynchronously with `adp extract query <task_id>` or `adp parse query <task_id>`.
+2. **Discover commands**: Run `adp schema` to get the machine-readable JSON spec of all commands, parameters, types, and defaults.
+3. **Authentication**: On first execution, run `adp config get` to verify credentials. If no valid configuration exists, prompt the user to provide an API Key.
+4. **Check Application**: On first execution, retrieve the application list via `adp app-id list`. For subsequent executions, prioritize `adp app-id cache` (cached in context). If the cache is unavailable, refresh it by calling `adp app-id list` again.
+5. **Execute**: Run `adp extract url <URL> --app-id <ID>` or `adp parse url <URL> --app-id <ID>`.
+6. **Query**: Check results asynchronously with `adp extract query <task_id>` or `adp parse query <task_id>`.
+7. **Error handling**: When a command fails, parse the stderr JSON to determine error type and recovery action. See [references/error-handling.md](references/error-handling.md).
 
 ### Common Scenarios → Command Mapping
 | User Intent | Recommended Command | Handling Rules |
@@ -21,10 +23,14 @@ agentic-doc-parse-and-extract is an official command-line tool released by Laiye
 | - Read full document content<br>- Parse layout & structure<br>- Convert document to text<br>- Process / analyze full document | `adp parse` | - Sync processing for small files<br>- Async processing (`--async` parameter) for files >20MB or >200 pages |
 | - Extract key fields (amount, date, name, ID, etc.)<br>- Output structured results (JSON/table) | `adp extract` | - Use matched existing app<br>- Create a custom extraction app if the document type is not in the known app list |
 | Batch process multiple files | `adp parse` / `adp extract` (batch mode) | - Directly use the local folder path<br>- Or save the file URL list to a text file, then pass the text file path |
+| Document content available as base64 string | `adp parse base64` / `adp extract base64` | - Use `--file-name` to specify original filename |
 
 ### Quick Reference for Common Commands
 
 ```bash
+# Command Discovery (for Agent introspection)
+adp schema
+
 # Configuration Check
 adp config get
 
@@ -37,9 +43,14 @@ adp extract url <file URL> --app-id <app_id>
 # Document Parsing (Long Document)
 adp parse url <file URL> --app-id <app_id>
 
+# Base64 Input
+adp extract base64 <base64_string> --app-id <app_id> --file-name invoice.pdf
+adp parse base64 <base64_string> --app-id <app_id> --file-name document.pdf
+
 # Asynchronous Query
 adp extract query <task_id>
 adp parse query <task_id>
+adp parse query <task_id1> <task_id2> --watch  # batch query with auto-poll
 
 # Batch Processing
 adp extract local <folder path> --app-id <app_id> --export <folder path> --concurrency 2
@@ -52,6 +63,9 @@ adp parse local <folder path> --app-id <app_id> --export <folder path> --concurr
 - **Batch Processing**: Processes multiple documents via `url <URL list file path>` or `local <folder path>` in a single run, without looped invocations. Default `--concurrency 2`.
 - **Local Cache**: Store commonly used APP_IDs in environment variables or configuration files.
 - **Priority Extraction**: If only key information needs to be extracted, use `extract` instead of `parse` (faster).
+- **Use --json flag**: Always use `--json` to get machine-readable output for reliable parsing.
+- **Use --retry for batch**: Set `--retry 2` for batch processing to auto-recover from transient failures.
+- **Use --timeout for large files**: Increase `--timeout` for files >20MB. Default is 900s.
 
 ---
 
@@ -83,8 +97,8 @@ For details, see [references/examples.md](references/examples.md)
 
    | Region | Login Address | API Base URL |
    |-----|----------|--------------|
-   | Chinese Mainland | [https://adp.laiye.com/](https://adp.laiye.com/) | `https://adp.laiye.com/` |
-   | Overseas Region | [https://adp-global.laiye.com/](https://adp-global.laiye.com/) | `https://adp-global.laiye.com/` |
+   | Chinese Mainland | [https://adp.laiye.com/](https://adp.laiye.com/?utm_source=github) | `https://adp.laiye.com/` |
+   | Overseas Region | [https://adp-global.laiye.com/](https://adp-global.laiye.com/?utm_source=github) | `https://adp-global.laiye.com/` |
 
    ### 2. Get API Key after registration/login
    New users need to register an ADP account first, and after registration, they can get 100 free credits/month
@@ -151,7 +165,15 @@ For examples of commands and responses, see [references/examples.md](references/
 
 ## Complete Command List
 
-For a complete list of all available commands, see [references/commands.md](references/commands.md)
+For a complete list of all available commands with full parameter specs, see [references/commands.md](references/commands.md)
+
+## Response Schema Reference
+
+For the output structure of each command (including batch processing output mechanism), see [references/response-schema.md](references/response-schema.md)
+
+## Error Handling Guide
+
+For error codes, types, and Agent auto-recovery strategies, see [references/error-handling.md](references/error-handling.md)
 
 ---
 

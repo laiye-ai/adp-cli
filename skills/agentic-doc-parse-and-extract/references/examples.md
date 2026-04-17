@@ -395,6 +395,186 @@ adp extract query <task_id>
 }
 ```
 
+## 9. Batch Processing Output
+
+When processing multiple files, the CLI creates an output directory and writes individual result files.
+
+### Sync batch output
+
+```bash
+adp extract local ./invoices/ --app-id YOUR_APP_ID --export ./results --concurrency 2
+```
+
+**stdout output (summary JSON):**
+```json
+{
+  "total": 3,
+  "success": 2,
+  "failed": 1,
+  "output_dir": "/home/user/results",
+  "files": [
+    {"input": "invoice1.pdf", "output": "invoice1.pdf.json", "status": "success"},
+    {"input": "invoice2.pdf", "output": "invoice2.pdf.json", "status": "success"},
+    {"input": "corrupted.pdf", "output": "corrupted.pdf.error.json", "status": "failed", "error": "Bad request: unsupported file format"}
+  ]
+}
+```
+
+**Output directory structure:**
+```
+results/
+  ├── invoice1.pdf.json          # Full extract result (same format as single-file response)
+  ├── invoice2.pdf.json
+  ├── corrupted.pdf.error.json   # {"input": "corrupted.pdf", "status": "failed", "error": "..."}
+  └── _summary.json              # Same content as stdout summary
+```
+
+**Agent must:** Read `output_dir` from summary, then read each `{output_dir}/{filename}.json` to get individual results.
+
+### Async batch with --no-wait
+
+```bash
+adp extract local ./invoices/ --app-id YOUR_APP_ID --async --no-wait --export tasks.json
+```
+
+**Output (tasks.json):**
+```json
+[
+  {"path": "invoice1.pdf", "task_id": "abc123def456"},
+  {"path": "invoice2.pdf", "task_id": "ghi789jkl012"}
+]
+```
+
+**Later, query all tasks:**
+```bash
+adp extract query --file tasks.json --watch --export ./results
+```
+
+---
+
+## 10. Error Scenario Examples
+
+### Authentication error (API Key not configured)
+
+```bash
+adp extract url https://example.com/invoice.pdf --app-id YOUR_APP_ID --json
+```
+
+**stderr output:**
+```json
+{
+  "type": "AUTH_ERROR",
+  "message": "Authentication error: unauthorized",
+  "fix": "Check your API key is correct and has not expired.",
+  "retryable": false,
+  "details": {"context": "extract"}
+}
+```
+**Exit code:** 4
+
+**Agent recovery:** Run `adp config get` to check, then prompt user for API Key.
+
+### Credit balance insufficient
+
+```bash
+adp credit --json
+```
+
+```json
+{
+  "credit_balance": 0.0
+}
+```
+
+**Agent recovery:** Report balance to user. Billing: parse 0.5/page, extract 1-1.5/page.
+
+### Invalid app-id
+
+```bash
+adp extract url https://example.com/invoice.pdf --app-id invalid_id --json
+```
+
+**stderr output:**
+```json
+{
+  "type": "RESOURCE_ERROR",
+  "message": "Resource not found: app not found",
+  "fix": "Check the resource ID or path is correct.",
+  "retryable": false,
+  "details": {"context": "extract"}
+}
+```
+**Exit code:** 3
+
+**Agent recovery:** Run `adp app-id list` to get valid app IDs.
+
+### Unsupported file format
+
+```bash
+adp parse local ./readme.txt --app-id YOUR_APP_ID --json
+```
+
+**stderr output:**
+```json
+{
+  "type": "PARAM_ERROR",
+  "message": "Parameter error: unsupported file type",
+  "fix": "Check the input parameters are correct.",
+  "retryable": false,
+  "details": {"context": "parse"}
+}
+```
+**Exit code:** 2
+
+**Agent recovery:** Check file extension. Supported: .jpg, .jpeg, .png, .bmp, .tiff, .tif, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx
+
+### Network timeout
+
+```bash
+adp parse url https://example.com/large-doc.pdf --app-id YOUR_APP_ID --json
+```
+
+**stderr output:**
+```json
+{
+  "type": "NETWORK_ERROR",
+  "message": "Network error: i/o timeout",
+  "fix": "Check your network connection and try again.",
+  "retryable": true,
+  "details": {"context": "parse"}
+}
+```
+**Exit code:** 1
+
+**Agent recovery:** Retry with `--timeout 1800`, or switch to `--async` mode for large files.
+
+### Async task not yet complete
+
+```bash
+adp parse query abc123def456 --json
+```
+
+```json
+{
+  "task_id": "abc123def456",
+  "status": "PROCESSING"
+}
+```
+
+**Agent recovery:** Wait and query again. Use `--watch` flag to auto-poll until completion.
+
+### Batch partial failure
+
+```bash
+adp extract local ./mixed_docs/ --app-id YOUR_APP_ID --export ./results --json
+```
+
+**Exit code:** 6 (partial failure)
+
+**Agent recovery:** Parse the summary JSON, handle successful files normally, report or retry failed files individually.
+
+---
+
 ## Description of Response Fields 
 
 ### Document Extraction Response Key Fields
