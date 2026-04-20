@@ -19,7 +19,17 @@
 
 `.jpg` `.jpeg` `.png` `.bmp` `.tiff` `.tif` `.pdf` `.doc` `.docx` `.xls` `.xlsx` `.ppt` `.pptx`（单文件最大 50MB）
 
-## 安装
+## Agent 集成
+
+如果你是 AI Agent，安装 ADP skills（自动包含 CLI 安装）：
+
+```bash
+npx skills add https://github.com/laiye-ai/adp-cli -y -g
+```
+
+Skills 会自动引导 CLI 安装、认证配置和使用。
+
+## 安装（手动）
 
 ```bash
 # npm（推荐）
