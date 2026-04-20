@@ -19,7 +19,17 @@ Official command-line tool for [Laiye ADP (Agentic Document Processing)](https:/
 
 `.jpg` `.jpeg` `.png` `.bmp` `.tiff` `.tif` `.pdf` `.doc` `.docx` `.xls` `.xlsx` `.ppt` `.pptx` (max 50MB per file)
 
-## Install
+## Agent Integration
+
+If you are an AI agent, install the ADP skills (includes CLI auto-install):
+
+```bash
+npx skills add https://github.com/laiye-ai/adp-cli -y -g
+```
+
+The skills package will guide you through CLI installation, authentication, and usage automatically.
+
+## Install (Manual)
 
 ```bash
 # npm (recommended)
