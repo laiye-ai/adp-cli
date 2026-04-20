@@ -2,7 +2,9 @@
 
 ## 1. Install ADP CLI
 
-Choose the appropriate installation method based on your environment:
+First check if ADP CLI is already installed by running `adp version`. If installed, skip to step 2.
+
+If not installed, choose the appropriate method:
 
 ```bash
 # Method 1: npm (recommended, works on all platforms, China-friendly with npmmirror)
@@ -17,11 +19,12 @@ Invoke-WebRequest -Uri "https://raw.githubusercontent.com/laiye-ai/adp-cli/main/
 ```
 
 **Agent installation logic:**
-1. Check if `npm` is available → use Method 1
-2. If no `npm`, detect OS:
+1. Run `adp version` — if it succeeds, CLI is already installed, skip installation
+2. If not installed, check if `npm` is available → use Method 1
+3. If no `npm`, detect OS:
    - Linux / macOS → use Method 2
    - Windows → use Method 3
-3. Verify installation: `adp version`
+4. Verify installation: `adp version`
 
 ## 2. Configure API Key and Base URL
 
