@@ -1,11 +1,27 @@
 # ADP CLI Sample code and response
 
-## 1. Obtain the installation package
+## 1. Install ADP CLI
 
-  ```bash
-  # via npm (all platforms)
-  npm install -g @laiye-adp/agentic-doc-parse-and-extract-cli
-  ```
+Choose the appropriate installation method based on your environment:
+
+```bash
+# Method 1: npm (recommended, works on all platforms, China-friendly with npmmirror)
+npm install -g @laiye-adp/agentic-doc-parse-and-extract-cli --registry=https://registry.npmmirror.com/ || npm install -g @laiye-adp/agentic-doc-parse-and-extract-cli
+export PATH="$(npm prefix -g)/bin:$PATH"
+
+# Method 2: Shell script (Linux / macOS, if npm is not available)
+curl -fsSL https://raw.githubusercontent.com/laiye-ai/adp-cli/main/scripts/adp-init.sh | bash
+
+# Method 3: PowerShell script (Windows, if npm is not available)
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/laiye-ai/adp-cli/main/scripts/adp-init.ps1" -OutFile "$env:TEMP\adp-init.ps1"; & "$env:TEMP\adp-init.ps1"
+```
+
+**Agent installation logic:**
+1. Check if `npm` is available → use Method 1
+2. If no `npm`, detect OS:
+   - Linux / macOS → use Method 2
+   - Windows → use Method 3
+3. Verify installation: `adp version`
 
 ## 2. Configure API Key and Base URL
 
