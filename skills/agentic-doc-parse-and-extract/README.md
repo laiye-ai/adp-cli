@@ -11,7 +11,7 @@ agentic_doc_parse_and_extract is the official command-line tool released by Laiy
 
 ## 🚀 About Laiye ADP
 
-ADP is Laiye's ** intelligent agent document processing product (Agentic Document Processing, referred to as ADP) ** , based on the general understanding ability of large models, without relying on rules and annotations, with the general understanding ability of multi-language, MultiModal Machine Learning, and multi-scene; autonomous planning and execution of intelligent agents, able to understand task goals, autonomous planning steps, invoke tools, and complete complex tasks; end-to-end business automation, from document input to business decision-making to human-machine collaboration, forming a complete closed loop.
+ADP is Laiye's **intelligent agent document processing product (Agentic Document Processing, referred to as ADP)** , based on the general understanding ability of large models, without relying on rules and annotations, with the general understanding ability of multi-language, MultiModal Machine Learning, and multi-scene; autonomous planning and execution of intelligent agents, able to understand task goals, autonomous planning steps, invoke tools, and complete complex tasks; end-to-end business automation, from document input to business decision-making to human-machine collaboration, forming a complete closed loop.
 
 **agentic-doc-parse-and-extract** is the official open-source CLI tool of ADP, supporting both manual terminal invocation and automatic invocation via AI Skill. With a single command, it can accomplish: structured document parsing + intelligent extraction of key fields, covering all scenarios including invoices, orders, certificates, bills, and general documents, outputting standard JSON, and seamlessly integrating with automation and AI workflows.
 
@@ -43,17 +43,19 @@ agentic-doc-parse-and-extract focuses on intelligent processing of the entire do
 
 ```
 agentic-doc-parse-and-extract/
-├── skill.md          # Skill configuration and invocation instructions
-├── README.md         # Introduction to Laiye ADP product and instructions for CLI download and invocation
-├── Reference/        # Parameter enumeration, error codes, and JSON return instructions
-    ├── examples.md   # Sample code for invocation and return with parameter explanations
-    ├── commands.md   # List of all commands
-├── License           # License
+├── skill.md                  # Skill configuration and invocation instructions
+├── README.md                 # Introduction to Laiye ADP product and instructions for CLI download and invocation
+├── references/               # Parameter enumeration, error codes, and JSON return instructions
+    ├── examples.md           # Sample code for invocation and return with parameter explanations
+    ├── commands.md           # List of all commands
+    ├── response-schema.md    # Return parameter description
+    ├── error-handling.md     # Mistakes and what to do about them
+├── License                   # License authorization
 ```
 
 ## 📋 API Key
 ### Get API Key
-1. Visit [ADP China Region URL]( https://adp.laiye.com/?utm_source=github) , [ADP Global Region URL]( https://adp-global.laiye.com/?utm_source=github)
+1. Visit [ADP China Region URL](https://adp.laiye.com/?utm_source=github), [ADP Global Region URL](https://adp-global.laiye.com/?utm_source=github)
 2. Register a new account (new users get 100 free credits per month)
 
 ## 💻 Environment and Installation
@@ -67,9 +69,16 @@ agentic-doc-parse-and-extract/
 
 ### Get the Installation Package
 
-  ```
-  # Linux & Mac
-  curl -fsSL https://raw.githubusercontent.com/Laiye-ADP/adp-cli/master/scripts/adp-init.sh | bash
+ ```bash
+  # Method 1: npm (recommended, works on all platforms, China-friendly with npmmirror)
+  npm install -g @laiye-adp/agentic-doc-parse-and-extract-cli --registry=https://registry.npmmirror.com/ || npm install -g @laiye-adp/agentic-doc-parse-and-extract-cli
+  export PATH="$(npm prefix -g)/bin:$PATH"
+
+  # Method 2: Shell script (Linux / macOS, if npm is not available)
+  curl -fsSL https://raw.githubusercontent.com/laiye-ai/adp-cli/main/scripts/adp-init.sh | bash
+
+  # Method 3: PowerShell script (Windows, if npm is not available)
+  Invoke-WebRequest -Uri "https://raw.githubusercontent.com/laiye-ai/adp-cli/main/scripts/adp-init.ps1" -OutFile "$env:TEMP\adp-init.ps1"; & "$env:TEMP\adp-init.ps1"
   ```
 
 ---
@@ -78,13 +87,13 @@ ADP CLI provides pre-compiled executable files that can be used directly without
 
 #### Installation on Windows Systems
 - Step 1: Download the executable file
-  Windows: Download the [adp.exe]( https://laiye-devops.oss-cn-beijing.aliyuncs.com/release/adp/cli/v1.10.0/win/adp.exe) executable file
+  Windows: Download the [adp.exe](https://laiye-devops.oss-cn-beijing.aliyuncs.com/release/adp/cli/v1.10.0/win/adp.exe) executable file
 
 - Step 2: Run the executable file
   Run in the command prompt:
     ```
     # Run in the current directory
-    app.exe --help
+    adp.exe --help
 
     # Or add it to the PATH and use it directly
     adp --help
@@ -101,7 +110,7 @@ ADP CLI provides pre-compiled executable files that can be used directly without
 - Step 4: Verify the installation
     ```
     # Check version information
-    app.exe --version
+    adp.exe --version
 
     # Or if added to PATH
     adp --version
@@ -110,15 +119,15 @@ ADP CLI provides pre-compiled executable files that can be used directly without
 
 #### Linux System Installation
 - Step 1: Download the executable file
-  Linux/macOS: Download the corresponding platform [binary file] (  https://laiye-devops.oss-cn-beijing.aliyuncs.com/release/adp/cli/v1.10.0/linux/adp )
+  Linux/macOS: Download the corresponding platform [binary file](https://laiye-devops.oss-cn-beijing.aliyuncs.com/release/adp/cli/v1.10.0/linux/adp)
 
 - Step 2: Set executable permissions
-"" "
-#Set executable permissions
-Chmod + x app
+    ```
+    # Set executable permissions
+    chmod +x adp
 
-#Run tests
-./app --help
+    # Run tests
+    ./adp --help
     ```
 - Step 3: Add to the PATH environment variable (recommended)
 To use the adp command from any location, it is recommended to choose one of the following two methods:
@@ -127,11 +136,11 @@ To use the adp command from any location, it is recommended to choose one of the
     export PATH=$PATH:$(pwd)
 
     # Method 2: Permanent addition (add to ~/.bashrc or ~/.zshrc)
-    echo 'export PATH=$PATH:/path/to/app' >> ~/.bashrc
+    echo 'export PATH=$PATH:/path/to/adp' >> ~/.bashrc
     source ~/.bashrc
 
     # Method 3: Create a symbolic link (requires sudo privileges)
-    sudo ln -s $(pwd)/app /usr/local/bin/adp
+    sudo ln -s $(pwd)/adp /usr/local/bin/adp
 
     # Verification
     adp --version
@@ -139,7 +148,7 @@ To use the adp command from any location, it is recommended to choose one of the
 - Step 4: Verify the installation
     ```
     # Use relative path
-   ./app --version
+   ./adp --version
 
     # Or if added to PATH
     adp --version
@@ -148,15 +157,15 @@ To use the adp command from any location, it is recommended to choose one of the
 ---
 #### macOS System Installation
 - Step 1: Download the executable file
-  Linux/macOS: Download the corresponding platform [binary file] (  https://laiye-devops.oss-cn-beijing.aliyuncs.com/release/adp/cli/v1.10.0/linux/adp )
+  Linux/macOS: Download the corresponding platform [binary file](https://laiye-devops.oss-cn-beijing.aliyuncs.com/release/adp/cli/v1.10.0/linux/adp)
 
 - Step 2: Set executable permissions
-"" "
-#Set executable permissions
-Chmod + x app
+    ```
+    # Set executable permissions
+    chmod +x adp
 
-#Run tests
-./app --help
+    # Run tests
+    ./adp --help
     ```
 - Step 3: Add to the PATH environment variable (recommended)
   To use the adp command from any location, it is recommended to choose one of the following two methods:
@@ -165,11 +174,11 @@ Chmod + x app
     export PATH=$PATH:$(pwd)
 
     # Method 2: Permanent addition (add to ~/.zshrc)
-    echo 'export PATH=$PATH:/path/to/app' >> ~/.zshrc
+    echo 'export PATH=$PATH:/path/to/adp' >> ~/.zshrc
     source ~/.zshrc
 
     # Method 3: Create a symbolic link (requires sudo privileges)
-    sudo ln -s $(pwd)/app /usr/local/bin/adp
+    sudo ln -s $(pwd)/adp /usr/local/bin/adp
 
     # Verify
     adp --version
@@ -177,13 +186,13 @@ Chmod + x app
 - Step 4: Verify Installation
     ```
     # Use relative path
-   ./app --version
+   ./adp --version
 
     # Or if added to PATH
     adp --version
     ```
 
-## ✨ Core Features
+## ✨ Product & Technical Highlights
 
 ### 📦 Out Of The Box Product
 
@@ -222,8 +231,8 @@ Chmod + x app
     | Custom Extraction | 1 point/page |
 
 - **Asset Recharge:**  You can directly log in to the ADP Portal to recharge assets. We provide independent Public Cloud access addresses for domestic and international users, which need to be configured separately by region. Accessing from a nearby location can better ensure high-speed and stable invocation across the network.
-  - Users in Chinese Mainland [Log in]( https://adp.laiye.com/),
-  - Users outside Chinese Mainland [Log in]( https://adp-global.laiye.com/)
+  - Users in Chinese Mainland [Log in](https://adp.laiye.com/?utm_source=github)
+  - Users outside Chinese Mainland [Log in](https://adp-global.laiye.com/?utm_source=github)
 
  If you encounter any issues with payment, please contact the support email: 📧 global_product@laiye.com
 
@@ -241,8 +250,8 @@ New users can receive **100 free credits** per month after registration, allowin
 - **CLI Documentation**: [ADP CLI User Guide](https://laiye-tech.feishu.cn/wiki/YIaawiK2DimisZk5KfDc8a8cnLh)
 - **API Documentation**: [OpenAPI User Guide](https://laiye-tech.feishu.cn/wiki/S1t2wYR04ivndKkMDxxcp2SFnKd?from=from_copylink)
 - **User Guide**: [Public Cloud Operation Manual](https://laiye-tech.feishu.cn/wiki/OfexwgVUQiOpEek4kO7c7NEJnAe)
-- **Problem Feedback**:  global_product@laiye.com
-- **Official Website**: [Laiye Technology](https://laiye.com)
+- **Problem Feedback**: [GitHub Issues](https://github.com/laiye-ai/adp-cli/issues) | global_product@laiye.com
+- **Official Website**: [Laiye Technology](https://laiye.com/en/)
 
 ---
 

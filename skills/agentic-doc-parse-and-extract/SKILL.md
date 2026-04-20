@@ -59,11 +59,10 @@ adp parse local <folder path> --app-id <app_id> --export <folder path> --concurr
 
 ## Performance Optimization Suggestions
 - **Reuse APP_ID**: Cache it in the context after one query to avoid calling `app-id list` every time.
-- **Synchronization First**: For small files (<20MB), prioritize using synchronous calls to avoid asynchronous polling.
+- **Sync First**: For small files (<20MB), prioritize using synchronous calls to avoid asynchronous polling.
 - **Batch Processing**: Processes multiple documents via `url <URL list file path>` or `local <folder path>` in a single run, without looped invocations. Default `--concurrency 2`.
 - **Local Cache**: Store commonly used APP_IDs in environment variables or configuration files.
 - **Priority Extraction**: If only key information needs to be extracted, use `extract` instead of `parse` (faster).
-- **Use --json flag**: Always use `--json` to get machine-readable output for reliable parsing.
 - **Use --retry for batch**: Set `--retry 2` for batch processing to auto-recover from transient failures.
 - **Use --timeout for large files**: Increase `--timeout` for files >20MB. Default is 900s.
 
@@ -86,12 +85,12 @@ adp parse local <folder path> --app-id <app_id> --export <folder path> --concurr
 
 ## Detailed Usage Steps
 
-## Step 1: Obtain the Installation Package
+### Step 1: Obtain the Installation Package
 For details, see [references/examples.md](references/examples.md)
 
-## Step 2: Obtain and Configure API Key
+### Step 2: Obtain and Configure API Key
 
-   ### 1. Access the ADP Portal to Obtain Credentials
+   #### 1. Access the ADP Portal to Obtain Credentials
 
    We provide independent Public Cloud access addresses for domestic and international users, which need to be configured separately by region. Accessing nearby can better ensure high-speed and stable calls across the network.
 
@@ -100,24 +99,24 @@ For details, see [references/examples.md](references/examples.md)
    | Chinese Mainland | [https://adp.laiye.com/](https://adp.laiye.com/?utm_source=github) | `https://adp.laiye.com/` |
    | Overseas Region | [https://adp-global.laiye.com/](https://adp-global.laiye.com/?utm_source=github) | `https://adp-global.laiye.com/` |
 
-   ### 2. Get API Key after registration/login
+   #### 2. Get API Key after registration/login
    New users need to register an ADP account first, and after registration, they can get 100 free credits/month
    - After logging in, click on the personal avatar, and you can directly access the `API_Key` entry.
    
-   ### 3. Complete the authentication configuration
+   #### 3. Complete the authentication configuration
    For details, see [references/examples.md](references/examples.md)
    
-   ### 4. Verify the configuration
+   #### 4. Verify the configuration
    For details, see [references/examples.md](references/examples.md)
    
    **Notes**:
    1. If API Key and API Base URL have been configured, the configuration information needs to be stored in environment variables to avoid uploading configuration items every time they are used.
    2. If API Key and API Base URL have not been configured yet, they need to be configured according to the above steps.
 
-## Step 3: Upload Documents
+### Step 3: Upload Documents
 After completing the authentication of the API Key, guide the user to upload local files or specify the file URL. After the user uploads the document, they can query the supported application scope of ADP and select the appropriate application for document parsing and extraction. If no suitable application is found, they can choose to create a custom extraction application, configure exclusive fields and parsing modes to meet the personalized document processing requirements.
 
-## Step 4: Query Available Applications 
+### Step 4: Query Available Applications 
 This function is used to query the built-in applications under the user's account (such as invoices/receipts, orders, common cards and certificates in China region, etc. which are standardized documents). Based on the `app-label`, you can assist in filtering the suitable application IDs. If no suitable application is found, you can choose to create a custom extraction application, configure specific fields and parsing modes to meet the personalized document processing requirements.
 
 **Notes**:
@@ -126,13 +125,13 @@ This function is used to query the built-in applications under the user's accoun
 For detailed examples of commands and responses, see [references/examples.md](references/examples.md).
 
 
-## Step 5: Add custom extraction application
+### Step 5: Add custom extraction application
 
 Support creating custom extraction applications, and independently add business-specific extraction fields as needed, and improve the detailed description of each field; the system will accurately identify the document content based on the configured fields and definitions, and complete customized information extraction for personalized documents and non-standard forms.
 
 For example commands, responses, and detailed parameter descriptions, please refer to [references/examples.md](references/examples.md) 
 
-## Step 6: Execute Document Processing
+### Step 6: Execute Document Processing
 
 ### Single Document Parsing
 
@@ -190,8 +189,8 @@ When using ADP output, always present the returned data as-is. Do not modify, ad
 7. **Billing Rules**:
    - Document parsing: 0.5 credits per page
    - Invoice/receipt extraction: 1.5 credits per page
-   - Order extraction: 1.5 credits/page
-   - Custom extraction: 1 credit/page
+   - Order extraction: 1.5 credits per page
+   - Custom extraction: 1 credit per page
 8. **App ID Reuse**: The app ID used by the user can be remembered for direct use next time, eliminating the need to enter the app_id after each query. The app ID under each user is unique and fixed; unless the user deletes the app, the app_id will not change, and the previously queried app_id can be directly used for document processing calls.
 
 ---
@@ -200,7 +199,7 @@ When using ADP output, always present the returned data as-is. Do not modify, ad
 - **CLI Documentation**: [ADP CLI User Guide](https://laiye-tech.feishu.cn/wiki/YIaawiK2DimisZk5KfDc8a8cnLh)
 - **API Documentation**: [OpenAPI User Guide](https://laiye-tech.feishu.cn/wiki/S1t2wYR04ivndKkMDxxcp2SFnKd)
 - **User Guide**: [Public Cloud Operation Manual](https://laiye-tech.feishu.cn/wiki/OfexwgVUQiOpEek4kO7c7NEJnAe)
-- **Problem Feedback**: global_product@laiye.com
+- **Problem Feedback**: [GitHub Issues](https://github.com/laiye-ai/adp-cli/issues) | global_product@laiye.com
 - **Official Website**: [Laiye Technology](https://laiye.com)
 
 ---
