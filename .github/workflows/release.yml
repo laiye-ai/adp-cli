@@ -100,7 +100,14 @@ jobs:
           for pkg_dir in npm/adp-cli-*; do
             echo "Publishing ${pkg_dir}..."
             cd "$pkg_dir"
-            npm publish --access public $TAG_FLAG
+            if ! npm publish --access public $TAG_FLAG 2>&1 | tee /tmp/npm-publish.log; then
+              if grep -q "You cannot publish over the previously published versions" /tmp/npm-publish.log; then
+                echo "Skipped ${pkg_dir} (already published)"
+              else
+                echo "Failed to publish ${pkg_dir}"
+                exit 1
+              fi
+            fi
             cd ../..
           done
         env:
@@ -110,11 +117,19 @@ jobs:
         run: |
           VERSION_NO_V=${{ steps.version.outputs.VERSION_NO_V }}
 
-          # Update optionalDependencies versions to match
-          sed -i "s/\"1.0.0\"/\"${VERSION_NO_V}\"/g" package.json
-
-          # Set package version
+          # Set package version first (before sed, so "1.0.0" in version field is still intact)
           npm version "$VERSION_NO_V" --no-git-tag-version
+
+          # Update optionalDependencies versions to match
+          # Use node to only update optionalDependencies, not the version field
+          node -e "
+            const fs = require('fs');
+            const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+            for (const dep of Object.keys(pkg.optionalDependencies || {})) {
+              pkg.optionalDependencies[dep] = '${VERSION_NO_V}';
+            }
+            fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');
+          "
 
           if [[ "$VERSION_NO_V" == *"-"* ]]; then
             npm publish --access public --tag beta
