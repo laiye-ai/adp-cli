@@ -24,7 +24,7 @@ Official command-line tool for [Laiye ADP (Agentic Document Processing)](https:/
 If you are an AI agent, install the ADP skills (includes CLI auto-install):
 
 ```bash
-npx skills add https://github.com/laiye-ai/adp-cli -y -g
+npx skills add https://github.com/laiye-ai/adp-cli --skill agentic-doc-parse-and-extract -y -g
 ```
 
 The skills package will guide you through CLI installation, authentication, and usage automatically.
