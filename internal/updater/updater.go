@@ -3,7 +3,6 @@ package updater
 import (
 	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -24,9 +23,6 @@ type cacheFile struct {
 	LatestVersion string  `json:"latest_version"`
 }
 
-type githubRelease struct {
-	TagName string `json:"tag_name"`
-}
 
 // CheckAndNotify runs a version check asynchronously.
 // Returns a channel that yields the update message (or empty string if no update).
@@ -63,7 +59,7 @@ func CheckAndNotify(currentVersion string, quiet bool, jsonMode bool) <-chan str
 		msg := fmt.Sprintf(
 			"\n  ╔══════════════════════════════════════════════════════════╗\n"+
 				"  ║  %s%s║\n"+
-				"  ║  Run: npm update -g agentic-doc-parse-and-extract-cli   ║\n"+
+				"  ║  Run: npm update -g @laiye-adp/agentic-doc-parse-...  ║\n"+
 				"  ╚══════════════════════════════════════════════════════════╝\n",
 			updateLine, pad,
 		)
@@ -127,10 +123,19 @@ func writeCache(path string, latestVersion string) {
 }
 
 func fetchLatestVersion() (string, error) {
-	url := fmt.Sprintf("https://api.github.com/repos/%s/releases/latest", repo)
+	// Use releases/latest/download/ and extract version from the 302 redirect URL.
+	// This avoids the GitHub API entirely (no rate-limit, no auth needed).
+	probeURL := fmt.Sprintf("https://github.com/%s/releases/latest/download/adp-%s-%s%s",
+		repo, mapOS(runtime.GOOS), mapArch(runtime.GOARCH), archiveExt())
 
-	client := &http.Client{Timeout: requestTimeout}
-	req, err := http.NewRequest("GET", url, nil)
+	client := &http.Client{
+		Timeout: requestTimeout,
+		CheckRedirect: func(req *http.Request, via []*http.Request) error {
+			return http.ErrUseLastResponse // don't follow redirects
+		},
+	}
+
+	req, err := http.NewRequest("HEAD", probeURL, nil)
 	if err != nil {
 		return "", err
 	}
@@ -140,27 +145,52 @@ func fetchLatestVersion() (string, error) {
 	if err != nil {
 		return "", err
 	}
-	defer resp.Body.Close()
+	resp.Body.Close()
 
 	if resp.StatusCode == http.StatusNotFound {
-		return "", nil // private repo or no releases yet, treat as "no update"
+		return "", nil
 	}
 
-	if resp.StatusCode != http.StatusOK {
-		return "", fmt.Errorf("github api returned %d", resp.StatusCode)
+	// 301/302 Location: .../download/v1.2.3/adp-linux-x64.tar.gz
+	loc := resp.Header.Get("Location")
+	if loc == "" {
+		return "", fmt.Errorf("no redirect from releases/latest")
 	}
 
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return "", err
+	// Extract version from path: .../download/{version}/...
+	parts := strings.Split(loc, "/")
+	for i, p := range parts {
+		if p == "download" && i+1 < len(parts) {
+			return parts[i+1], nil
+		}
 	}
 
-	var release githubRelease
-	if err := json.Unmarshal(body, &release); err != nil {
-		return "", err
-	}
+	return "", fmt.Errorf("could not extract version from redirect URL")
+}
 
-	return release.TagName, nil
+func archiveExt() string {
+	if runtime.GOOS == "windows" {
+		return ".zip"
+	}
+	return ".tar.gz"
+}
+
+func mapArch(goarch string) string {
+	switch goarch {
+	case "amd64":
+		return "x64"
+	default:
+		return goarch // arm64 stays arm64
+	}
+}
+
+func mapOS(goos string) string {
+	switch goos {
+	case "windows":
+		return "win32"
+	default:
+		return goos // linux, darwin stay as-is
+	}
 }
 
 // isNewer returns true if candidate is strictly newer than current.

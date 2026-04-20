@@ -1,5 +1,5 @@
 {
-  "name": "agentic-doc-parse-and-extract-cli",
+  "name": "@laiye-adp/agentic-doc-parse-and-extract-cli",
   "version": "1.0.0",
   "description": "Official CLI for Laiye ADP (Agentic Document Processing) - document parsing and intelligent extraction",
   "keywords": [
@@ -21,11 +21,11 @@
   },
   "license": "SEE LICENSE IN license.md",
   "bin": {
-    "adp": "./bin/adp"
+    "adp": "bin/adp"
   },
-  "scripts": {
-    "postinstall": "node scripts/postinstall.js"
-  },
+  "files": [
+    "bin/adp"
+  ],
   "engines": {
     "node": ">=14.0.0"
   },
@@ -38,8 +38,12 @@
     "x64",
     "arm64"
   ],
-  "files": [
-    "bin/.gitkeep",
-    "scripts/postinstall.js"
-  ]
+  "optionalDependencies": {
+    "@laiye-adp/adp-cli-linux-x64": "1.0.0",
+    "@laiye-adp/adp-cli-linux-arm64": "1.0.0",
+    "@laiye-adp/adp-cli-darwin-x64": "1.0.0",
+    "@laiye-adp/adp-cli-darwin-arm64": "1.0.0",
+    "@laiye-adp/adp-cli-win32-x64": "1.0.0",
+    "@laiye-adp/adp-cli-win32-arm64": "1.0.0"
+  }
 }

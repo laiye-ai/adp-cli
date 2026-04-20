@@ -1,0 +1,13 @@
+{
+  "name": "@laiye-adp/adp-cli-darwin-arm64",
+  "version": "1.0.0",
+  "description": "ADP CLI binary for darwin arm64",
+  "os": ["darwin"],
+  "cpu": ["arm64"],
+  "files": ["bin/adp"],
+  "license": "SEE LICENSE IN license.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/laiye-ai/adp-cli.git"
+  }
+}

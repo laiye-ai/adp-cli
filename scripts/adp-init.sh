@@ -10,6 +10,16 @@ REPO="laiye-ai/adp-cli"
 BINARY_NAME="adp"
 INSTALL_DIR="/usr/local/bin"
 
+# ─── Download mirrors (proxy first, GitHub fallback) ─────────────────────────
+# Support custom version: ADP_VERSION=v1.2.3 bash adp-init.sh
+ADP_VERSION="${ADP_VERSION:-latest}"
+if [[ "$ADP_VERSION" == "latest" ]]; then
+  GITHUB_URL="https://github.com/${REPO}/releases/latest/download"
+else
+  GITHUB_URL="https://github.com/${REPO}/releases/download/${ADP_VERSION}"
+fi
+MIRROR_URL="https://ghproxy.net/${GITHUB_URL}"
+
 # ─── Color output ─────────────────────────────────────────────────────────────
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -46,39 +56,80 @@ detect_arch() {
   esac
 }
 
-# ─── Get latest version from GitHub ──────────────────────────────────────────
-get_latest_version() {
-  local version
-  version=$(curl -fsSL "https://api.github.com/repos/${REPO}/releases/latest" \
-    | grep '"tag_name"' \
-    | sed -E 's/.*"tag_name": *"([^"]+)".*/\1/')
-  if [[ -z "$version" ]]; then
-    err "Failed to fetch latest version from GitHub."
-    exit 1
+
+# ─── Add to PATH (persistent + current session) ─────────────────────────────
+add_to_path() {
+  local dir="$1"
+  # Already in PATH — skip
+  case ":$PATH:" in
+    *":$dir:"*) return ;;
+  esac
+
+  local profile=""
+  if [[ -n "${ZSH_VERSION:-}" ]] || [[ "$SHELL" == */zsh ]]; then
+    profile="$HOME/.zshrc"
+  elif [[ -f "$HOME/.bashrc" ]]; then
+    profile="$HOME/.bashrc"
+  elif [[ -f "$HOME/.profile" ]]; then
+    profile="$HOME/.profile"
   fi
-  echo "$version"
+
+  if [[ -n "$profile" ]]; then
+    if ! grep -qF "$dir" "$profile" 2>/dev/null; then
+      echo "export PATH=\"$dir:\$PATH\"" >> "$profile"
+      warn "Added $dir to $profile"
+    fi
+  fi
+
+  # Make it available in the current session immediately
+  export PATH="$dir:$PATH"
 }
 
 # ─── Main ─────────────────────────────────────────────────────────────────────
 main() {
-  local os arch version archive_name download_url tmp_dir
+  # Check required commands
+  for cmd in curl tar; do
+    if ! command -v "$cmd" &>/dev/null; then
+      err "'$cmd' is required but not found. Please install it first."
+      exit 1
+    fi
+  done
+
+  local os arch archive_name tmp_dir
 
   os=$(detect_os)
   arch=$(detect_arch)
-  version=$(get_latest_version)
 
   archive_name="adp-${os}-${arch}.tar.gz"
-  download_url="https://github.com/${REPO}/releases/download/${version}/${archive_name}"
 
   log "Platform : ${os}"
   log "Arch     : ${arch}"
-  log "Version  : ${version}"
-  log "Downloading ${download_url}"
 
   tmp_dir=$(mktemp -d)
   trap 'rm -rf "$tmp_dir"' EXIT
 
-  curl -fsSL --progress-bar -o "${tmp_dir}/${archive_name}" "$download_url"
+  # Try mirror first (China-friendly), fallback to GitHub
+  local downloaded=false
+  for base_url in "$MIRROR_URL" "$GITHUB_URL"; do
+    local url="${base_url}/${archive_name}"
+    log "Downloading ${url}"
+    if curl -fsSL --connect-timeout 10 --max-time 120 --progress-bar -o "${tmp_dir}/${archive_name}" "$url"; then
+      downloaded=true
+      break
+    fi
+    warn "Failed, trying next mirror..."
+  done
+
+  if [[ "$downloaded" != "true" ]]; then
+    err "All download sources failed. Possible causes:"
+    err "  - Network connectivity issue"
+    err "  - No release found for platform '${os}-${arch}'"
+    err "  - GitHub/mirror service unavailable"
+    err ""
+    err "Alternative: install via npm (recommended for China mainland):"
+    err "  npm install -g @laiye-adp/agentic-doc-parse-and-extract-cli"
+    exit 1
+  fi
 
   log "Extracting..."
   tar -xzf "${tmp_dir}/${archive_name}" -C "$tmp_dir"
@@ -97,6 +148,9 @@ main() {
 
   log "Installed adp to ${install_dest}"
 
+  # Ensure INSTALL_DIR is in PATH
+  add_to_path "$INSTALL_DIR"
+
   # Verify
   if command -v adp &>/dev/null; then
     log "Verification: $(adp version)"
@@ -105,8 +159,7 @@ main() {
     echo "  Run 'adp config set --api-key YOUR_API_KEY' to get started."
   else
     warn "adp installed to ${install_dest} but is not in PATH."
-    warn "Add the following to your shell profile:"
-    warn "  export PATH=\"${INSTALL_DIR}:\$PATH\""
+    warn "You may need to restart your terminal."
   fi
 }
 

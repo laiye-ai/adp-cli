@@ -1,0 +1,13 @@
+{
+  "name": "@laiye-adp/adp-cli-win32-x64",
+  "version": "1.0.0",
+  "description": "ADP CLI binary for win32 x64",
+  "os": ["win32"],
+  "cpu": ["x64"],
+  "files": ["bin/adp.exe"],
+  "license": "SEE LICENSE IN license.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/laiye-ai/adp-cli.git"
+  }
+}

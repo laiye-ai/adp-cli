@@ -23,7 +23,7 @@ Official command-line tool for [Laiye ADP (Agentic Document Processing)](https:/
 
 ```bash
 # npm (recommended)
-npm install -g agentic-doc-parse-and-extract-cli
+npm install -g @laiye-adp/agentic-doc-parse-and-extract-cli
 
 # Linux / macOS
 curl -fsSL https://raw.githubusercontent.com/laiye-ai/adp-cli/main/scripts/adp-init.sh | bash

@@ -23,7 +23,7 @@
 
 ```bash
 # npm（推荐）
-npm install -g agentic-doc-parse-and-extract-cli
+npm install -g @laiye-adp/agentic-doc-parse-and-extract-cli
 
 # Linux / macOS
 curl -fsSL https://raw.githubusercontent.com/laiye-ai/adp-cli/main/scripts/adp-init.sh | bash

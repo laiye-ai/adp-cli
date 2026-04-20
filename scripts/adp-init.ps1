@@ -11,6 +11,16 @@ $ErrorActionPreference = 'Stop'
 $REPO        = "laiye-ai/adp-cli"
 $BINARY_NAME = "adp.exe"
 
+# ─── Download mirrors (proxy first, GitHub fallback) ─────────────────────────
+# Support custom version: $env:ADP_VERSION="v1.2.3"; .\adp-init.ps1
+$ADP_VERSION = if ($env:ADP_VERSION) { $env:ADP_VERSION } else { "latest" }
+if ($ADP_VERSION -eq "latest") {
+  $GITHUB_BASE = "https://github.com/$REPO/releases/latest/download"
+} else {
+  $GITHUB_BASE = "https://github.com/$REPO/releases/download/$ADP_VERSION"
+}
+$MIRROR_BASE = "https://ghproxy.net/$GITHUB_BASE"
+
 # ─── Color helpers ────────────────────────────────────────────────────────────
 function Log  { param($msg) Write-Host "[adp-cli] $msg" -ForegroundColor Green }
 function Warn { param($msg) Write-Host "[adp-cli] $msg" -ForegroundColor Yellow }
@@ -27,17 +37,6 @@ function Get-Arch {
       Err "Unsupported architecture: $($env:PROCESSOR_ARCHITECTURE)"
       exit 1
     }
-  }
-}
-
-# ─── Get latest version from GitHub ──────────────────────────────────────────
-function Get-LatestVersion {
-  try {
-    $response = Invoke-RestMethod -Uri "https://api.github.com/repos/$REPO/releases/latest" -UseBasicParsing
-    return $response.tag_name
-  } catch {
-    Err "Failed to fetch latest version from GitHub: $_"
-    exit 1
   }
 }
 
@@ -67,18 +66,14 @@ function Add-ToUserPath {
 # ─── Main ─────────────────────────────────────────────────────────────────────
 function Main {
   $arch      = Get-Arch
-  $version   = Get-LatestVersion
   $platform  = "win32"
 
   $archiveName  = "adp-${platform}-${arch}.zip"
-  $downloadUrl  = "https://github.com/$REPO/releases/download/$version/$archiveName"
   $installDir   = Get-InstallDir
   $installPath  = Join-Path $installDir $BINARY_NAME
 
   Log "Platform : $platform"
   Log "Arch     : $arch"
-  Log "Version  : $version"
-  Log "Downloading $downloadUrl"
 
   # Create temp dir
   $tmpDir = Join-Path $env:TEMP "adp-install-$(Get-Random)"
@@ -86,20 +81,44 @@ function Main {
 
   try {
     $archivePath = Join-Path $tmpDir $archiveName
-    Invoke-WebRequest -Uri $downloadUrl -OutFile $archivePath -UseBasicParsing
+
+    # Try mirror first (China-friendly), fallback to GitHub
+    $downloaded = $false
+    foreach ($baseUrl in @($MIRROR_BASE, $GITHUB_BASE)) {
+      $url = "$baseUrl/$archiveName"
+      Log "Downloading $url"
+      try {
+        Invoke-WebRequest -Uri $url -OutFile $archivePath -UseBasicParsing -TimeoutSec 120
+        $downloaded = $true
+        break
+      } catch {
+        Warn "Failed, trying next mirror..."
+      }
+    }
+
+    if (-not $downloaded) {
+      Err "All download sources failed. Possible causes:"
+      Err "  - Network connectivity issue"
+      Err "  - No release found for platform '${platform}-${arch}'"
+      Err "  - GitHub/mirror service unavailable"
+      Err ""
+      Err "Alternative: install via npm (recommended for China mainland):"
+      Err "  npm install -g @laiye-adp/agentic-doc-parse-and-extract-cli"
+      exit 1
+    }
 
     Log "Extracting..."
     Expand-Archive -Path $archivePath -DestinationPath $tmpDir -Force
 
-    $extractedBin = Join-Path $tmpDir "adp.exe"
-    if (-not (Test-Path $extractedBin)) {
-      Err "Extracted binary not found at $extractedBin"
+    $extractedBin = Get-ChildItem -Path $tmpDir -Recurse -Filter "adp.exe" | Select-Object -First 1
+    if (-not $extractedBin) {
+      Err "Extracted binary 'adp.exe' not found in archive"
       exit 1
     }
 
     # Install
     New-Item -ItemType Directory -Path $installDir -Force | Out-Null
-    Move-Item -Path $extractedBin -Destination $installPath -Force
+    Move-Item -Path $extractedBin.FullName -Destination $installPath -Force
 
     Log "Installed adp to $installPath"
 

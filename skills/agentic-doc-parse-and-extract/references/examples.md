@@ -3,14 +3,8 @@
 ## 1. Obtain the installation package
 
   ```bash
-  # Linux & Mac
-  curl -fsSL https://raw.githubusercontent.com/laiye-ai/adp-cli/main/scripts/adp-init.sh | bash
-
-  # Windows (PowerShell)
-  irm https://raw.githubusercontent.com/laiye-ai/adp-cli/main/scripts/adp-init.ps1 | iex
-
-  # Or via npm (all platforms)
-  npm install -g adp-cli
+  # via npm (all platforms)
+  npm install -g @laiye-adp/agentic-doc-parse-and-extract-cli
   ```
 
 ## 2. Configure API Key and Base URL

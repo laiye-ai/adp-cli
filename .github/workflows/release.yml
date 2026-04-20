@@ -55,10 +55,68 @@ jobs:
           generate_release_notes: true
           files: dist/*
 
-      - name: Sync package.json version and publish to npm
+      - name: Prepare npm platform packages
         run: |
-          npm version ${{ steps.version.outputs.VERSION_NO_V }} --no-git-tag-version
-          if [[ "${{ steps.version.outputs.VERSION_NO_V }}" == *"-"* ]]; then
+          VERSION_NO_V=${{ steps.version.outputs.VERSION_NO_V }}
+
+          # Copy binaries into platform package directories
+          # Rebuild binaries from dist archives for npm packages
+          cd dist
+
+          # Extract and place binaries for each platform
+          for archive in *.tar.gz; do
+            # adp-linux-x64.tar.gz -> linux-x64
+            platform_arch=$(echo "$archive" | sed 's/^adp-//;s/\.tar\.gz$//')
+            pkg_dir="../npm/adp-cli-${platform_arch}"
+            mkdir -p "${pkg_dir}/bin"
+            tar -xzf "$archive" -C "${pkg_dir}/bin/"
+          done
+
+          for archive in *.zip; do
+            # adp-win32-x64.zip -> win32-x64
+            platform_arch=$(echo "$archive" | sed 's/^adp-//;s/\.zip$//')
+            pkg_dir="../npm/adp-cli-${platform_arch}"
+            mkdir -p "${pkg_dir}/bin"
+            unzip -o "$archive" -d "${pkg_dir}/bin/"
+          done
+
+          cd ..
+
+          # Update version in all platform packages
+          for pkg_dir in npm/adp-cli-*; do
+            cd "$pkg_dir"
+            npm version "$VERSION_NO_V" --no-git-tag-version
+            cd ../..
+          done
+
+      - name: Publish platform packages to npm
+        run: |
+          VERSION_NO_V=${{ steps.version.outputs.VERSION_NO_V }}
+          TAG_FLAG=""
+          if [[ "$VERSION_NO_V" == *"-"* ]]; then
+            TAG_FLAG="--tag beta"
+          fi
+
+          for pkg_dir in npm/adp-cli-*; do
+            echo "Publishing ${pkg_dir}..."
+            cd "$pkg_dir"
+            npm publish --access public $TAG_FLAG
+            cd ../..
+          done
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish main package to npm
+        run: |
+          VERSION_NO_V=${{ steps.version.outputs.VERSION_NO_V }}
+
+          # Update optionalDependencies versions to match
+          sed -i "s/\"1.0.0\"/\"${VERSION_NO_V}\"/g" package.json
+
+          # Set package version
+          npm version "$VERSION_NO_V" --no-git-tag-version
+
+          if [[ "$VERSION_NO_V" == *"-"* ]]; then
             npm publish --access public --tag beta
           else
             npm publish --access public
