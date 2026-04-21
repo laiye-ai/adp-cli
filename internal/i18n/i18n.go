@@ -65,7 +65,7 @@ var Translations = map[string]map[string]string{
 		"app_id_list_title":        "List all available application IDs.",
 		"app_id_list_cache_title":  "List cached application IDs (fast).",
 		"app_id_list_app_label":    "Filter applications by label (optional)",
-		"app_id_list_app_type":     "Filter applications by type: 1=custom app, 0=system preset",
+		"app_id_list_app_type":     "Filter applications by type: 0=system preset, 1=custom app; omit to list all",
 		"app_id_list_limit":        "Limit the number of returned applications (default: 120)",
 		"no_applications_found":   "No applications found",
 
@@ -199,7 +199,7 @@ var Translations = map[string]map[string]string{
 		"app_id_list_title":        "列出所有可用的应用 ID。",
 		"app_id_list_cache_title":  "从缓存获取应用ID列表（快速）。",
 		"app_id_list_app_label":    "按标签过滤应用（可选）",
-		"app_id_list_app_type":     "按应用类型过滤：1=自定义应用，0=系统预设",
+		"app_id_list_app_type":     "按应用类型过滤：0=系统预设应用，1=自定义应用；不传则返回全部应用",
 		"app_id_list_limit":        "限制返回应用数量（默认：120）",
 		"no_applications_found":    "未找到应用",
 

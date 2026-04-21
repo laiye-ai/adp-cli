@@ -274,6 +274,9 @@ adp app-id list --app-label "invoice"
 # 仅列出自定义应用
 adp app-id list --app-type 1
 
+# 仅列出系统预设应用（开箱即用）
+adp app-id list --app-type 0
+
 # 限制返回数量
 adp app-id list --limit 50
 ```
@@ -281,7 +284,7 @@ adp app-id list --limit 50
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `--app-label` | string | — | 按标签过滤 |
-| `--app-type` | int | 0 | 应用类型（0=全部，1=自定义） |
+| `--app-type` | int | 不传 | 应用类型（不传=全部，0=系统预设，1=自定义） |
 | `--limit` | int | 120 | 返回数量限制 |
 
 ### 查看本地缓存

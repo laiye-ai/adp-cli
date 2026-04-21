@@ -151,16 +151,19 @@ main() {
   # Ensure INSTALL_DIR is in PATH
   add_to_path "$INSTALL_DIR"
 
-  # Verify
-  if command -v adp &>/dev/null; then
-    log "Verification: $(adp version)"
-    echo ""
-    echo -e "${GREEN}✓ ADP CLI installed successfully!${NC}"
-    echo "  Run 'adp config set --api-key YOUR_API_KEY' to get started."
-  else
-    warn "adp installed to ${install_dest} but is not in PATH."
-    warn "You may need to restart your terminal."
+  # Verify (use absolute path — PATH may not be refreshed in current shell)
+  log "Verification: $("$install_dest" version)"
+  echo ""
+  echo -e "${GREEN}✓ ADP CLI installed successfully!${NC}"
+  echo "  Run 'adp config set --api-key YOUR_API_KEY' to get started."
+
+  if ! command -v adp &>/dev/null; then
+    warn "adp is not on PATH in the current shell. Restart your terminal,"
+    warn "or use the absolute path printed below."
   fi
+
+  # Machine-readable install path (for agents / scripts to parse)
+  echo "ADP_INSTALL_PATH=${install_dest}"
 }
 
 main

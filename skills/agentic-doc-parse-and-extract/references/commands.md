@@ -46,7 +46,7 @@ Query available applications.
 | Option | Type | Required | Default | Description |
 |--------|------|----------|---------|-------------|
 | `--app-label` | string | No | — | Filter by application label |
-| `--app-type` | integer | No | — | Filter by application type |
+| `--app-type` | integer | No | — | Filter by application type: `0`=system preset, `1`=custom; omit to list all |
 | `--limit` | integer | No | 120 | Maximum number of results |
 
 ### `adp app-id cache`
