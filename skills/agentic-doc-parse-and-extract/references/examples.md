@@ -8,7 +8,7 @@ If not installed, choose the appropriate method:
 
 ```bash
 # Method 1: npm (recommended, works on all platforms, China-friendly with npmmirror)
-npm install -g @laiye-adp/agentic-doc-parse-and-extract-cli --registry=https://registry.npmmirror.com/ || npm install -g @laiye-adp/agentic-doc-parse-and-extract-cli
+npm install -g @laiye-adp/agentic-doc-parse-and-extract-cli@1.11.0-beta.5 --registry=https://registry.npmmirror.com/ || npm install -g @laiye-adp/agentic-doc-parse-and-extract-cli@1.11.0-beta.5
 export PATH="$(npm prefix -g)/bin:$PATH"
 
 # Method 2: Shell script (Linux / macOS, if npm is not available)
