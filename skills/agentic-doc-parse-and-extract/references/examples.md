@@ -8,7 +8,7 @@ If not installed, choose the appropriate method:
 
 ```bash
 # Method 1: npm (recommended, works on all platforms, China-friendly with npmmirror)
-npm install -g @laiye-adp/agentic-doc-parse-and-extract-cli@1.11.0-beta.5 --registry=https://registry.npmmirror.com/ || npm install -g @laiye-adp/agentic-doc-parse-and-extract-cli@1.11.0-beta.5
+npm install -g @laiye-adp/agentic-doc-parse-and-extract-cli@1.11.0-beta.6 --registry=https://registry.npmmirror.com/ || npm install -g @laiye-adp/agentic-doc-parse-and-extract-cli@1.11.0-beta.6
 
 # Method 2: Shell script (Linux / macOS, if npm is not available)
 curl -fsSL https://raw.githubusercontent.com/laiye-ai/adp-cli/main/scripts/adp-init.sh | bash
