@@ -133,6 +133,14 @@ function Main {
     Write-Host "[adp-cli] ✓ ADP CLI installed successfully!" -ForegroundColor Green
     Write-Host "  Run 'adp config set --api-key YOUR_API_KEY' to get started." -ForegroundColor Cyan
 
+    if (-not (Get-Command adp -ErrorAction SilentlyContinue)) {
+      Warn "adp is not on PATH in the current shell. Restart your terminal,"
+      Warn "or use the absolute path printed below."
+    }
+
+    # Machine-readable install path (for agents / scripts to parse)
+    Write-Host "ADP_INSTALL_PATH=$installPath"
+
   } finally {
     Remove-Item -Path $tmpDir -Recurse -Force -ErrorAction SilentlyContinue
   }

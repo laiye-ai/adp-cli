@@ -2,14 +2,13 @@
 
 ## 1. Install ADP CLI
 
-First check if ADP CLI is already installed by running `adp version`. If installed, skip to step 2.
+First check if ADP CLI is already installed by running `adp version`. If it succeeds, skip to step 2.
 
 If not installed, choose the appropriate method:
 
 ```bash
 # Method 1: npm (recommended, works on all platforms, China-friendly with npmmirror)
 npm install -g @laiye-adp/agentic-doc-parse-and-extract-cli@1.11.0-beta.5 --registry=https://registry.npmmirror.com/ || npm install -g @laiye-adp/agentic-doc-parse-and-extract-cli@1.11.0-beta.5
-export PATH="$(npm prefix -g)/bin:$PATH"
 
 # Method 2: Shell script (Linux / macOS, if npm is not available)
 curl -fsSL https://raw.githubusercontent.com/laiye-ai/adp-cli/main/scripts/adp-init.sh | bash
@@ -18,13 +17,53 @@ curl -fsSL https://raw.githubusercontent.com/laiye-ai/adp-cli/main/scripts/adp-i
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/laiye-ai/adp-cli/main/scripts/adp-init.ps1" -OutFile "$env:TEMP\adp-init.ps1"; & "$env:TEMP\adp-init.ps1"
 ```
 
-**Agent installation logic:**
-1. Run `adp version` — if it succeeds, CLI is already installed, skip installation
-2. If not installed, check if `npm` is available → use Method 1
-3. If no `npm`, detect OS:
-   - Linux / macOS → use Method 2
-   - Windows → use Method 3
-4. Verify installation: `adp version`
+### Resolving `adp` when it's not on PATH (important for Agents)
+
+After `npm install -g`, the npm global bin directory is often **not** on the current shell's `PATH`, so a bare `adp` call will fail with "command not found". Agents must resolve the absolute path to the `adp` binary instead of relying on `PATH`.
+
+**Resolution rule:**
+- **Windows**: `npm prefix -g` returns the directory that already contains `adp.cmd` / `adp.exe`. Use `<prefix>\adp.cmd`.
+- **Linux / macOS**: `npm prefix -g` returns the prefix; the binary lives at `<prefix>/bin/adp`.
+
+**Cross-platform one-liner to locate the binary:**
+
+```bash
+# Linux / macOS (bash/zsh)
+ADP_BIN="$(npm prefix -g)/bin/adp"
+"$ADP_BIN" version
+```
+
+```powershell
+# Windows (PowerShell)
+$ADP_BIN = Join-Path (npm prefix -g) "adp.cmd"
+& $ADP_BIN version
+```
+
+```bash
+# Windows (Git Bash / MSYS in Claude Code)
+ADP_BIN="$(npm prefix -g)/adp.cmd"
+"$ADP_BIN" version
+```
+
+**Optional**: prepend the directory to PATH for the current shell session only (does not persist):
+```bash
+# bash/zsh
+export PATH="$(dirname "$ADP_BIN"):$PATH"
+```
+```powershell
+# PowerShell
+$env:PATH = "$(Split-Path $ADP_BIN);$env:PATH"
+```
+
+### Agent installation logic
+
+1. Run `adp version` — if it succeeds, CLI is already installed and on PATH, skip installation and use bare `adp` for all subsequent commands.
+2. If not installed, check if `npm` is available → use Method 1. Else detect OS: Linux / macOS → Method 2; Windows → Method 3.
+3. **After install, do NOT assume `adp` is on PATH.** Resolve `ADP_BIN`:
+   - **Method 1 (npm)**: use the platform rule above (`npm prefix -g` ± `/bin`).
+   - **Method 2 / 3 (shell scripts)**: parse the last line of script output — it prints `ADP_INSTALL_PATH=<absolute path>` for this exact purpose.
+4. Verify with `"$ADP_BIN" version` (or `& $ADP_BIN version` in PowerShell). If it succeeds, install is good.
+5. For all subsequent `adp ...` examples in this document, substitute the bare `adp` with `"$ADP_BIN"` (or your resolved absolute path) until the user opens a new terminal where PATH is refreshed.
 
 ## 2. Configure API Key and Base URL
 
