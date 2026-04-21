@@ -21,9 +21,14 @@ agentic-doc-parse-and-extract is an official command-line tool released by Laiye
 | User Intent | Recommended Command | Handling Rules |
 | :---------- | :------------------ | :------------- |
 | - Read full document content<br>- Parse layout & structure<br>- Convert document to text<br>- Process / analyze full document | `adp parse` | - Sync processing for small files<br>- Async processing (`--async` parameter) for files >20MB or >200 pages |
-| - Extract key fields (amount, date, name, ID, etc.)<br>- Output structured results (JSON/table) | `adp extract` | - Use matched existing app<br>- Create a custom extraction app if the document type is not in the known app list |
-| Batch process multiple files | `adp parse` / `adp extract` (batch mode) | - Directly use the local folder path<br>- Or save the file URL list to a text file, then pass the text file path |
-| Document content available as base64 string | `adp parse base64` / `adp extract base64` | - Use `--file-name` to specify original filename |
+| - Extract key fields (amount, date, name, ID, etc.)<br>- Output structured results (JSON/table) | `adp extract` | - Use Extract directly, **no need to parse first**<br>- Use matched existing app<br>- Create a custom extraction app if the document type is not in the known app list |
+| Batch processing of local files | `adp extract local <folder path>` <br> `adp parse local <folder path> `  | Batch processing can accept files from the local folder. |
+| Batch processing of URL files | `adp extract url <URL list file path>` <br> `adp parse url <URL list file path> `  | If you need to process multiple URLs in a batch, you can first save the list of URLs in a text file, and then input the corresponding URL of this text file to achieve batch processing at once. |
+
+Note:
+- The `adp extract` command has built-in document parsing capabilities. After ADP automatically parses the document, it performs structured extraction. Therefore, when users need to extract the structured content of the document, there is no need to use apd for parsing.
+- URL list file format: A plain text file where each line is a URL pointing to a document to be processed.
+
 
 ### Quick Reference for Common Commands
 
