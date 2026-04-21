@@ -37,7 +37,8 @@ The CLI has two output modes controlled by `--json` flag:
   {
     "app_id": "61ac******bd21",
     "app_name": "Overseas Invoices/Receipts",
-    "app_label": ["Invoice", "Receipt", "Bill"]
+    "app_label": ["Invoice", "Receipt", "Bill"],
+    "app_type": 1
   }
 ]
 ```
@@ -47,6 +48,7 @@ The CLI has two output modes controlled by `--json` flag:
 | `app_id` | string | Application ID (use this for `--app-id`) |
 | `app_name` | string | Application display name |
 | `app_label` | string[] | Labels for matching user intent |
+| `app_type` | int | 0:Out-of-the-box application(Pre-set);1:Custom application|
 
 ---
 

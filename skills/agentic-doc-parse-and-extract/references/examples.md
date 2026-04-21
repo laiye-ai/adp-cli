@@ -106,37 +106,46 @@ adp app-id cache
 ```json
   [
     {
-      "app_id": "61ac******bd21",
-      "app_name": "Overseas Invoices/Receipts", "app_label": [
-      "Invoice",
-      "Receipt",
-      "Bill",
-      "Financial Document",
-      "Information Extraction" ]
+      "app_id": "2f74******58400",
+      "app_label": null,
+      "app_name": "Custom Application Name",
+      "app_type": 1
+    },
+   {
+      "app_id": "ootb_******c8d1",
+      "app_label": [
+        "invoice",
+        "Receipt",
+        "Bill",
+        "Financial document",
+        "Information extraction"
+      ],
+      "app_name": "Invoice",
+      "app_type": 0
+    },
+   {
+      "app_id": "ootb_******a2b5",
+      "app_label": [
+        "Order",
+        "E-commerce logistics",
+        "Inventory management",
+        "Information extraction"
+      ],
+      "app_name": "Purchase Order",
+      "app_type": 0
     },
     {
-      "app_id": "61a8******bd21",
-      "app_name": "Document Parsing", "app_label": [
-      "Document parsing",
-      "Image extraction",
-      "OCR",
-      "Structural analysis",
-      "Batch parsing" ]
+      "app_id": "ootb_******y2b4",
+      "app_label": [
+        "Document parsing",
+        "Image extraction",
+        "OCR",
+        "Structural analysis",
+        "Batch Parsing"
+      ],
+      "app_name": "Document parsing",
+      "app_type": 0
     },
-    {
-      "app_id": "619f******ad21",
-      "app_name": "Purchase Order", "app_label": [
-      "Order",
-      "E-commerce logistics",
-      "Inventory management",
-      "Information extraction" ]
-    },
-    {
-      "app_id": "39dw*******51bd",
-      "app_name": "Custom Application Name", "app_label": [
-      "Custom Label 1",
-      "Custom Label 2" ]
-    }
   ]
 ```
 
