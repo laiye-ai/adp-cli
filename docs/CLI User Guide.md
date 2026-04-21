@@ -274,6 +274,9 @@ adp app-id list --app-label "invoice"
 # List custom applications only
 adp app-id list --app-type 1
 
+# List system preset applications only (out-of-the-box)
+adp app-id list --app-type 0
+
 # Limit number of results
 adp app-id list --limit 50
 ```
@@ -281,7 +284,7 @@ adp app-id list --limit 50
 | Flag | Type | Default | Description |
 |------|------|---------|-------------|
 | `--app-label` | string | — | Filter by label |
-| `--app-type` | int | 0 | Application type (0=all, 1=custom) |
+| `--app-type` | int | unset | Application type (unset=all, 0=system preset, 1=custom) |
 | `--limit` | int | 120 | Maximum number of results |
 
 ### View Local Cache

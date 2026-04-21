@@ -53,7 +53,7 @@ var listAppsCmd = &cobra.Command{
 		}
 
 		var appTypePtr *int
-		if appType > 0 {
+		if cmd.Flags().Changed("app-type") {
 			appTypePtr = &appType
 		}
 

@@ -24,7 +24,7 @@
 如果你是 AI Agent，安装 ADP skills：
 
 ```bash
-npx skills add https://github.com/laiye-ai/adp-cli -y -g
+npx skills add laiye-ai/adp-cli -y -g
 ```
 
 Skills 会自动引导 CLI 安装、认证配置和使用。
