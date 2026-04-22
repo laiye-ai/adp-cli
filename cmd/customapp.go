@@ -35,7 +35,7 @@ var createCustomAppCmd = &cobra.Command{
 		longDocConfigStr, _ := cmd.Flags().GetString("long-doc-config")
 
 		// Validate parse-mode enum
-		if err := errors.ValidateEnum(parseMode, []string{"standard", "accurate", "fast"}, "parse-mode"); err != nil {
+		if err := errors.ValidateEnum(parseMode, []string{"advance", "standard", "agentic"}, "parse-mode"); err != nil {
 			formatterOut.ExitWithError(err)
 		}
 
@@ -133,7 +133,7 @@ var updateCustomAppCmd = &cobra.Command{
 		longDocConfigStr, _ := cmd.Flags().GetString("long-doc-config")
 
 		// Validate parse-mode enum
-		if err := errors.ValidateEnum(parseMode, []string{"standard", "accurate", "fast"}, "parse-mode"); err != nil {
+		if err := errors.ValidateEnum(parseMode, []string{"advance", "standard", "agentic"}, "parse-mode"); err != nil {
 			formatterOut.ExitWithError(err)
 		}
 

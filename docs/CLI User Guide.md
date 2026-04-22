@@ -313,7 +313,7 @@ adp custom-app create \
 ```bash
 adp custom-app create \
   --app-name "Invoice Extractor" \
-  --parse-mode accurate \
+  --parse-mode agentic \
   --extract-fields ./fields.json
 ```
 
@@ -321,7 +321,7 @@ adp custom-app create \
 |------|------|---------|-------------|
 | `--app-name` | string | — | **Required.** Application name |
 | `--extract-fields` | string | — | **Required.** Field definitions (JSON string or file path) |
-| `--parse-mode` | string | — | **Required.** Parse mode (`standard` / `accurate` / `fast`) |
+| `--parse-mode` | string | — | **Required.** Parse mode (`advance` / `standard` / `agentic`) |
 | `--app-label` | string | — | Application label |
 | `--enable-long-doc` | string | — | Enable long document mode |
 | `--long-doc-config` | string | — | Long document configuration |
@@ -333,7 +333,7 @@ adp custom-app create \
 adp custom-app update \
   --app-id APP_ID \
   --extract-fields ./updated_fields.json \
-  --parse-mode accurate \
+  --parse-mode agentic \
   --enable-long-doc true
 ```
 

@@ -313,7 +313,7 @@ adp custom-app create \
 ```bash
 adp custom-app create \
   --app-name "发票提取" \
-  --parse-mode accurate \
+  --parse-mode agentic \
   --extract-fields ./fields.json
 ```
 
@@ -321,7 +321,7 @@ adp custom-app create \
 |------|------|--------|------|
 | `--app-name` | string | — | **必填**，应用名称 |
 | `--extract-fields` | string | — | **必填**，提取字段定义（JSON 字符串或文件路径） |
-| `--parse-mode` | string | — | **必填**，解析模式（`standard` / `accurate` / `fast`） |
+| `--parse-mode` | string | — | **必填**，解析模式（`advance` / `standard` / `agentic`） |
 | `--app-label` | string | — | 应用标签 |
 | `--enable-long-doc` | string | — | 是否启用长文档模式 |
 | `--long-doc-config` | string | — | 长文档配置 |
@@ -333,7 +333,7 @@ adp custom-app create \
 adp custom-app update \
   --app-id APP_ID \
   --extract-fields ./updated_fields.json \
-  --parse-mode accurate \
+  --parse-mode agentic \
   --enable-long-doc true
 ```
 
