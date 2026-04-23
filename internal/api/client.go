@@ -334,12 +334,11 @@ func (c *Client) CreateCustomApp(appName string, extractFields []map[string]inte
 }
 
 // UpdateCustomApp updates a custom extraction app
-func (c *Client) UpdateCustomApp(appID string, extractFields []map[string]interface{}, parseMode string, enableLongDoc bool, appName *string, appLabel []string, longDocConfig []map[string]interface{}) (map[string]interface{}, error) {
+func (c *Client) UpdateCustomApp(appID string, extractFields []map[string]interface{}, parseMode string, enableLongDoc *bool, appName *string, appLabel []string, longDocConfig []map[string]interface{}) (map[string]interface{}, error) {
 	data := map[string]interface{}{
 		"app_id":          appID,
 		"extract_fields":   extractFields,
 		"parse_mode":      parseMode,
-		"enable_long_doc": enableLongDoc,
 	}
 
 	if appName != nil {
@@ -348,8 +347,11 @@ func (c *Client) UpdateCustomApp(appID string, extractFields []map[string]interf
 	if appLabel != nil {
 		data["app_label"] = appLabel
 	}
-	if enableLongDoc && longDocConfig != nil {
-		data["long_doc_config"] = longDocConfig
+	if enableLongDoc != nil {
+		data["enable_long_doc"] = *enableLongDoc
+		if *enableLongDoc && longDocConfig != nil {
+			data["long_doc_config"] = longDocConfig
+		}
 	}
 
 	return c.request("POST", fmt.Sprintf("/open/agentic_doc_processor/%s/v1/app-manage/update", c.tenantName), data)

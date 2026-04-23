@@ -208,7 +208,7 @@ ADP CLI 提供预编译的可执行文件，无需安装Python环境即可直接
 
 ### 🛠️ 技术能力
 
-- **10+ 种文件格式** ： 覆盖主流图片与办公文档格式（.jpg, .jpeg, .png, .bmp, .tiff, .tif, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx）
+- **10+ 种文件格式** ： 覆盖主流图片与办公文档格式（.jpg, .jpeg, .png, .bmp, .tiff, .tif, .pdf, .doc, .docx, .xls, .xlsx）
 - **VLM + LLM 双引擎** ： 视觉理解 + 语义提取，实现最大准确率
 - **同步与异步模式** ： 所有功能均对外开放同步、异步 API
 - **文件限制：** 最大文件大小：50MB

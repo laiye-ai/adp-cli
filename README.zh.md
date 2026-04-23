@@ -17,7 +17,7 @@
 
 ## 支持的文件格式
 
-`.jpg` `.jpeg` `.png` `.bmp` `.tiff` `.tif` `.pdf` `.doc` `.docx` `.xls` `.xlsx` `.ppt` `.pptx`（单文件最大 50MB）
+`.jpg` `.jpeg` `.png` `.bmp` `.tiff` `.tif` `.pdf` `.doc` `.docx` `.xls` `.xlsx`（单文件最大 50MB）
 
 ## Agent 集成
 

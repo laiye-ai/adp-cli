@@ -180,8 +180,12 @@ var updateCustomAppCmd = &cobra.Command{
 			}
 		}
 
-		// Parse enable long doc
-		enableLongDoc := enableLongDocStr == "true" || enableLongDocStr == "1"
+		// Parse enable long doc (tri-state: nil = not provided, *bool otherwise)
+		var enableLongDoc *bool
+		if enableLongDocStr != "" {
+			val := enableLongDocStr == "true" || enableLongDocStr == "1"
+			enableLongDoc = &val
+		}
 
 		// Parse long doc config
 		var longDocConfig []map[string]interface{}
@@ -450,7 +454,6 @@ func init() {
 	updateCustomAppCmd.MarkFlagRequired("app-id")
 	updateCustomAppCmd.MarkFlagRequired("extract-fields")
 	updateCustomAppCmd.MarkFlagRequired("parse-mode")
-	updateCustomAppCmd.MarkFlagRequired("enable-long-doc")
 
 	// get-config flags
 	getConfigCustomAppCmd.Flags().String("api-key", "", i18n.T("custom_app_get_config_api_key"))

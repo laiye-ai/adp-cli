@@ -205,7 +205,7 @@ To use the adp command from any location, it is recommended to choose one of the
 
 ### 🛠️ Technical Capabilities
 
-- **10+ File Formats**: Covers mainstream image and work document formats (.jpg,.jpeg,.png,.bmp,.tiff,.tif,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx)
+- **10+ File Formats**: Covers mainstream image and work document formats (.jpg,.jpeg,.png,.bmp,.tiff,.tif,.pdf,.doc,.docx,.xls,.xlsx)
 - **VLM + LLM Dual Engines**: Visual understanding + semantic extraction to achieve maximum accuracy
 - **Synchronous and Asynchronous Modes**: All functions are open to external synchronous and asynchronous APIs
 - **File Restrictions:** Maximum file size: 50MB

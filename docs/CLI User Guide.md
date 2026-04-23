@@ -120,6 +120,8 @@ adp parse url ./url_list.txt --app-id APP_ID
 ### Parse Base64 Data
 
 ```bash
+# --file-name is just a display name (with extension) — it does not read from disk.
+# The server uses the extension to detect file type; make sure it matches the base64 content.
 adp parse base64 BASE64_DATA --app-id APP_ID --file-name invoice.pdf
 ```
 
@@ -147,7 +149,7 @@ adp parse query TASK_ID --watch
 | `--timeout` | int | 900 | Timeout in seconds |
 | `--concurrency` | int | 1 | Concurrent workers (free: max 1, paid: max 2) |
 | `--retry` | int | 0 | Retry count with exponential backoff |
-| `--file-name` | string | document | File name (base64 subcommand only) |
+| `--file-name` | string | document | Display name with extension (used by server to detect file type; does not read from disk), base64 subcommand only |
 
 ### parse query Flags
 
@@ -303,16 +305,28 @@ adp app-id cache
 
 ```bash
 adp custom-app create \
-  --app-name "Invoice Extractor" \
-  --parse-mode standard \
-  --extract-fields '[{"name":"invoice_no","type":"string","description":"Invoice number"}]'
+  --app-name "Financial document extraction" \
+  --extract-fields '[
+    {"field_name":"Invoice number","field_type":"string","field_prompt":"Extract the serial number at the top left corner of the invoice"},
+    {"field_name":"Invoice date","field_type":"date","field_prompt":"Extract the invoice issuance date"},
+    {"field_name":"Product details","field_type":"table","field_prompt":null,"sub_fields":[
+      {"field_name":"Contract Number","field_type":"string","field_prompt":"Extract the contract number"},
+      {"field_name":"Signing Date","field_type":"date","field_prompt":"Extract the signing date"}
+    ]}
+  ]' \
+  --parse-mode "standard" \
+  --enable-long-doc true \
+  --long-doc-config '[
+    {"doc_type":"Contract","doc_desc":"Multi-page contract"},
+    {"doc_type":"Tender document","doc_desc":"Engineering tender documents"}
+  ]'
 ```
 
-`--extract-fields` accepts an inline JSON string or a path to a JSON file:
+`--extract-fields` also accepts a path to a JSON file:
 
 ```bash
 adp custom-app create \
-  --app-name "Invoice Extractor" \
+  --app-name "Financial document extraction" \
   --parse-mode agentic \
   --extract-fields ./fields.json
 ```
@@ -323,8 +337,8 @@ adp custom-app create \
 | `--extract-fields` | string | — | **Required.** Field definitions (JSON string or file path) |
 | `--parse-mode` | string | — | **Required.** Parse mode (`advance` / `standard` / `agentic`) |
 | `--app-label` | string | — | Application label |
-| `--enable-long-doc` | string | — | Enable long document mode |
-| `--long-doc-config` | string | — | Long document configuration |
+| `--enable-long-doc` | string | — | Enable long document mode (`true` / `false`) |
+| `--long-doc-config` | string | — | Long document configuration (only takes effect when `--enable-long-doc true`) |
 | `--api-key` | string | — | Specify API Key |
 
 ### Update a Custom Application
@@ -332,9 +346,20 @@ adp custom-app create \
 ```bash
 adp custom-app update \
   --app-id APP_ID \
-  --extract-fields ./updated_fields.json \
-  --parse-mode agentic \
-  --enable-long-doc true
+  --extract-fields '[
+    {"field_name":"Invoice number","field_type":"string","field_prompt":"Extract the serial number at the top left corner of the invoice"},
+    {"field_name":"Invoice date","field_type":"date","field_prompt":"Extract the invoice issuance date"},
+    {"field_name":"Product details","field_type":"table","field_prompt":null,"sub_fields":[
+      {"field_name":"Contract Number","field_type":"string","field_prompt":"Extract the contract number"},
+      {"field_name":"Signing Date","field_type":"date","field_prompt":"Extract the signing date"}
+    ]}
+  ]' \
+  --parse-mode "agentic" \
+  --enable-long-doc true \
+  --long-doc-config '[
+    {"doc_type":"Contract","doc_desc":"Multi-page contract"},
+    {"doc_type":"Tender document","doc_desc":"Engineering tender documents"}
+  ]'
 ```
 
 | Flag | Type | Default | Description |
@@ -342,10 +367,10 @@ adp custom-app update \
 | `--app-id` | string | — | **Required.** Application ID |
 | `--extract-fields` | string | — | **Required.** Field definitions |
 | `--parse-mode` | string | — | **Required.** Parse mode |
-| `--enable-long-doc` | string | — | **Required.** Enable long document mode |
+| `--enable-long-doc` | string | — | Enable long document mode (`true` / `false`); if omitted, server default behavior is preserved |
 | `--app-name` | string | — | Application name |
 | `--app-label` | string | — | Application label |
-| `--long-doc-config` | string | — | Long document configuration |
+| `--long-doc-config` | string | — | Long document configuration (only takes effect when `--enable-long-doc true`) |
 | `--api-key` | string | — | Specify API Key |
 
 ### View Application Config
@@ -489,7 +514,7 @@ adp parse local ./docs/ --app-id APP_ID --quiet --export ./out/
 
 ## Supported File Formats
 
-PDF, JPG, JPEG, PNG, BMP, TIFF, TIF, DOC, DOCX, XLS, XLSX, PPT, PPTX
+PDF, JPG, JPEG, PNG, BMP, TIFF, TIF, DOC, DOCX, XLS, XLSX
 
 Maximum file size: **50 MB**.
 

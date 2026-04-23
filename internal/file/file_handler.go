@@ -27,8 +27,6 @@ var SupportedExtensions = map[string]bool{
 	".docx": true,
 	".xls":  true,
 	".xlsx": true,
-	".ppt":  true,
-	".pptx": true,
 }
 
 // FileHandler handles file operations
@@ -201,10 +199,6 @@ func (h *FileHandler) GetMimeType(path string) string {
 		return "application/vnd.ms-excel"
 	case ".xlsx":
 		return "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-	case ".ppt":
-		return "application/vnd.ms-powerpoint"
-	case ".pptx":
-		return "application/vnd.openxmlformats-officedocument.presentationml.presentation"
 	default:
 		return "application/octet-stream"
 	}

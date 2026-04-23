@@ -188,7 +188,7 @@ When using ADP output, always present the returned data as-is. Do not modify, ad
 1. **API Key Security**: Please keep your API Key secure and avoid disclosing it to unauthorized third parties.
 2. **API Base URL Configuration**: Select the corresponding address based on the region. For Chinese Mainland, use `https://adp.laiye.com/`, and for overseas regions, use `https://adp-global.laiye.com/`
 3. **File Size Limit**: The maximum size of a single file is 50MB
-4. **Supported Formats**: .jpg, .jpeg, .png, .bmp, .tiff, .tif, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx
+4. **Supported Formats**: .jpg, .jpeg, .png, .bmp, .tiff, .tif, .pdf, .doc, .docx, .xls, .xlsx
 5. **Free Quota**: New users receive 100 free credits per month, which are reset at the beginning of each month. Credits can be used for document parsing and extraction processing.
 6. **Check Balance**: Run `adp credit` to check the current account's credit balance.
 7. **Billing Rules**:

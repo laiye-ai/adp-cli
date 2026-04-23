@@ -41,7 +41,7 @@ Key field for Agent: **`retryable`** — if `true`, the Agent should retry with 
 2. Fix the parameter and retry
 3. Common fixes:
    - JSON parse error → validate JSON syntax in `--extract-fields` or `--long-doc-config`
-   - Unsupported file type → check file extension is one of: .jpg, .jpeg, .png, .bmp, .tiff, .tif, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx
+   - Unsupported file type → check file extension is one of: .jpg, .jpeg, .png, .bmp, .tiff, .tif, .pdf, .doc, .docx, .xls, .xlsx
    - Invalid enum value → check `--parse-mode` is one of: `advance`, `standard`, `agentic`
 
 ### RESOURCE_ERROR (Exit Code: 3)

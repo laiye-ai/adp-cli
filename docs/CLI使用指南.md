@@ -120,6 +120,8 @@ adp parse url ./url_list.txt --app-id APP_ID
 ### 解析 Base64 数据
 
 ```bash
+# --file-name 只是一个显示名（含扩展名），不读取磁盘文件
+# 服务端依赖扩展名判断文件类型，请确保扩展名与 base64 实际内容匹配
 adp parse base64 BASE64_DATA --app-id APP_ID --file-name invoice.pdf
 ```
 
@@ -147,7 +149,7 @@ adp parse query TASK_ID --watch
 | `--timeout` | int | 900 | 超时时间（秒） |
 | `--concurrency` | int | 1 | 并发数（免费用户最大 1，付费用户最大 2） |
 | `--retry` | int | 0 | 失败重试次数（指数退避） |
-| `--file-name` | string | document | 文件名（仅 base64 子命令可用） |
+| `--file-name` | string | document | 文件显示名（含扩展名，用于服务端识别格式），仅 base64 子命令需要 |
 
 ### parse query 参数
 
@@ -303,16 +305,28 @@ adp app-id cache
 
 ```bash
 adp custom-app create \
-  --app-name "发票提取" \
-  --parse-mode standard \
-  --extract-fields '[{"name":"invoice_no","type":"string","description":"发票号码"}]'
+  --app-name "财务单据提取" \
+  --extract-fields '[
+    {"field_name":"发票号码","field_type":"string","field_prompt":"提取发票左上角的序列号"},
+    {"field_name":"开票日期","field_type":"date","field_prompt":"提取发票开具日期"},
+    {"field_name":"明细","field_type":"table","field_prompt":null,"sub_fields":[
+      {"field_name":"合同编号","field_type":"string","field_prompt":"提取合同编号"},
+      {"field_name":"签订日期","field_type":"date","field_prompt":"提取签订日期"}
+    ]}
+  ]' \
+  --parse-mode "standard" \
+  --enable-long-doc true \
+  --long-doc-config '[
+    {"doc_type":"合同","doc_desc":"多页合同文档"},
+    {"doc_type":"标书","doc_desc":"工程招标文件"}
+  ]'
 ```
 
-`--extract-fields` 支持 JSON 字符串或 JSON 文件路径：
+`--extract-fields` 也支持 JSON 文件路径：
 
 ```bash
 adp custom-app create \
-  --app-name "发票提取" \
+  --app-name "财务单据提取" \
   --parse-mode agentic \
   --extract-fields ./fields.json
 ```
@@ -323,8 +337,8 @@ adp custom-app create \
 | `--extract-fields` | string | — | **必填**，提取字段定义（JSON 字符串或文件路径） |
 | `--parse-mode` | string | — | **必填**，解析模式（`advance` / `standard` / `agentic`） |
 | `--app-label` | string | — | 应用标签 |
-| `--enable-long-doc` | string | — | 是否启用长文档模式 |
-| `--long-doc-config` | string | — | 长文档配置 |
+| `--enable-long-doc` | string | — | 是否启用长文档模式（`true` / `false`） |
+| `--long-doc-config` | string | — | 长文档配置（仅 `--enable-long-doc true` 时生效） |
 | `--api-key` | string | — | 指定 API Key |
 
 ### 更新自定义应用
@@ -332,9 +346,20 @@ adp custom-app create \
 ```bash
 adp custom-app update \
   --app-id APP_ID \
-  --extract-fields ./updated_fields.json \
-  --parse-mode agentic \
-  --enable-long-doc true
+  --extract-fields '[
+    {"field_name":"发票号码","field_type":"string","field_prompt":"提取发票左上角的序列号"},
+    {"field_name":"开票日期","field_type":"date","field_prompt":"提取发票开具日期"},
+    {"field_name":"明细","field_type":"table","field_prompt":null,"sub_fields":[
+      {"field_name":"合同编号","field_type":"string","field_prompt":"提取合同编号"},
+      {"field_name":"签订日期","field_type":"date","field_prompt":"提取签订日期"}
+    ]}
+  ]' \
+  --parse-mode "agentic" \
+  --enable-long-doc true \
+  --long-doc-config '[
+    {"doc_type":"合同","doc_desc":"多页合同文档"},
+    {"doc_type":"标书","doc_desc":"工程招标文件"}
+  ]'
 ```
 
 | 参数 | 类型 | 默认值 | 说明 |
@@ -342,10 +367,10 @@ adp custom-app update \
 | `--app-id` | string | — | **必填**，应用 ID |
 | `--extract-fields` | string | — | **必填**，提取字段定义 |
 | `--parse-mode` | string | — | **必填**，解析模式 |
-| `--enable-long-doc` | string | — | **必填**，是否启用长文档模式 |
+| `--enable-long-doc` | string | — | 是否启用长文档模式（`true` / `false`），不传则保持服务端默认行为 |
 | `--app-name` | string | — | 应用名称 |
 | `--app-label` | string | — | 应用标签 |
-| `--long-doc-config` | string | — | 长文档配置 |
+| `--long-doc-config` | string | — | 长文档配置（仅 `--enable-long-doc true` 时生效） |
 | `--api-key` | string | — | 指定 API Key |
 
 ### 查看应用配置
@@ -489,7 +514,7 @@ adp parse local ./docs/ --app-id APP_ID --quiet --export ./out/
 
 ## 支持的文件格式
 
-PDF、JPG、JPEG、PNG、BMP、TIFF、TIF、DOC、DOCX、XLS、XLSX、PPT、PPTX
+PDF、JPG、JPEG、PNG、BMP、TIFF、TIF、DOC、DOCX、XLS、XLSX
 
 单文件大小限制：**50 MB**。
 

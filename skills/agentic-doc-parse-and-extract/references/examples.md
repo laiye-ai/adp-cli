@@ -587,7 +587,7 @@ adp parse local ./readme.txt --app-id YOUR_APP_ID --json
 ```
 **Exit code:** 2
 
-**Agent recovery:** Check file extension. Supported: .jpg, .jpeg, .png, .bmp, .tiff, .tif, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx
+**Agent recovery:** Check file extension. Supported: .jpg, .jpeg, .png, .bmp, .tiff, .tif, .pdf, .doc, .docx, .xls, .xlsx
 
 ### Network timeout
 

@@ -17,7 +17,7 @@ Official command-line tool for [Laiye ADP (Agentic Document Processing)](https:/
 
 ## Supported Formats
 
-`.jpg` `.jpeg` `.png` `.bmp` `.tiff` `.tif` `.pdf` `.doc` `.docx` `.xls` `.xlsx` `.ppt` `.pptx` (max 50MB per file)
+`.jpg` `.jpeg` `.png` `.bmp` `.tiff` `.tif` `.pdf` `.doc` `.docx` `.xls` `.xlsx` (max 50MB per file)
 
 ## Agent Integration
 

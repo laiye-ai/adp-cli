@@ -110,7 +110,7 @@ Parse base64-encoded document content.
 | `--no-wait` | boolean | No | false | Submit async task and return immediately |
 | `--export` | string | No | — | Export results to specified path |
 | `--timeout` | integer | No | 900 | Timeout in seconds |
-| `--file-name` | string | No | "document" | File name for the base64 content |
+| `--file-name` | string | No | "document" | Display name with extension for the base64 content (used to detect file type; does not read from disk) |
 | `--concurrency` | integer | No | 1 | Concurrent processing count |
 | `--retry` | integer | No | 0 | Number of retries on failure |
 
@@ -171,7 +171,7 @@ Extract from base64-encoded document content.
 | `--no-wait` | boolean | No | false | Submit async task and return immediately |
 | `--export` | string | No | — | Export results to specified path |
 | `--timeout` | integer | No | 900 | Timeout in seconds |
-| `--file-name` | string | No | "document" | File name for the base64 content |
+| `--file-name` | string | No | "document" | Display name with extension for the base64 content (used to detect file type; does not read from disk) |
 | `--concurrency` | integer | No | 1 | Concurrent processing count |
 | `--retry` | integer | No | 0 | Number of retries on failure |
 
@@ -203,7 +203,7 @@ Create a custom extraction application.
 | `--extract-fields` | string (JSON) | **Yes** | Field definitions in JSON format |
 | `--parse-mode` | string | **Yes** | Parsing mode: `advance`, `standard`, or `agentic` |
 | `--enable-long-doc` | string | **Yes** | Enable long document processing (`true`/`false`) |
-| `--long-doc-config` | string (JSON) | No | Long document type configuration |
+| `--long-doc-config` | string (JSON) | No | Long document type configuration (only applied when `--enable-long-doc true`) |
 
 ### `adp custom-app update`
 
@@ -217,8 +217,8 @@ Update an existing custom extraction application.
 | `--app-label` | string | No | New application labels |
 | `--extract-fields` | string (JSON) | **Yes** | Updated field definitions |
 | `--parse-mode` | string | **Yes** | Parsing mode: `advance`, `standard`, or `agentic` |
-| `--enable-long-doc` | string | **Yes** | Enable long document processing |
-| `--long-doc-config` | string (JSON) | No | Long document type configuration |
+| `--enable-long-doc` | string | No | Enable long document processing (`true`/`false`); if omitted, server default behavior is preserved |
+| `--long-doc-config` | string (JSON) | No | Long document type configuration (only applied when `--enable-long-doc true`) |
 
 ### `adp custom-app get-config`
 
