@@ -1,23 +1,22 @@
-# ADP CLI
+## 🚀 About Laiye ADP
 
-Official command-line tool for [Laiye ADP (Agentic Document Processing)](https://adp-global.laiye.com/) — document parsing and intelligent field extraction.
+ADP is Laiye's **intelligent agent document processing product (Agentic Document Processing, referred to as ADP)** , based on the general understanding ability of large models, without relying on rules and annotations, with the general understanding ability of multi-language, MultiModal Machine Learning, and multi-scene; autonomous planning and execution of intelligent agents, able to understand task goals, autonomous planning steps, invoke tools, and complete complex tasks; end-to-end business automation, from document input to business decision-making to human-machine collaboration, forming a complete closed loop.
 
-[English](README.md) | [简体中文](README.zh.md)
+**agentic-doc-parse-and-extract** is the official open-source CLI tool of ADP, supporting both manual terminal invocation and automatic invocation via AI Skill. With a single command, it can accomplish: structured document parsing + intelligent extraction of key fields, covering all scenarios including invoices, orders, certificates, bills, and general documents, outputting standard JSON, and seamlessly integrating with automation and AI workflows.
 
-## Features
+---
 
-- **Document Parsing** — Turn any type of document into structured data (Markdown or JSON)
-- **Invoice/Receipt/Purchase Order Extraction** — Extract key information and line items from invoices, receipts, purchase orders and more
-- **Custom Document Extraction** — Extract custom fields from any type of document
-- **Batch Processing** — Concurrently process multiple documents in a folder or from URLs, with per-file result output
-- **Sync/Async** — Support both sync and async processing modes
-- **Two-Phase Async** — `--async --no-wait` submits tasks and outputs task-id list; `query --file` resumes from where you left off
-- **Reliability** — Automatic retry with exponential backoff (`--retry`), fine-grained exit codes
-- **Cross Platform** — Windows / Linux / macOS, static binaries with no dependencies
+## 💡 Core Features
 
-## Supported Formats
+agentic-doc-parse-and-extract focuses on intelligent processing of the entire document workflow, taking into account both manual terminal calls and automatic calls by AI Agents. Its core functions cover all scenarios of parsing, extraction, and batch processing, requiring no complex configuration, and operations can be completed with a single command:
 
-`.jpg` `.jpeg` `.png` `.bmp` `.tiff` `.tif` `.pdf` `.doc` `.docx` `.xls` `.xlsx` (max 50MB per file)
+| Function Name | Function Description | Optimal Scenario |
+|---------|------------------|----------|
+| **Document Parsing** | Automatically recognize multi-format documents such as PDFs and images, convert messy unstructured content (e.g., scanned documents, handwritten text, complex layout documents) into standardized Structured Data, while preserving the original document hierarchy and key relationships | Convert unstructured documents into Structured Data for LLM reading and subsequent extraction |
+| **Out Of The Box Document Extraction** | Based on the native AI capabilities of the ADP large model, it comes with built-in standardized extraction models for invoices, receipts, orders, commonly used certificates in China, etc. No need to configure rules or manual annotation, one-click extraction of key fields from various types of general documentation, outputting standard JSON | Account Payable automation, expense management, procurement automation, quick entry of card and certificate information into the system |
+| **Custom Document Extraction** | Supports independent creation, editing, and management of personalized extraction applications, allowing configuration of exclusive extraction fields and recognition logic for enterprise-specific documentation and industry-customized forms | Private extraction requirements for enterprise-specific documentation, industry-customized forms, and non-standardized documents |
+| **Task Query** | Supports asynchronous task submission and status query, enabling quick viewing of task execution progress, success/failure status, and final task processing results | Batch task processing, asynchronous document processing, problem troubleshooting, and processing record tracing |
+| **Application Management** | Provides comprehensive application management capabilities, allowing users to view all available extraction applications (system-built + custom), query application details, and manage application tags | Multi-scenario business switching, full lifecycle management of applications, and custom application management |
 
 ## Agent Integration
 
@@ -215,10 +214,18 @@ adp_results_20250417_153020/
 - App cache: `~/.adp/app_cache.json`
 - Version check cache: `~/.adp/version_check.json` (refreshed every 24h)
 
-## License
+## 📜 License
 
-Commercial license — see [license.md](license.md). Free for non-commercial use (personal learning, research, teaching, open-source community). Commercial use requires written authorization from Laiye Technology. Contact: global_product@laiye.com
+We adopt a combined model of open-source tools + paid services: the CLI tool is completely free and open-source, making it easy for everyone to quickly integrate; while the core ADP intelligent parsing capability is a Public Cloud commercial service, billed based on actual usage, aiming to provide users with a highly accurate and stable document processing experience.
 
-## Contributing
+- **CLI Tool**: Open source under the MIT License, freely available for use, modification, and distribution
+- **ADP Service**: AI document processing service based on Public Cloud, billed by usage, [Billing Rules](#credit)
 
-Build all platforms with `make build-all VERSION=v1.0.0`. Run E2E tests with `bash tests/test.sh`.
+Free Quota: New users can receive **100 free credits** per month after registration, allowing them to experience full functionality
+
+## 📞 Support and Contact
+- **CLI Documentation**: [ADP CLI User Guide](https://laiye-tech.feishu.cn/wiki/YIaawiK2DimisZk5KfDc8a8cnLh)
+- **API Documentation**: [OpenAPI User Guide](https://laiye-tech.feishu.cn/wiki/S1t2wYR04ivndKkMDxxcp2SFnKd?from=from_copylink)
+- **User Guide**: [Public Cloud Operation Manual](https://laiye-tech.feishu.cn/wiki/OfexwgVUQiOpEek4kO7c7NEJnAe)
+- **Problem Feedback**: [GitHub Issues](https://github.com/laiye-ai/adp-cli/issues) | global_product@laiye.com
+- **Official Website**: [Laiye Technology](https://laiye.com/en/)
