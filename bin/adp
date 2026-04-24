@@ -1,0 +1,40 @@
+#!/usr/bin/env node
+
+'use strict';
+
+const { spawnSync } = require('child_process');
+const path = require('path');
+const fs = require('fs');
+
+const platform = process.platform;
+const arch = process.arch;
+const pkgName = `@laiye-adp/adp-cli-${platform}-${arch}`;
+const binName = platform === 'win32' ? 'adp.exe' : 'adp';
+
+function findBinPath() {
+  // Method 1: require.resolve (works for local/project installs)
+  try {
+    const pkgDir = path.dirname(require.resolve(`${pkgName}/package.json`));
+    const p = path.join(pkgDir, 'bin', binName);
+    if (fs.existsSync(p)) return p;
+  } catch {}
+
+  // Method 2: look in sibling node_modules (works for global installs)
+  // Global layout: <prefix>/node_modules/@laiye-adp/agentic-doc-parse-and-extract-cli/bin/adp
+  //                <prefix>/node_modules/@laiye-adp/adp-cli-win32-x64/bin/adp.exe
+  const scopeDir = path.resolve(__dirname, '..', '..');
+  const p = path.join(scopeDir, `adp-cli-${platform}-${arch}`, 'bin', binName);
+  if (fs.existsSync(p)) return p;
+
+  return null;
+}
+
+const binPath = findBinPath();
+if (!binPath) {
+  console.error(`[adp-cli] Platform package "${pkgName}" is not installed.`);
+  console.error(`[adp-cli] Supported platforms: linux-x64, linux-arm64, darwin-x64, darwin-arm64, win32-x64, win32-arm64`);
+  process.exit(1);
+}
+
+const result = spawnSync(binPath, process.argv.slice(2), { stdio: 'inherit' });
+process.exit(result.status ?? 1);

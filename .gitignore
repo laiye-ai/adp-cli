@@ -1,7 +1,5 @@
 # Binaries
 *.exe
-dist/
-adp
 
 # IDE
 .idea/
