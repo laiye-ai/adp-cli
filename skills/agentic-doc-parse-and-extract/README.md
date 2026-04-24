@@ -67,7 +67,7 @@ agentic-doc-parse-and-extract/
 | **macOS** | macOS 10.14 (Mojave) or later |
 ---
 
-### Get the Installation Package
+### Install
 
  ```bash
   # Method 1: npm (recommended, works on all platforms, China-friendly with npmmirror)
@@ -82,115 +82,6 @@ agentic-doc-parse-and-extract/
   ```
 
 ---
-### Local Installation Guide
-ADP CLI provides pre-compiled executable files that can be used directly without installing a Python environment.
-
-#### Installation on Windows Systems
-- Step 1: Download the executable file
-  Windows: Download the [adp.exe](https://laiye-devops.oss-cn-beijing.aliyuncs.com/release/adp/cli/v1.10.0/win/adp.exe) executable file
-
-- Step 2: Run the executable file
-  Run in the command prompt:
-    ```
-    # Run in the current directory
-    adp.exe --help
-
-    # Or add it to the PATH and use it directly
-    adp --help
-    ```
-- Step 3: Add to System PATH (Optional)
-  To use the adp command from any location, you can add the directory where the file is located to the system PATH:
-    ```
-    # Method 1: Temporary addition (current session window)
-    set PATH=%PATH%;C:\path\to\adp-cli
-
-    # Method 2: Permanent addition (requires administrator privileges)
-    setx PATH "%PATH%;C:\path\to\adp-cli"
-    ```
-- Step 4: Verify the installation
-    ```
-    # Check version information
-    adp.exe --version
-
-    # Or if added to PATH
-    adp --version
-    ```
----
-
-#### Linux System Installation
-- Step 1: Download the executable file
-  Linux/macOS: Download the corresponding platform [binary file](https://laiye-devops.oss-cn-beijing.aliyuncs.com/release/adp/cli/v1.10.0/linux/adp)
-
-- Step 2: Set executable permissions
-    ```
-    # Set executable permissions
-    chmod +x adp
-
-    # Run tests
-    ./adp --help
-    ```
-- Step 3: Add to the PATH environment variable (recommended)
-To use the adp command from any location, it is recommended to choose one of the following two methods:
-    ```
-    # Method 1: Temporary addition (current session window)
-    export PATH=$PATH:$(pwd)
-
-    # Method 2: Permanent addition (add to ~/.bashrc or ~/.zshrc)
-    echo 'export PATH=$PATH:/path/to/adp' >> ~/.bashrc
-    source ~/.bashrc
-
-    # Method 3: Create a symbolic link (requires sudo privileges)
-    sudo ln -s $(pwd)/adp /usr/local/bin/adp
-
-    # Verification
-    adp --version
-    ```
-- Step 4: Verify the installation
-    ```
-    # Use relative path
-   ./adp --version
-
-    # Or if added to PATH
-    adp --version
-    ```
-
----
-#### macOS System Installation
-- Step 1: Download the executable file
-  Linux/macOS: Download the corresponding platform [binary file](https://laiye-devops.oss-cn-beijing.aliyuncs.com/release/adp/cli/v1.10.0/linux/adp)
-
-- Step 2: Set executable permissions
-    ```
-    # Set executable permissions
-    chmod +x adp
-
-    # Run tests
-    ./adp --help
-    ```
-- Step 3: Add to the PATH environment variable (recommended)
-  To use the adp command from any location, it is recommended to choose one of the following two methods:
-    ```
-    # Method 1: Temporary addition (current session window)
-    export PATH=$PATH:$(pwd)
-
-    # Method 2: Permanent addition (add to ~/.zshrc)
-    echo 'export PATH=$PATH:/path/to/adp' >> ~/.zshrc
-    source ~/.zshrc
-
-    # Method 3: Create a symbolic link (requires sudo privileges)
-    sudo ln -s $(pwd)/adp /usr/local/bin/adp
-
-    # Verify
-    adp --version
-    ```
-- Step 4: Verify Installation
-    ```
-    # Use relative path
-   ./adp --version
-
-    # Or if added to PATH
-    adp --version
-    ```
 
 ## ✨ Product & Technical Highlights
 

@@ -70,12 +70,11 @@ agentic-doc-parse-and-extract/
 | **macOS** | macOS 10.14 (Mojave) 或更高版本 |
 ---
 
-### 获取安装包
+### 安装
 
   ```bash
   # 方法 1: npm（推荐，全平台通用，国内可通过 npmmirror 镜像加速）
   npm install -g @laiye-adp/agentic-doc-parse-and-extract-cli --registry=https://registry.npmmirror.com/ || npm install -g @laiye-adp/agentic-doc-parse-and-extract-cli
-  export PATH="$(npm prefix -g)/bin:$PATH"
 
   # 方法 2: Shell 脚本（Linux / macOS，无 npm 环境时使用）
   curl -fsSL https://raw.githubusercontent.com/laiye-ai/adp-cli/main/scripts/adp-init.sh | bash
@@ -85,115 +84,6 @@ agentic-doc-parse-and-extract/
   ```
 
 ---
-### 本地安装指南
-ADP CLI 提供预编译的可执行文件，无需安装Python环境即可直接使用。
-
-#### Windows 系统安装
-- 步骤 1：下载可执行文件
-  Windows：下载 [adp.exe](https://laiye-devops.oss-cn-beijing.aliyuncs.com/release/adp/cli/v1.10.0/win/adp.exe) 可执行文件
-
-- 步骤 2：运行可执行文件
-  在命令提示符中运行：
-  ```
-    # 在当前目录运行
-    adp.exe --help
-
-    # 或者添加到PATH后直接使用
-    adp --help
-    ```
-- 步骤 3：添加到系统PATH（可选）
-  为了在任意位置使用 adp 命令，可以将文件所在目录添加到系统PATH：
-    ```
-    # 方式一：临时添加（当前会话窗口）
-    set PATH=%PATH%;C:\path\to\adp-cli
-
-    # 方式二：永久添加（需要管理员权限）
-    setx PATH "%PATH%;C:\path\to\adp-cli"
-    ```
-- 步骤 4：验证安装
-    ```
-    # 查看版本信息
-    adp.exe --version
-
-    # 或如果已添加到PATH
-    adp --version
-    ```
----
-
-#### Linux 系统安装
-- 步骤 1：下载可执行文件
-  Linux/macOS：下载对应平台[二进制文件](https://laiye-devops.oss-cn-beijing.aliyuncs.com/release/adp/cli/v1.10.0/linux/adp)
-
-- 步骤 2：设置可执行权限
-    ```
-    # 设置可执行权限
-    chmod +x adp
-
-    # 运行测试
-    ./adp --help
-    ```
-- 步骤 3：添加到PATH环境变量（推荐）
-  为了在任意位置使用 adp 命令，推荐以下两种方式之一：
-    ```
-    # 方式一：临时添加（当前会话窗口）
-    export PATH=$PATH:$(pwd)
-
-    # 方式二：永久添加（添加到 ~/.bashrc 或 ~/.zshrc）
-    echo 'export PATH=$PATH:/path/to/adp' >> ~/.bashrc
-    source ~/.bashrc
-
-    # 方式三：创建软链接（需要sudo权限）
-    sudo ln -s $(pwd)/adp /usr/local/bin/adp
-
-    # 验证
-    adp --version
-    ```
-- 步骤 4：验证安装
-    ```
-    # 使用相对路径
-    ./adp --version
-
-    # 或者如果已添加到PATH
-    adp --version
-    ```
-
----
-#### macOS 系统安装
-- 步骤 1：下载可执行文件
-  Linux/macOS：下载对应平台[二进制文件](https://laiye-devops.oss-cn-beijing.aliyuncs.com/release/adp/cli/v1.10.0/linux/adp)
-
-- 步骤 2：设置可执行权限
-    ```
-    # 设置可执行权限
-    chmod +x adp
-
-    # 运行测试
-    ./adp --help
-    ```
-- 步骤 3：添加到PATH环境变量（推荐）
-  为了在任意位置使用 adp 命令，推荐以下两种方式之一：
-    ```
-    # 方式一：临时添加（当前会话窗口）
-    export PATH=$PATH:$(pwd)
-
-    # 方式二：永久添加（添加到 ~/.zshrc）
-    echo 'export PATH=$PATH:/path/to/adp' >> ~/.zshrc
-    source ~/.zshrc
-
-    # 方式三：创建软链接（需要sudo权限）
-    sudo ln -s $(pwd)/adp /usr/local/bin/adp
-
-    # 验证
-    adp --version
-    ```
-- 步骤 4：验证安装
-    ```
-    # 使用相对路径
-    ./adp --version
-
-    # 或者如果已添加到PATH
-    adp --version
-    ```
 
 ## ✨ 核心特性
 
