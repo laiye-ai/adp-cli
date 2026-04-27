@@ -45,7 +45,7 @@ irm https://raw.githubusercontent.com/laiye-ai/adp-cli/main/scripts/adp-init.ps1
 
 ## 配置
 
-访问 [https://adp.laiye.com/](https://adp.laiye.com/) 注册并获取 API Key（新用户每月 100 免费积分）。
+访问 [https://adp.laiye.com/](https://adp.laiye.com/?utm_source=github) 注册并获取 API Key（新用户每月 100 免费积分）。
 
 ```bash
 adp config set --api-key <your-api-key>
