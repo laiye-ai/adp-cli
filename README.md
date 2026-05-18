@@ -47,7 +47,7 @@ Or download a prebuilt binary from [GitHub Releases](https://github.com/laiye-ai
 
 ## Configure
 
-Get an API key at [https://adp-global.laiye.com/](https://adp-global.laiye.com/) (new users get 100 free credits per month).
+Get an API key at [https://adp-global.laiye.com/](https://adp-global.laiye.com/?utm_source=github) (new users get 100 free credits per month).
 
 ```bash
 adp config set --api-key <your-api-key>
@@ -272,7 +272,7 @@ adp_results_20250417_153020/
 We adopt a combined model of open-source tools + paid services: the CLI tool is completely free and open-source, making it easy for everyone to quickly integrate; while the core ADP intelligent parsing capability is a Public Cloud commercial service, billed based on actual usage, aiming to provide users with a highly accurate and stable document processing experience.
 
 - **CLI Tool**: Open source under the MIT License, freely available for use, modification, and distribution
-- **ADP Service**: AI document processing service based on Public Cloud, billed by usage, [Billing Rules](#credit)
+- **ADP Service**: AI document processing service based on Public Cloud, billed by usage, Billing Rules
 
 Free Quota: New users can receive **100 free credits** per month after registration, allowing them to experience full functionality
 
