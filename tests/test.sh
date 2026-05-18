@@ -113,7 +113,7 @@ skip_test() {
 
 cleanup() {
     rm -f "$RESULT_FILE"
-    rm -f "$SCRIPT_DIR/parse_tasks.json" "$SCRIPT_DIR/extract_tasks.json"
+    rm -f "$SCRIPT_DIR/parse_tasks.json" "$SCRIPT_DIR/extract_tasks.json" "$SCRIPT_DIR/hr_tasks.json"
     # Delete custom app if created
     if [ -n "${CREATED_APP_ID:-}" ] && [ "$API_AVAILABLE" = true ]; then
         "$ADP" custom-app delete --app-id "$CREATED_APP_ID" > /dev/null 2>&1 || true
@@ -131,6 +131,8 @@ run_test "adp --help" "$ADP" --help
 run_test "adp parse --help" "$ADP" parse --help
 run_test "adp extract --help" "$ADP" extract --help
 run_test "adp custom-app --help" "$ADP" custom-app --help
+run_test "adp human-review --help" "$ADP" human-review --help
+run_test "adp webhook --help" "$ADP" webhook --help
 run_test "adp --lang en --help" "$ADP" --lang en --help
 run_test "adp --lang zh --help" "$ADP" --lang zh --help
 
@@ -143,7 +145,6 @@ if [ "$API_AVAILABLE" = true ]; then
     # API config exists — only test non-destructive commands
     run_test "config get" "$ADP" config get
     run_test "config set --api-base-url (restore)" "$ADP" config set --api-base-url "$ORIGINAL_API_BASE_URL"
-    skip_test "config set --api-key (skipped to preserve API config)"
     skip_test "config clear (skipped to preserve API config)"
 else
     # No API config — safe to do full config lifecycle test
@@ -163,17 +164,21 @@ run_test "schema parse" "$ADP" schema parse
 run_test "schema parse local" "$ADP" schema parse local
 run_test "schema extract" "$ADP" schema extract
 run_test "schema custom-app" "$ADP" schema custom-app
+run_test "schema human-review" "$ADP" schema human-review
+run_test "schema webhook" "$ADP" schema webhook
 
 # ============================================
 # 4. API Tests (require credentials)
 # ============================================
 if [ "$API_AVAILABLE" != true ]; then
-    print_header "4-8. API Tests (SKIPPED)"
+    print_header "4-10. API Tests (SKIPPED)"
     skip_test "app-id list"
     skip_test "parse local"
     skip_test "extract local"
     skip_test "custom-app create"
     skip_test "credit"
+    skip_test "human-review rule-create"
+    skip_test "webhook create"
 else
 
 # ---- App ID ----
@@ -281,6 +286,117 @@ fi
 print_header "8. Credit Command"
 
 run_test "credit" "$ADP" credit
+
+# ---- Human Review ----
+print_header "9. Human Review Commands"
+
+# Rule CRUD (uses APP_ID from earlier)
+echo -e "\n${YELLOW}[TEST]${NC} human-review rule-create"
+TESTS_RUN=$((TESTS_RUN + 1))
+HR_CREATE_OUTPUT=$("$ADP" human-review rule-create \
+    --app-id "$APP_ID" \
+    --rule-name "E2E-Test-Rule-$(date +%s)" \
+    --rule-status \
+    --rule '[{"rule_dimension":"整体文档","rule_setting":"字段不为空"}]' \
+    --rule-logic 1 2>&1) || true
+
+if echo "$HR_CREATE_OUTPUT" | grep -q '"code": "success"\|"code":"success"'; then
+    echo -e "${GREEN}[PASS]${NC} human-review rule-create"
+    TESTS_PASSED=$((TESTS_PASSED + 1))
+    TEST_LOG+="PASS | human-review rule-create"$'\n'
+else
+    echo -e "${RED}[FAIL]${NC} human-review rule-create"
+    echo "$HR_CREATE_OUTPUT"
+    TESTS_FAILED=$((TESTS_FAILED + 1))
+    TEST_LOG+="FAIL | human-review rule-create"$'\n'
+fi
+
+run_test "human-review get-config" "$ADP" human-review get-config --app-id "$APP_ID"
+
+echo -e "\n${YELLOW}[TEST]${NC} human-review rule-update"
+TESTS_RUN=$((TESTS_RUN + 1))
+HR_UPDATE_OUTPUT=$("$ADP" human-review rule-update \
+    --app-id "$APP_ID" \
+    --rule-name "E2E-Test-Rule-Updated" \
+    --rule '[{"rule_dimension":"整体文档","rule_setting":"字段不为空"}]' \
+    --rule-logic 2 2>&1) || true
+
+if echo "$HR_UPDATE_OUTPUT" | grep -q '"code": "success"\|"code":"success"'; then
+    echo -e "${GREEN}[PASS]${NC} human-review rule-update"
+    TESTS_PASSED=$((TESTS_PASSED + 1))
+    TEST_LOG+="PASS | human-review rule-update"$'\n'
+else
+    echo -e "${RED}[FAIL]${NC} human-review rule-update"
+    echo "$HR_UPDATE_OUTPUT"
+    TESTS_FAILED=$((TESTS_FAILED + 1))
+    TEST_LOG+="FAIL | human-review rule-update"$'\n'
+fi
+
+run_test "human-review rule-delete" "$ADP" human-review rule-delete --app-id "$APP_ID"
+
+# AI generate (may fail if app doesn't support it, treat as best-effort)
+run_test "human-review rule-ai-generate" "$ADP" human-review rule-ai-generate --app-id "$APP_ID" || true
+
+# Task create (reuses extract flow, sync mode)
+run_test "human-review task-create (local sync)" "$ADP" human-review task-create \
+    --app-id "$APP_ID" --local "$SCRIPT_DIR/samples/73.蚂蚁+B类.png"
+
+# Task create (async + no-wait)
+HR_TASKS_FILE="$SCRIPT_DIR/hr_tasks.json"
+run_test "human-review task-create (local async --no-wait)" "$ADP" human-review task-create \
+    --app-id "$APP_ID" --local "$SCRIPT_DIR/samples/73.蚂蚁+B类.png" \
+    --async --no-wait --export "$HR_TASKS_FILE"
+
+if [ -f "$HR_TASKS_FILE" ]; then
+    run_test "human-review task-query --file" "$ADP" human-review task-query --watch --file "$HR_TASKS_FILE"
+    rm -f "$HR_TASKS_FILE"
+else
+    skip_test "human-review task-query --file (no tasks file generated)"
+fi
+
+# ---- Webhook ----
+print_header "10. Webhook Commands"
+
+# Create webhook
+echo -e "\n${YELLOW}[TEST]${NC} webhook create"
+TESTS_RUN=$((TESTS_RUN + 1))
+WH_CREATE_OUTPUT=$("$ADP" webhook create \
+    --webhook-url "https://example.com/callback-e2e-test" \
+    --event-types "1,3,4" 2>&1) || true
+
+CREATED_WEBHOOK_ID=$(echo "$WH_CREATE_OUTPUT" | grep -o '"webhook_id": "[^"]*' | head -1 | cut -d'"' -f4 || true)
+if [ -n "$CREATED_WEBHOOK_ID" ]; then
+    echo -e "${GREEN}[PASS]${NC} webhook create (webhook_id: $CREATED_WEBHOOK_ID)"
+    TESTS_PASSED=$((TESTS_PASSED + 1))
+    TEST_LOG+="PASS | webhook create (webhook_id: $CREATED_WEBHOOK_ID)"$'\n'
+else
+    # May still succeed without webhook_id in output
+    if echo "$WH_CREATE_OUTPUT" | grep -q '"code": "success"\|"code":"success"'; then
+        echo -e "${GREEN}[PASS]${NC} webhook create"
+        TESTS_PASSED=$((TESTS_PASSED + 1))
+        TEST_LOG+="PASS | webhook create"$'\n'
+    else
+        echo -e "${RED}[FAIL]${NC} webhook create"
+        echo "$WH_CREATE_OUTPUT"
+        TESTS_FAILED=$((TESTS_FAILED + 1))
+        TEST_LOG+="FAIL | webhook create"$'\n'
+    fi
+fi
+
+run_test "webhook get-config" "$ADP" webhook get-config
+
+if [ -n "${CREATED_WEBHOOK_ID:-}" ]; then
+    run_test "webhook update" "$ADP" webhook update \
+        --webhook-id "$CREATED_WEBHOOK_ID" \
+        --webhook-url "https://example.com/callback-e2e-updated" \
+        --event-types "1,2,3,4"
+    run_test "webhook log" "$ADP" webhook log --webhook-id "$CREATED_WEBHOOK_ID"
+    run_test "webhook delete" "$ADP" webhook delete --webhook-id "$CREATED_WEBHOOK_ID"
+else
+    skip_test "webhook update (no webhook_id)"
+    run_test "webhook log" "$ADP" webhook log
+    skip_test "webhook delete (no webhook_id)"
+fi
 
 fi  # end API tests
 

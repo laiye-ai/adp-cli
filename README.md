@@ -15,6 +15,8 @@ agentic-doc-parse-and-extract focuses on intelligent processing of the entire do
 | **Document Parsing** | Automatically recognize multi-format documents such as PDFs and images, convert messy unstructured content (e.g., scanned documents, handwritten text, complex layout documents) into standardized Structured Data, while preserving the original document hierarchy and key relationships | Convert unstructured documents into Structured Data for LLM reading and subsequent extraction |
 | **Out Of The Box Document Extraction** | Based on the native AI capabilities of the ADP large model, it comes with built-in standardized extraction models for invoices, receipts, orders, commonly used certificates in China, etc. No need to configure rules or manual annotation, one-click extraction of key fields from various types of general documentation, outputting standard JSON | Account Payable automation, expense management, procurement automation, quick entry of card and certificate information into the system |
 | **Custom Document Extraction** | Supports independent creation, editing, and management of personalized extraction applications, allowing configuration of exclusive extraction fields and recognition logic for enterprise-specific documentation and industry-customized forms | Private extraction requirements for enterprise-specific documentation, industry-customized forms, and non-standardized documents |
+| **Human-Review Collaboration** | Provides complete human-review collaboration APIs and CLI commands, supporting creation, editing, querying and deletion of review rules, AI-recommended rules, task execution (sync/async), and document result updates | Automated quality assurance, compliance review, human-in-the-loop document processing |
+| **Webhook Callbacks** | Supports configuring Webhook callback URLs and trigger events, enabling real-time push notifications when task status changes, eliminating the need for continuous polling | Real-time task status monitoring, third-party system integration, event-driven workflows |
 | **Task Query** | Supports asynchronous task submission and status query, enabling quick viewing of task execution progress, success/failure status, and final task processing results | Batch task processing, asynchronous document processing, problem troubleshooting, and processing record tracing |
 | **Application Management** | Provides comprehensive application management capabilities, allowing users to view all available extraction applications (system-built + custom), query application details, and manage application tags | Multi-scenario business switching, full lifecycle management of applications, and custom application management |
 
@@ -111,6 +113,19 @@ adp credit
 | `adp custom-app delete` | Delete a custom app |
 | `adp custom-app delete-version` | Delete a specific config version |
 | `adp custom-app ai-generate` | AI-recommend extraction fields |
+| `adp human-review rule-create` | Create a human-review collaboration rule |
+| `adp human-review get-config` | View human-review rule for an app |
+| `adp human-review rule-update` | Update a human-review collaboration rule |
+| `adp human-review rule-delete` | Delete a human-review collaboration rule |
+| `adp human-review rule-ai-generate` | AI-recommended review rules |
+| `adp human-review task-create` | Create a human-review task (sync/async) |
+| `adp human-review task-query` | Query human-review async task status |
+| `adp human-review result-update` | Update document human-review result |
+| `adp webhook create` | Create a webhook callback configuration |
+| `adp webhook get-config` | List webhook configurations |
+| `adp webhook update` | Update a webhook configuration |
+| `adp webhook delete` | Delete a webhook configuration |
+| `adp webhook log` | Query webhook push logs |
 | `adp credit` | Show remaining credits |
 | `adp schema` | Output command schema (for AI agents) |
 
@@ -168,6 +183,44 @@ adp extract query --watch --file tasks.json --export ./results/
 ```
 
 Even if the CLI crashes mid-way, task IDs in `tasks.json` are preserved — resume anytime with `query --file`.
+
+## Human-Review Collaboration
+
+Human-review commands manage collaboration rules and tasks for document quality assurance:
+
+```bash
+# Create a review rule
+adp human-review rule-create --app-id <app-id> --rule-name "my-rule" \
+  --rule '[{"rule_dimension":"整体文档","rule_setting":"所有字段不能为空"}]' \
+  --rule-status "true" --rule-logic 2
+
+# Update a review rule
+adp human-review rule-update --app-id <app-id> --rule-name "my-rule" \
+  --rule '[{"rule_dimension":"文档置信度","rule_setting":"不能小于0.9"}]' \
+  --rule-status "false" --rule-logic 1
+
+# Query rule config
+adp human-review get-config --app-id <app-id>
+
+# AI-generate rules
+adp human-review rule-ai-generate --app-id <app-id> \
+  --fields '[{"field_name":"amount","field_accuracy":"high"}]'
+
+# Create async task
+adp human-review task-create --app-id <app-id> --url https://example.com/file.pdf --async
+
+# Query task status
+adp human-review task-query <task-id> --watch
+
+# Update document result
+adp human-review result-update --file-task-id <task-id> \
+  --collaboration-result '[{"field_name":"amount","field_type":"string","field_values":["100"]}]'
+```
+
+**Flags:**
+- `--rule-status`: string (`"true"` / `"false"`, default: `"true"`) — use `=` to pass value (e.g. `--rule-status=false`)
+- `--rule-logic`: integer — `1` = any condition, `2` = all conditions
+- `--collaboration-result`: JSON — required fields: `field_name`, `field_type` (string/date/table), `field_values` (array). When `field_type=table`, use `table_values: [[{field_name, field_type (string/date only), field_values}]]`
 
 ## Batch Processing
 

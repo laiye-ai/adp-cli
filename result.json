@@ -1,0 +1,32 @@
+{
+  "code": "success",
+  "data": {
+    "agent_type": null,
+    "aigc": {
+      "ContentProducer": "001191110108587659081E10001",
+      "ContentPropagator": "001191110108587659081E10001",
+      "Label": "AIGCLabelType.AI_GENERATED",
+      "ProcessingTypes": [
+        "ocr",
+        "llm_extract"
+      ],
+      "ProduceID": "31cba63f4f3d11f1a62b26afa157f1f1",
+      "PropagateID": "31cba63f4f3d11f1a62b26afa157f1f1",
+      "ReservedCode1": "3ae1f4a4c012d4ceddbdd13d3ca7571c",
+      "ReservedCode2": "3ae1f4a4c012d4ceddbdd13d3ca7571c"
+    },
+    "classify_result": null,
+    "collaboration_result": [],
+    "doc_recognize_result": [],
+    "document_classification_detail": null,
+    "extract_config_version": "",
+    "extraction_result": [],
+    "file_url": "",
+    "message": "获取文件失败，或文件内容为空",
+    "output_result": [],
+    "status": 5,
+    "task_id": ""
+  },
+  "message": "",
+  "tips": null
+}

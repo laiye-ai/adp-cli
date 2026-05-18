@@ -111,6 +111,7 @@ var createCustomAppCmd = &cobra.Command{
 			cliErr := errors.ClassifyException(err, "custom-app create")
 			formatterOut.ExitWithError(cliErr)
 		}
+		checkAPIResponse(result, "custom-app create")
 
 		formatterOut.PrintSuccess(i18n.T("app_created"))
 		formatterOut.PrintJSON(result)
@@ -214,6 +215,7 @@ var updateCustomAppCmd = &cobra.Command{
 			cliErr := errors.ClassifyException(err, "custom-app update")
 			formatterOut.ExitWithError(cliErr)
 		}
+		checkAPIResponse(result, "custom-app update")
 
 		formatterOut.PrintSuccess(i18n.T("app_updated"))
 		formatterOut.PrintJSON(result)
@@ -252,6 +254,7 @@ var getConfigCustomAppCmd = &cobra.Command{
 			cliErr := errors.ClassifyException(err, "custom-app get-config")
 			formatterOut.ExitWithError(cliErr)
 		}
+		checkAPIResponse(result, "custom-app get-config")
 
 		formatterOut.PrintJSON(result)
 	},
@@ -415,6 +418,7 @@ var aiGenerateCustomAppCmd = &cobra.Command{
 			cliErr := errors.ClassifyException(err, "custom-app ai-generate")
 			formatterOut.ExitWithError(cliErr)
 		}
+		checkAPIResponse(result, "custom-app ai-generate")
 
 		formatterOut.PrintJSON(result)
 	},

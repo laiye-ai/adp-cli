@@ -14,6 +14,7 @@ type Formatter struct {
 	jsonMode  bool
 	quietMode bool
 	isTTY     bool
+	exitHook  func(message string, code int)
 }
 
 // New creates a new Formatter
@@ -41,6 +42,11 @@ func (f *Formatter) SetJSONMode(enabled bool) {
 // SetQuietMode sets quiet mode
 func (f *Formatter) SetQuietMode(enabled bool) {
 	f.quietMode = enabled
+}
+
+// SetExitHook registers a function to be called before os.Exit in ExitWithError.
+func (f *Formatter) SetExitHook(hook func(message string, code int)) {
+	f.exitHook = hook
 }
 
 // IsTTY returns whether the output is a TTY
@@ -123,6 +129,9 @@ func (f *Formatter) PrintCLIError(err *errors.CLIError) {
 // ExitWithError prints error and exits with the error code
 func (f *Formatter) ExitWithError(err *errors.CLIError) {
 	f.PrintCLIError(err)
+	if f.exitHook != nil {
+		f.exitHook(err.Message, err.Code)
+	}
 	os.Exit(err.Code)
 }
 

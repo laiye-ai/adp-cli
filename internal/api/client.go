@@ -10,8 +10,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/rs/zerolog/log"
 	"github.com/laiye-ai/adp-cli/internal/config"
+	"github.com/rs/zerolog/log"
 )
 
 const (
@@ -166,6 +166,14 @@ func (c *Client) ParseAsync(fileURL, appID string, filePath, fileBase64, fileNam
 		return "", err
 	}
 
+	if code, ok := resp["code"].(string); ok && code != "success" {
+		msg, _ := resp["message"].(string)
+		if msg == "" {
+			msg = code
+		}
+		return "", fmt.Errorf("API error (%s): %s", code, msg)
+	}
+
 	if data, ok := resp["data"].(map[string]interface{}); ok {
 		if taskID, ok := data["task_id"].(string); ok {
 			return taskID, nil
@@ -180,11 +188,15 @@ func (c *Client) QueryParseTask(taskID string) (map[string]interface{}, error) {
 }
 
 // ExtractSync synchronously extracts from a document
-func (c *Client) ExtractSync(fileURL, appID string, filePath, fileBase64, fileName string, extractConfig map[string]interface{}) (map[string]interface{}, error) {
+func (c *Client) ExtractSync(fileURL, appID string, filePath, fileBase64, fileName string, extractConfig map[string]interface{}, disableCollaboration bool) (map[string]interface{}, error) {
 	data := map[string]interface{}{
 		"app_id":          appID,
-		"file_name":        fileName,
+		"file_name":       fileName,
 		"with_rec_result": false,
+	}
+
+	if disableCollaboration {
+		data["model_params"] = map[string]interface{}{"disable_collaboration": 0}
 	}
 
 	if fileBase64 != "" {
@@ -210,7 +222,7 @@ func (c *Client) ExtractSync(fileURL, appID string, filePath, fileBase64, fileNa
 func (c *Client) ExtractAsync(fileURL, appID string, filePath, fileBase64, fileName string, extractConfig map[string]interface{}) (string, error) {
 	data := map[string]interface{}{
 		"app_id":          appID,
-		"file_name":        fileName,
+		"file_name":       fileName,
 		"with_rec_result": false,
 	}
 
@@ -233,6 +245,14 @@ func (c *Client) ExtractAsync(fileURL, appID string, filePath, fileBase64, fileN
 	resp, err := c.request("POST", fmt.Sprintf("/open/agentic_doc_processor/%s/v1/app/doc/extract/create/task", c.tenantName), data)
 	if err != nil {
 		return "", err
+	}
+
+	if code, ok := resp["code"].(string); ok && code != "success" {
+		msg, _ := resp["message"].(string)
+		if msg == "" {
+			msg = code
+		}
+		return "", fmt.Errorf("API error (%s): %s", code, msg)
 	}
 
 	if data, ok := resp["data"].(map[string]interface{}); ok {
@@ -314,9 +334,9 @@ func (c *Client) ListApps(appType *int, limit int) ([]map[string]interface{}, er
 // CreateCustomApp creates a custom extraction app
 func (c *Client) CreateCustomApp(appName string, extractFields []map[string]interface{}, parseMode string, enableLongDoc *bool, longDocConfig []map[string]interface{}, appLabel []string) (map[string]interface{}, error) {
 	data := map[string]interface{}{
-		"app_name":      appName,
+		"app_name":       appName,
 		"extract_fields": extractFields,
-		"parse_mode":    parseMode,
+		"parse_mode":     parseMode,
 	}
 
 	if appLabel != nil {
@@ -336,9 +356,9 @@ func (c *Client) CreateCustomApp(appName string, extractFields []map[string]inte
 // UpdateCustomApp updates a custom extraction app
 func (c *Client) UpdateCustomApp(appID string, extractFields []map[string]interface{}, parseMode string, enableLongDoc *bool, appName *string, appLabel []string, longDocConfig []map[string]interface{}) (map[string]interface{}, error) {
 	data := map[string]interface{}{
-		"app_id":          appID,
-		"extract_fields":   extractFields,
-		"parse_mode":      parseMode,
+		"app_id":         appID,
+		"extract_fields": extractFields,
+		"parse_mode":     parseMode,
 	}
 
 	if appName != nil {
@@ -380,7 +400,7 @@ func (c *Client) DeleteCustomApp(appID string) (map[string]interface{}, error) {
 // DeleteCustomAppVersion deletes a specific config version
 func (c *Client) DeleteCustomAppVersion(appID, configVersion string) (map[string]interface{}, error) {
 	data := map[string]interface{}{
-		"app_id":          appID,
+		"app_id":         appID,
 		"config_version": configVersion,
 	}
 	return c.request("POST", fmt.Sprintf("/open/agentic_doc_processor/%s/v1/app-manage/version/delete", c.tenantName), data)
@@ -424,8 +444,132 @@ func (c *Client) IsPaidUser() (bool, error) {
 	return false, nil
 }
 
+// ReportStatistics sends a telemetry event to the statistics endpoint.
+func (c *Client) ReportStatistics(data interface{}) error {
+	endpoint := fmt.Sprintf("/open/agentic_doc_processor/%s/v1/command/statistics", c.tenantName)
+	_, err := c.request("POST", endpoint, data)
+	return err
+}
+
 // HealthCheck checks API health
 func (c *Client) HealthCheck() bool {
 	_, err := c.request("GET", "/health", nil)
 	return err == nil
+}
+
+// --- Human-Review (Collaboration) APIs ---
+
+// CreateCollaborationRule creates a human-review collaboration rule
+func (c *Client) CreateCollaborationRule(appID, ruleName string, ruleStatus bool, rules []map[string]interface{}, ruleLogic int) (map[string]interface{}, error) {
+	data := map[string]interface{}{
+		"app_id":      appID,
+		"rule_name":   ruleName,
+		"rule_status": ruleStatus,
+		"rule":        rules,
+		"rule_logic":  ruleLogic,
+	}
+	return c.request("POST", fmt.Sprintf("/open/agentic_doc_processor/%s/v1/collaboration/rules/create", c.tenantName), data)
+}
+
+// GetCollaborationRule gets the collaboration rule for an app
+func (c *Client) GetCollaborationRule(appID string) (map[string]interface{}, error) {
+	return c.request("GET", fmt.Sprintf("/open/agentic_doc_processor/%s/v1/collaboration/rules/%s", c.tenantName, appID), nil)
+}
+
+// UpdateCollaborationRule updates a collaboration rule
+func (c *Client) UpdateCollaborationRule(appID, ruleName string, ruleStatus bool, rules []map[string]interface{}, ruleLogic int) (map[string]interface{}, error) {
+	data := map[string]interface{}{
+		"app_id":      appID,
+		"rule_name":   ruleName,
+		"rule_status": ruleStatus,
+		"rule":        rules,
+		"rule_logic":  ruleLogic,
+	}
+	return c.request("POST", fmt.Sprintf("/open/agentic_doc_processor/%s/v1/collaboration/rules/update", c.tenantName), data)
+}
+
+// DeleteCollaborationRule deletes a collaboration rule
+func (c *Client) DeleteCollaborationRule(appID string) (map[string]interface{}, error) {
+	data := map[string]interface{}{"app_id": appID}
+	return c.request("POST", fmt.Sprintf("/open/agentic_doc_processor/%s/v1/collaboration/rules/delete", c.tenantName), data)
+}
+
+// RecommendCollaborationRule gets AI-recommended collaboration rules.
+// fields may be nil; when provided it is sent as the "fields" payload key.
+func (c *Client) RecommendCollaborationRule(appID string, fields []map[string]interface{}) (map[string]interface{}, error) {
+	data := map[string]interface{}{
+		"app_id": appID,
+	}
+	if fields != nil {
+		data["fields"] = fields
+	}
+	return c.request("POST", fmt.Sprintf("/open/agentic_doc_processor/%s/v1/collaboration/rules/recommend", c.tenantName), data)
+}
+
+// UpdateCollaborationResult updates a document's human-review result
+func (c *Client) UpdateCollaborationResult(fileTaskID string, collaborationResult []map[string]interface{}) (map[string]interface{}, error) {
+	data := map[string]interface{}{
+		"file_task_id":         fileTaskID,
+		"collaboration_result": collaborationResult,
+	}
+	return c.request("POST", fmt.Sprintf("/open/agentic_doc_processor/%s/v1/collaboration/result/update", c.tenantName), data)
+}
+
+// --- Webhook APIs (endpoints are placeholders, replace when backend is ready) ---
+
+// CreateWebhook creates a webhook configuration.
+// appIDs may be nil for "apply to all apps".
+func (c *Client) CreateWebhook(webhookURL string, eventTypes []int, appIDs []string) (map[string]interface{}, error) {
+	data := map[string]interface{}{
+		"webhook_url": webhookURL,
+		"event_types": eventTypes,
+	}
+	if appIDs != nil {
+		data["app_id"] = appIDs
+	}
+	return c.request("POST", fmt.Sprintf("/open/agentic_doc_processor/%s/v1/webhook/create", c.tenantName), data)
+}
+
+// ListWebhooks lists webhook configurations, optionally filtered by app IDs.
+func (c *Client) ListWebhooks(appIDs []string) (map[string]interface{}, error) {
+	data := map[string]interface{}{}
+	if appIDs != nil {
+		data["app_id"] = appIDs
+	}
+	return c.request("POST", fmt.Sprintf("/open/agentic_doc_processor/%s/v1/webhook/list", c.tenantName), data)
+}
+
+// UpdateWebhook updates a webhook configuration.
+func (c *Client) UpdateWebhook(webhookID, webhookURL string, eventTypes []int, appIDs []string) (map[string]interface{}, error) {
+	data := map[string]interface{}{
+		"webhook_id":  webhookID,
+		"webhook_url": webhookURL,
+		"event_types": eventTypes,
+	}
+	if appIDs != nil {
+		data["app_id"] = appIDs
+	}
+	return c.request("POST", fmt.Sprintf("/open/agentic_doc_processor/%s/v1/webhook/update", c.tenantName), data)
+}
+
+// DeleteWebhook deletes a webhook configuration
+func (c *Client) DeleteWebhook(webhookID string) (map[string]interface{}, error) {
+	data := map[string]interface{}{"webhook_id": webhookID}
+	return c.request("POST", fmt.Sprintf("/open/agentic_doc_processor/%s/v1/webhook/delete", c.tenantName), data)
+}
+
+// QueryWebhookLog queries webhook push logs.
+// Any of webhookID / startTime / endTime may be empty to omit them from the query.
+func (c *Client) QueryWebhookLog(webhookID, startTime, endTime string) (map[string]interface{}, error) {
+	data := map[string]interface{}{}
+	if webhookID != "" {
+		data["webhook_id"] = webhookID
+	}
+	if startTime != "" {
+		data["start_time"] = startTime
+	}
+	if endTime != "" {
+		data["end_time"] = endTime
+	}
+	return c.request("POST", fmt.Sprintf("/open/agentic_doc_processor/%s/v1/webhook/log", c.tenantName), data)
 }

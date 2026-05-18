@@ -1,0 +1,4782 @@
+{
+  "code": "success",
+  "data": {
+    "agent_type": "custom-extractor",
+    "aigc": {
+      "ContentProducer": "001191110108587659081E10001",
+      "ContentPropagator": "001191110108587659081E10001",
+      "Label": "AIGCLabelType.AI_GENERATED",
+      "ProcessingTypes": [
+        "ocr",
+        "llm_extract"
+      ],
+      "ProduceID": "e57fa8034e7911f183a036834997d505",
+      "PropagateID": "e57fa8034e7911f183a036834997d505",
+      "ReservedCode1": "10815fadf3160242e47b5b830f36076f",
+      "ReservedCode2": "10815fadf3160242e47b5b830f36076f"
+    },
+    "classify_result": null,
+    "collaboration_result": [
+      {
+        "field_id": "",
+        "field_key": "2ba119deda2811f0961afa59318c0ee6",
+        "field_name": "客户订单号",
+        "field_values": [
+          {
+            "field_confidence": 0.9999503442460437,
+            "field_value": "P020250304012",
+            "references": [
+              {
+                "page_no": 1,
+                "points": [
+                  {
+                    "x": 587,
+                    "y": 72
+                  },
+                  {
+                    "x": 770,
+                    "y": 72
+                  },
+                  {
+                    "x": 770,
+                    "y": 89
+                  },
+                  {
+                    "x": 587,
+                    "y": 89
+                  }
+                ],
+                "search_text": "采购单号: P020250304012"
+              }
+            ]
+          }
+        ],
+        "field_verify_detail": {
+          "matched_reason": "",
+          "rule_matched": false,
+          "verification_passed": true
+        },
+        "field_verify_state": 1,
+        "field_verify_values": [
+          {
+            "field_confidence": 0.9999503442460437,
+            "field_value": "P020250304012",
+            "references": [
+              {
+                "page_no": 1,
+                "points": [
+                  {
+                    "x": 587,
+                    "y": 72
+                  },
+                  {
+                    "x": 770,
+                    "y": 72
+                  },
+                  {
+                    "x": 770,
+                    "y": 89
+                  },
+                  {
+                    "x": 587,
+                    "y": 89
+                  }
+                ],
+                "search_text": "采购单号: P020250304012"
+              }
+            ]
+          }
+        ],
+        "table_values": [],
+        "table_verify_values": []
+      },
+      {
+        "field_id": "",
+        "field_key": "2ba11bf0da2811f0961afa59318c0ee6",
+        "field_name": "订单日期",
+        "field_values": [
+          {
+            "field_confidence": 0.9993470827342421,
+            "field_value": "2025-03-04",
+            "references": [
+              {
+                "page_no": 1,
+                "points": [
+                  {
+                    "x": 27,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 393
+                  },
+                  {
+                    "x": 27,
+                    "y": 393
+                  }
+                ],
+                "search_text": "订货日期:2025-03-04"
+              }
+            ]
+          }
+        ],
+        "field_verify_detail": {
+          "matched_reason": "",
+          "rule_matched": false,
+          "verification_passed": true
+        },
+        "field_verify_state": 1,
+        "field_verify_values": [
+          {
+            "field_confidence": 0.9993470827342421,
+            "field_value": "2025-03-04",
+            "references": [
+              {
+                "page_no": 1,
+                "points": [
+                  {
+                    "x": 27,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 393
+                  },
+                  {
+                    "x": 27,
+                    "y": 393
+                  }
+                ],
+                "search_text": "订货日期:2025-03-04"
+              }
+            ]
+          }
+        ],
+        "table_values": [],
+        "table_verify_values": []
+      },
+      {
+        "field_id": "",
+        "field_key": "2ba11d30da2811f0961afa59318c0ee6",
+        "field_name": "客户名称",
+        "field_values": [
+          {
+            "field_confidence": 0.9993470986288122,
+            "field_value": "中山市蚂蚁照明光电有限公司",
+            "references": [
+              {
+                "page_no": 1,
+                "points": [
+                  {
+                    "x": 27,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 393
+                  },
+                  {
+                    "x": 27,
+                    "y": 393
+                  }
+                ],
+                "search_text": "订货方:中山市蚂蚁照明光电有限公司"
+              }
+            ]
+          }
+        ],
+        "field_verify_detail": {
+          "matched_reason": "",
+          "rule_matched": false,
+          "verification_passed": true
+        },
+        "field_verify_state": 1,
+        "field_verify_values": [
+          {
+            "field_confidence": 0.9993470986288122,
+            "field_value": "中山市蚂蚁照明光电有限公司",
+            "references": [
+              {
+                "page_no": 1,
+                "points": [
+                  {
+                    "x": 27,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 393
+                  },
+                  {
+                    "x": 27,
+                    "y": 393
+                  }
+                ],
+                "search_text": "订货方:中山市蚂蚁照明光电有限公司"
+              }
+            ]
+          }
+        ],
+        "table_values": [],
+        "table_verify_values": []
+      },
+      {
+        "field_id": "",
+        "field_key": "2ba11e5cda2811f0961afa59318c0ee6",
+        "field_name": "客户地址",
+        "field_values": [
+          {
+            "field_confidence": 0.9993459343601441,
+            "field_value": "中山市横栏镇永兴工业区富庆一路21号2栋",
+            "references": [
+              {
+                "page_no": 1,
+                "points": [
+                  {
+                    "x": 27,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 393
+                  },
+                  {
+                    "x": 27,
+                    "y": 393
+                  }
+                ],
+                "search_text": "企业地址:中山市横栏镇永兴工业区富庆一路21号2栋"
+              }
+            ]
+          }
+        ],
+        "field_verify_detail": {
+          "matched_reason": "",
+          "rule_matched": false,
+          "verification_passed": true
+        },
+        "field_verify_state": 1,
+        "field_verify_values": [
+          {
+            "field_confidence": 0.9993459343601441,
+            "field_value": "中山市横栏镇永兴工业区富庆一路21号2栋",
+            "references": [
+              {
+                "page_no": 1,
+                "points": [
+                  {
+                    "x": 27,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 393
+                  },
+                  {
+                    "x": 27,
+                    "y": 393
+                  }
+                ],
+                "search_text": "企业地址:中山市横栏镇永兴工业区富庆一路21号2栋"
+              }
+            ]
+          }
+        ],
+        "table_values": [],
+        "table_verify_values": []
+      },
+      {
+        "field_id": "",
+        "field_key": "2ba11f74da2811f0961afa59318c0ee6",
+        "field_name": "联系人",
+        "field_values": [
+          {
+            "field_confidence": 0.9993470906815272,
+            "field_value": "马国银",
+            "references": [
+              {
+                "page_no": 1,
+                "points": [
+                  {
+                    "x": 27,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 393
+                  },
+                  {
+                    "x": 27,
+                    "y": 393
+                  }
+                ],
+                "search_text": "联系人:马国银"
+              }
+            ]
+          }
+        ],
+        "field_verify_detail": {
+          "matched_reason": "",
+          "rule_matched": false,
+          "verification_passed": true
+        },
+        "field_verify_state": 1,
+        "field_verify_values": [
+          {
+            "field_confidence": 0.9993470906815272,
+            "field_value": "马国银",
+            "references": [
+              {
+                "page_no": 1,
+                "points": [
+                  {
+                    "x": 27,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 393
+                  },
+                  {
+                    "x": 27,
+                    "y": 393
+                  }
+                ],
+                "search_text": "联系人:马国银"
+              }
+            ]
+          }
+        ],
+        "table_values": [],
+        "table_verify_values": []
+      },
+      {
+        "field_id": "",
+        "field_key": "2ba1208cda2811f0961afa59318c0ee6",
+        "field_name": "联系方式",
+        "field_values": [
+          {
+            "field_confidence": 0.9995523827662236,
+            "field_value": "0760-28188088,0760-28188089",
+            "references": [
+              {
+                "page_no": 1,
+                "points": [
+                  {
+                    "x": 27,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 393
+                  },
+                  {
+                    "x": 27,
+                    "y": 393
+                  }
+                ],
+                "search_text": "联系电话:0760-28188088"
+              }
+            ]
+          }
+        ],
+        "field_verify_detail": {
+          "matched_reason": "",
+          "rule_matched": false,
+          "verification_passed": true
+        },
+        "field_verify_state": 1,
+        "field_verify_values": [
+          {
+            "field_confidence": 0.9995523827662236,
+            "field_value": "0760-28188088,0760-28188089",
+            "references": [
+              {
+                "page_no": 1,
+                "points": [
+                  {
+                    "x": 27,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 393
+                  },
+                  {
+                    "x": 27,
+                    "y": 393
+                  }
+                ],
+                "search_text": "联系电话:0760-28188088"
+              }
+            ]
+          }
+        ],
+        "table_values": [],
+        "table_verify_values": []
+      },
+      {
+        "field_id": "",
+        "field_key": "7a6c4fb1b59d45c68e341d8645967211",
+        "field_name": "交货地点",
+        "field_values": [
+          {
+            "field_confidence": 0.9999742164362393,
+            "field_value": "中山市横栏镇永兴工业区富庆一路21号蚂蚁照明仓库",
+            "references": [
+              {
+                "page_no": 1,
+                "points": [
+                  {
+                    "x": 29,
+                    "y": 533
+                  },
+                  {
+                    "x": 407,
+                    "y": 533
+                  },
+                  {
+                    "x": 407,
+                    "y": 549
+                  },
+                  {
+                    "x": 29,
+                    "y": 549
+                  }
+                ],
+                "search_text": "交货地点:中山市横栏镇永兴工业区富庆一路21号蚂蚁照明仓库。"
+              }
+            ]
+          }
+        ],
+        "field_verify_detail": {
+          "matched_reason": "",
+          "rule_matched": false,
+          "verification_passed": true
+        },
+        "field_verify_state": 1,
+        "field_verify_values": [
+          {
+            "field_confidence": 0.9999742164362393,
+            "field_value": "中山市横栏镇永兴工业区富庆一路21号蚂蚁照明仓库",
+            "references": [
+              {
+                "page_no": 1,
+                "points": [
+                  {
+                    "x": 29,
+                    "y": 533
+                  },
+                  {
+                    "x": 407,
+                    "y": 533
+                  },
+                  {
+                    "x": 407,
+                    "y": 549
+                  },
+                  {
+                    "x": 29,
+                    "y": 549
+                  }
+                ],
+                "search_text": "交货地点:中山市横栏镇永兴工业区富庆一路21号蚂蚁照明仓库。"
+              }
+            ]
+          }
+        ],
+        "table_values": [],
+        "table_verify_values": []
+      },
+      {
+        "field_id": "",
+        "field_key": "2ba1219ada2811f0961afa59318c0ee6",
+        "field_name": "采购清单",
+        "field_values": [
+          [
+            {
+              "field_key": "2ba122dada2811f0961afa59318c0ee6",
+              "field_name": "物料代码",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470000825222,
+                  "field_value": "C.FL.0003",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "C.FL.0003"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba123fcda2811f0961afa59318c0ee6",
+              "field_name": "物料名称",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470032614193,
+                  "field_value": "有铅锡膏",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "有铅锡膏"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1250ada2811f0961afa59318c0ee6",
+              "field_name": "规格型号",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470032614237,
+                  "field_value": "GW9068C-6",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "GW9068C-6"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1262cda2811f0961afa59318c0ee6",
+              "field_name": "单位",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470668396727,
+                  "field_value": "克",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "克"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1273ada2811f0961afa59318c0ee6",
+              "field_name": "数量",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993468761049715,
+                  "field_value": "100000",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "100000"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12852da2811f0961afa59318c0ee6",
+              "field_name": "单价",
+              "field_values": [
+                {
+                  "field_confidence": 1,
+                  "field_value": "无结果",
+                  "references": []
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12960da2811f0961afa59318c0ee6",
+              "field_name": "金额",
+              "field_values": [
+                {
+                  "field_confidence": 1,
+                  "field_value": "无结果",
+                  "references": []
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12a78da2811f0961afa59318c0ee6",
+              "field_name": "交货日期",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470827342421,
+                  "field_value": "2025-03-04",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "2025-03-04"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12b86da2811f0961afa59318c0ee6",
+              "field_name": "备注",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993468522631341,
+                  "field_value": "50瓶",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "50瓶"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "field_key": "2ba122dada2811f0961afa59318c0ee6",
+              "field_name": "物料代码",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993467998112397,
+                  "field_value": "C.FL.0001",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "C.FL.0001"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba123fcda2811f0961afa59318c0ee6",
+              "field_name": "物料名称",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470668396756,
+                  "field_value": "锡丝",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "锡丝"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1250ada2811f0961afa59318c0ee6",
+              "field_name": "规格型号",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993468474948402,
+                  "field_value": "YF-12 φ1.1mm 55%",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "YF-12 φ1.1mm 55%"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1262cda2811f0961afa59318c0ee6",
+              "field_name": "单位",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993465900032166,
+                  "field_value": "pcs",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "pcs"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1273ada2811f0961afa59318c0ee6",
+              "field_name": "数量",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470668396727,
+                  "field_value": "80",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "80"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12852da2811f0961afa59318c0ee6",
+              "field_name": "单价",
+              "field_values": [
+                {
+                  "field_confidence": 1,
+                  "field_value": "无结果",
+                  "references": []
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12960da2811f0961afa59318c0ee6",
+              "field_name": "金额",
+              "field_values": [
+                {
+                  "field_confidence": 1,
+                  "field_value": "无结果",
+                  "references": []
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12a78da2811f0961afa59318c0ee6",
+              "field_name": "交货日期",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470827342421,
+                  "field_value": "2025-03-04",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "2025-03-04"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12b86da2811f0961afa59318c0ee6",
+              "field_name": "备注",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993468284213324,
+                  "field_value": "80卷",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "80卷"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        ],
+        "field_verify_detail": {
+          "matched_reason": "",
+          "rule_matched": false,
+          "verification_passed": true
+        },
+        "field_verify_state": 1,
+        "field_verify_values": [
+          [
+            {
+              "field_key": "2ba122dada2811f0961afa59318c0ee6",
+              "field_name": "物料代码",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470000825222,
+                  "field_value": "C.FL.0003",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "C.FL.0003"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba123fcda2811f0961afa59318c0ee6",
+              "field_name": "物料名称",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470032614193,
+                  "field_value": "有铅锡膏",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "有铅锡膏"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1250ada2811f0961afa59318c0ee6",
+              "field_name": "规格型号",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470032614237,
+                  "field_value": "GW9068C-6",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "GW9068C-6"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1262cda2811f0961afa59318c0ee6",
+              "field_name": "单位",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470668396727,
+                  "field_value": "克",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "克"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1273ada2811f0961afa59318c0ee6",
+              "field_name": "数量",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993468761049715,
+                  "field_value": "100000",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "100000"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12852da2811f0961afa59318c0ee6",
+              "field_name": "单价",
+              "field_values": [
+                {
+                  "field_confidence": 1,
+                  "field_value": "无结果",
+                  "references": []
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12960da2811f0961afa59318c0ee6",
+              "field_name": "金额",
+              "field_values": [
+                {
+                  "field_confidence": 1,
+                  "field_value": "无结果",
+                  "references": []
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12a78da2811f0961afa59318c0ee6",
+              "field_name": "交货日期",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470827342421,
+                  "field_value": "2025-03-04",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "2025-03-04"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12b86da2811f0961afa59318c0ee6",
+              "field_name": "备注",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993468522631341,
+                  "field_value": "50瓶",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "50瓶"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "field_key": "2ba122dada2811f0961afa59318c0ee6",
+              "field_name": "物料代码",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993467998112397,
+                  "field_value": "C.FL.0001",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "C.FL.0001"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba123fcda2811f0961afa59318c0ee6",
+              "field_name": "物料名称",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470668396756,
+                  "field_value": "锡丝",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "锡丝"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1250ada2811f0961afa59318c0ee6",
+              "field_name": "规格型号",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993468474948402,
+                  "field_value": "YF-12 φ1.1mm 55%",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "YF-12 φ1.1mm 55%"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1262cda2811f0961afa59318c0ee6",
+              "field_name": "单位",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993465900032166,
+                  "field_value": "pcs",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "pcs"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1273ada2811f0961afa59318c0ee6",
+              "field_name": "数量",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470668396727,
+                  "field_value": "80",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "80"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12852da2811f0961afa59318c0ee6",
+              "field_name": "单价",
+              "field_values": [
+                {
+                  "field_confidence": 1,
+                  "field_value": "无结果",
+                  "references": []
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12960da2811f0961afa59318c0ee6",
+              "field_name": "金额",
+              "field_values": [
+                {
+                  "field_confidence": 1,
+                  "field_value": "无结果",
+                  "references": []
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12a78da2811f0961afa59318c0ee6",
+              "field_name": "交货日期",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470827342421,
+                  "field_value": "2025-03-04",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "2025-03-04"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12b86da2811f0961afa59318c0ee6",
+              "field_name": "备注",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993468284213324,
+                  "field_value": "80卷",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "80卷"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        ],
+        "table_values": [
+          [
+            {
+              "field_key": "2ba122dada2811f0961afa59318c0ee6",
+              "field_name": "物料代码",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470000825222,
+                  "field_value": "C.FL.0003",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "C.FL.0003"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba123fcda2811f0961afa59318c0ee6",
+              "field_name": "物料名称",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470032614193,
+                  "field_value": "有铅锡膏",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "有铅锡膏"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1250ada2811f0961afa59318c0ee6",
+              "field_name": "规格型号",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470032614237,
+                  "field_value": "GW9068C-6",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "GW9068C-6"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1262cda2811f0961afa59318c0ee6",
+              "field_name": "单位",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470668396727,
+                  "field_value": "克",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "克"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1273ada2811f0961afa59318c0ee6",
+              "field_name": "数量",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993468761049715,
+                  "field_value": "100000",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "100000"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12852da2811f0961afa59318c0ee6",
+              "field_name": "单价",
+              "field_values": [
+                {
+                  "field_confidence": 1,
+                  "field_value": "无结果",
+                  "references": []
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12960da2811f0961afa59318c0ee6",
+              "field_name": "金额",
+              "field_values": [
+                {
+                  "field_confidence": 1,
+                  "field_value": "无结果",
+                  "references": []
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12a78da2811f0961afa59318c0ee6",
+              "field_name": "交货日期",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470827342421,
+                  "field_value": "2025-03-04",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "2025-03-04"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12b86da2811f0961afa59318c0ee6",
+              "field_name": "备注",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993468522631341,
+                  "field_value": "50瓶",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "50瓶"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "field_key": "2ba122dada2811f0961afa59318c0ee6",
+              "field_name": "物料代码",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993467998112397,
+                  "field_value": "C.FL.0001",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "C.FL.0001"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba123fcda2811f0961afa59318c0ee6",
+              "field_name": "物料名称",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470668396756,
+                  "field_value": "锡丝",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "锡丝"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1250ada2811f0961afa59318c0ee6",
+              "field_name": "规格型号",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993468474948402,
+                  "field_value": "YF-12 φ1.1mm 55%",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "YF-12 φ1.1mm 55%"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1262cda2811f0961afa59318c0ee6",
+              "field_name": "单位",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993465900032166,
+                  "field_value": "pcs",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "pcs"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1273ada2811f0961afa59318c0ee6",
+              "field_name": "数量",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470668396727,
+                  "field_value": "80",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "80"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12852da2811f0961afa59318c0ee6",
+              "field_name": "单价",
+              "field_values": [
+                {
+                  "field_confidence": 1,
+                  "field_value": "无结果",
+                  "references": []
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12960da2811f0961afa59318c0ee6",
+              "field_name": "金额",
+              "field_values": [
+                {
+                  "field_confidence": 1,
+                  "field_value": "无结果",
+                  "references": []
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12a78da2811f0961afa59318c0ee6",
+              "field_name": "交货日期",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470827342421,
+                  "field_value": "2025-03-04",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "2025-03-04"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12b86da2811f0961afa59318c0ee6",
+              "field_name": "备注",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993468284213324,
+                  "field_value": "80卷",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "80卷"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        ],
+        "table_verify_values": [
+          [
+            {
+              "field_key": "2ba122dada2811f0961afa59318c0ee6",
+              "field_name": "物料代码",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470000825222,
+                  "field_value": "C.FL.0003",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "C.FL.0003"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba123fcda2811f0961afa59318c0ee6",
+              "field_name": "物料名称",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470032614193,
+                  "field_value": "有铅锡膏",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "有铅锡膏"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1250ada2811f0961afa59318c0ee6",
+              "field_name": "规格型号",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470032614237,
+                  "field_value": "GW9068C-6",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "GW9068C-6"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1262cda2811f0961afa59318c0ee6",
+              "field_name": "单位",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470668396727,
+                  "field_value": "克",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "克"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1273ada2811f0961afa59318c0ee6",
+              "field_name": "数量",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993468761049715,
+                  "field_value": "100000",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "100000"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12852da2811f0961afa59318c0ee6",
+              "field_name": "单价",
+              "field_values": [
+                {
+                  "field_confidence": 1,
+                  "field_value": "无结果",
+                  "references": []
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12960da2811f0961afa59318c0ee6",
+              "field_name": "金额",
+              "field_values": [
+                {
+                  "field_confidence": 1,
+                  "field_value": "无结果",
+                  "references": []
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12a78da2811f0961afa59318c0ee6",
+              "field_name": "交货日期",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470827342421,
+                  "field_value": "2025-03-04",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "2025-03-04"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12b86da2811f0961afa59318c0ee6",
+              "field_name": "备注",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993468522631341,
+                  "field_value": "50瓶",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "50瓶"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "field_key": "2ba122dada2811f0961afa59318c0ee6",
+              "field_name": "物料代码",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993467998112397,
+                  "field_value": "C.FL.0001",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "C.FL.0001"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba123fcda2811f0961afa59318c0ee6",
+              "field_name": "物料名称",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470668396756,
+                  "field_value": "锡丝",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "锡丝"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1250ada2811f0961afa59318c0ee6",
+              "field_name": "规格型号",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993468474948402,
+                  "field_value": "YF-12 φ1.1mm 55%",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "YF-12 φ1.1mm 55%"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1262cda2811f0961afa59318c0ee6",
+              "field_name": "单位",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993465900032166,
+                  "field_value": "pcs",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "pcs"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1273ada2811f0961afa59318c0ee6",
+              "field_name": "数量",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470668396727,
+                  "field_value": "80",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "80"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12852da2811f0961afa59318c0ee6",
+              "field_name": "单价",
+              "field_values": [
+                {
+                  "field_confidence": 1,
+                  "field_value": "无结果",
+                  "references": []
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12960da2811f0961afa59318c0ee6",
+              "field_name": "金额",
+              "field_values": [
+                {
+                  "field_confidence": 1,
+                  "field_value": "无结果",
+                  "references": []
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12a78da2811f0961afa59318c0ee6",
+              "field_name": "交货日期",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470827342421,
+                  "field_value": "2025-03-04",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "2025-03-04"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12b86da2811f0961afa59318c0ee6",
+              "field_name": "备注",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993468284213324,
+                  "field_value": "80卷",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "80卷"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        ]
+      }
+    ],
+    "doc_recognize_result": [],
+    "document_classification_detail": null,
+    "extract_config_version": "",
+    "extraction_result": [
+      {
+        "field_key": "2ba119deda2811f0961afa59318c0ee6",
+        "field_name": "客户订单号",
+        "field_values": [
+          {
+            "field_confidence": 0.9999503442460437,
+            "field_value": "P020250304012",
+            "references": [
+              {
+                "page_no": 1,
+                "points": [
+                  {
+                    "x": 587,
+                    "y": 72
+                  },
+                  {
+                    "x": 770,
+                    "y": 72
+                  },
+                  {
+                    "x": 770,
+                    "y": 89
+                  },
+                  {
+                    "x": 587,
+                    "y": 89
+                  }
+                ],
+                "search_text": "采购单号: P020250304012"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "field_key": "2ba11bf0da2811f0961afa59318c0ee6",
+        "field_name": "订单日期",
+        "field_values": [
+          {
+            "field_confidence": 0.9993470827342421,
+            "field_value": "2025-03-04",
+            "references": [
+              {
+                "page_no": 1,
+                "points": [
+                  {
+                    "x": 27,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 393
+                  },
+                  {
+                    "x": 27,
+                    "y": 393
+                  }
+                ],
+                "search_text": "订货日期:2025-03-04"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "field_key": "2ba11d30da2811f0961afa59318c0ee6",
+        "field_name": "客户名称",
+        "field_values": [
+          {
+            "field_confidence": 0.9993470986288122,
+            "field_value": "中山市蚂蚁照明光电有限公司",
+            "references": [
+              {
+                "page_no": 1,
+                "points": [
+                  {
+                    "x": 27,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 393
+                  },
+                  {
+                    "x": 27,
+                    "y": 393
+                  }
+                ],
+                "search_text": "订货方:中山市蚂蚁照明光电有限公司"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "field_key": "2ba11e5cda2811f0961afa59318c0ee6",
+        "field_name": "客户地址",
+        "field_values": [
+          {
+            "field_confidence": 0.9993459343601441,
+            "field_value": "中山市横栏镇永兴工业区富庆一路21号2栋",
+            "references": [
+              {
+                "page_no": 1,
+                "points": [
+                  {
+                    "x": 27,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 393
+                  },
+                  {
+                    "x": 27,
+                    "y": 393
+                  }
+                ],
+                "search_text": "企业地址:中山市横栏镇永兴工业区富庆一路21号2栋"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "field_key": "2ba11f74da2811f0961afa59318c0ee6",
+        "field_name": "联系人",
+        "field_values": [
+          {
+            "field_confidence": 0.9993470906815272,
+            "field_value": "马国银",
+            "references": [
+              {
+                "page_no": 1,
+                "points": [
+                  {
+                    "x": 27,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 393
+                  },
+                  {
+                    "x": 27,
+                    "y": 393
+                  }
+                ],
+                "search_text": "联系人:马国银"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "field_key": "2ba1208cda2811f0961afa59318c0ee6",
+        "field_name": "联系方式",
+        "field_values": [
+          {
+            "field_confidence": 0.9995523827662236,
+            "field_value": "0760-28188088,0760-28188089",
+            "references": [
+              {
+                "page_no": 1,
+                "points": [
+                  {
+                    "x": 27,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 393
+                  },
+                  {
+                    "x": 27,
+                    "y": 393
+                  }
+                ],
+                "search_text": "联系电话:0760-28188088"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "field_key": "7a6c4fb1b59d45c68e341d8645967211",
+        "field_name": "交货地点",
+        "field_values": [
+          {
+            "field_confidence": 0.9999742164362393,
+            "field_value": "中山市横栏镇永兴工业区富庆一路21号蚂蚁照明仓库",
+            "references": [
+              {
+                "page_no": 1,
+                "points": [
+                  {
+                    "x": 29,
+                    "y": 533
+                  },
+                  {
+                    "x": 407,
+                    "y": 533
+                  },
+                  {
+                    "x": 407,
+                    "y": 549
+                  },
+                  {
+                    "x": 29,
+                    "y": 549
+                  }
+                ],
+                "search_text": "交货地点:中山市横栏镇永兴工业区富庆一路21号蚂蚁照明仓库。"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "field_confidence": 0.9993465900032166,
+        "field_key": "2ba1219ada2811f0961afa59318c0ee6",
+        "field_name": "采购清单",
+        "references": [],
+        "table_values": [
+          [
+            {
+              "field_key": "2ba122dada2811f0961afa59318c0ee6",
+              "field_name": "物料代码",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470000825222,
+                  "field_value": "C.FL.0003",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "C.FL.0003"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba123fcda2811f0961afa59318c0ee6",
+              "field_name": "物料名称",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470032614193,
+                  "field_value": "有铅锡膏",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "有铅锡膏"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1250ada2811f0961afa59318c0ee6",
+              "field_name": "规格型号",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470032614237,
+                  "field_value": "GW9068C-6",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "GW9068C-6"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1262cda2811f0961afa59318c0ee6",
+              "field_name": "单位",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470668396727,
+                  "field_value": "克",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "克"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1273ada2811f0961afa59318c0ee6",
+              "field_name": "数量",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993468761049715,
+                  "field_value": "100000",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "100000"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12852da2811f0961afa59318c0ee6",
+              "field_name": "单价",
+              "field_values": [
+                {
+                  "field_confidence": 1,
+                  "field_value": "无结果",
+                  "references": []
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12960da2811f0961afa59318c0ee6",
+              "field_name": "金额",
+              "field_values": [
+                {
+                  "field_confidence": 1,
+                  "field_value": "无结果",
+                  "references": []
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12a78da2811f0961afa59318c0ee6",
+              "field_name": "交货日期",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470827342421,
+                  "field_value": "2025-03-04",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "2025-03-04"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12b86da2811f0961afa59318c0ee6",
+              "field_name": "备注",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993468522631341,
+                  "field_value": "50瓶",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "50瓶"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "field_key": "2ba122dada2811f0961afa59318c0ee6",
+              "field_name": "物料代码",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993467998112397,
+                  "field_value": "C.FL.0001",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "C.FL.0001"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba123fcda2811f0961afa59318c0ee6",
+              "field_name": "物料名称",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470668396756,
+                  "field_value": "锡丝",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "锡丝"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1250ada2811f0961afa59318c0ee6",
+              "field_name": "规格型号",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993468474948402,
+                  "field_value": "YF-12 φ1.1mm 55%",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "YF-12 φ1.1mm 55%"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1262cda2811f0961afa59318c0ee6",
+              "field_name": "单位",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993465900032166,
+                  "field_value": "pcs",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "pcs"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1273ada2811f0961afa59318c0ee6",
+              "field_name": "数量",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470668396727,
+                  "field_value": "80",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "80"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12852da2811f0961afa59318c0ee6",
+              "field_name": "单价",
+              "field_values": [
+                {
+                  "field_confidence": 1,
+                  "field_value": "无结果",
+                  "references": []
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12960da2811f0961afa59318c0ee6",
+              "field_name": "金额",
+              "field_values": [
+                {
+                  "field_confidence": 1,
+                  "field_value": "无结果",
+                  "references": []
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12a78da2811f0961afa59318c0ee6",
+              "field_name": "交货日期",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470827342421,
+                  "field_value": "2025-03-04",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "2025-03-04"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12b86da2811f0961afa59318c0ee6",
+              "field_name": "备注",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993468284213324,
+                  "field_value": "80卷",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "80卷"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        ]
+      }
+    ],
+    "file_url": "",
+    "message": "",
+    "output_result": [
+      {
+        "field_key": "2ba119deda2811f0961afa59318c0ee6",
+        "field_name": "客户订单号",
+        "field_values": [
+          {
+            "field_confidence": 0.9999503442460437,
+            "field_value": "P020250304012",
+            "references": [
+              {
+                "page_no": 1,
+                "points": [
+                  {
+                    "x": 587,
+                    "y": 72
+                  },
+                  {
+                    "x": 770,
+                    "y": 72
+                  },
+                  {
+                    "x": 770,
+                    "y": 89
+                  },
+                  {
+                    "x": 587,
+                    "y": 89
+                  }
+                ],
+                "search_text": "采购单号: P020250304012"
+              }
+            ]
+          }
+        ],
+        "field_verify_detail": {
+          "matched_reason": "",
+          "rule_matched": false,
+          "verification_passed": true
+        },
+        "field_verify_state": 1,
+        "table_values": []
+      },
+      {
+        "field_key": "2ba11bf0da2811f0961afa59318c0ee6",
+        "field_name": "订单日期",
+        "field_values": [
+          {
+            "field_confidence": 0.9993470827342421,
+            "field_value": "2025-03-04",
+            "references": [
+              {
+                "page_no": 1,
+                "points": [
+                  {
+                    "x": 27,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 393
+                  },
+                  {
+                    "x": 27,
+                    "y": 393
+                  }
+                ],
+                "search_text": "订货日期:2025-03-04"
+              }
+            ]
+          }
+        ],
+        "field_verify_detail": {
+          "matched_reason": "",
+          "rule_matched": false,
+          "verification_passed": true
+        },
+        "field_verify_state": 1,
+        "table_values": []
+      },
+      {
+        "field_key": "2ba11d30da2811f0961afa59318c0ee6",
+        "field_name": "客户名称",
+        "field_values": [
+          {
+            "field_confidence": 0.9993470986288122,
+            "field_value": "中山市蚂蚁照明光电有限公司",
+            "references": [
+              {
+                "page_no": 1,
+                "points": [
+                  {
+                    "x": 27,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 393
+                  },
+                  {
+                    "x": 27,
+                    "y": 393
+                  }
+                ],
+                "search_text": "订货方:中山市蚂蚁照明光电有限公司"
+              }
+            ]
+          }
+        ],
+        "field_verify_detail": {
+          "matched_reason": "",
+          "rule_matched": false,
+          "verification_passed": true
+        },
+        "field_verify_state": 1,
+        "table_values": []
+      },
+      {
+        "field_key": "2ba11e5cda2811f0961afa59318c0ee6",
+        "field_name": "客户地址",
+        "field_values": [
+          {
+            "field_confidence": 0.9993459343601441,
+            "field_value": "中山市横栏镇永兴工业区富庆一路21号2栋",
+            "references": [
+              {
+                "page_no": 1,
+                "points": [
+                  {
+                    "x": 27,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 393
+                  },
+                  {
+                    "x": 27,
+                    "y": 393
+                  }
+                ],
+                "search_text": "企业地址:中山市横栏镇永兴工业区富庆一路21号2栋"
+              }
+            ]
+          }
+        ],
+        "field_verify_detail": {
+          "matched_reason": "",
+          "rule_matched": false,
+          "verification_passed": true
+        },
+        "field_verify_state": 1,
+        "table_values": []
+      },
+      {
+        "field_key": "2ba11f74da2811f0961afa59318c0ee6",
+        "field_name": "联系人",
+        "field_values": [
+          {
+            "field_confidence": 0.9993470906815272,
+            "field_value": "马国银",
+            "references": [
+              {
+                "page_no": 1,
+                "points": [
+                  {
+                    "x": 27,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 393
+                  },
+                  {
+                    "x": 27,
+                    "y": 393
+                  }
+                ],
+                "search_text": "联系人:马国银"
+              }
+            ]
+          }
+        ],
+        "field_verify_detail": {
+          "matched_reason": "",
+          "rule_matched": false,
+          "verification_passed": true
+        },
+        "field_verify_state": 1,
+        "table_values": []
+      },
+      {
+        "field_key": "2ba1208cda2811f0961afa59318c0ee6",
+        "field_name": "联系方式",
+        "field_values": [
+          {
+            "field_confidence": 0.9995523827662236,
+            "field_value": "0760-28188088,0760-28188089",
+            "references": [
+              {
+                "page_no": 1,
+                "points": [
+                  {
+                    "x": 27,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 125
+                  },
+                  {
+                    "x": 772,
+                    "y": 393
+                  },
+                  {
+                    "x": 27,
+                    "y": 393
+                  }
+                ],
+                "search_text": "联系电话:0760-28188088"
+              }
+            ]
+          }
+        ],
+        "field_verify_detail": {
+          "matched_reason": "",
+          "rule_matched": false,
+          "verification_passed": true
+        },
+        "field_verify_state": 1,
+        "table_values": []
+      },
+      {
+        "field_key": "7a6c4fb1b59d45c68e341d8645967211",
+        "field_name": "交货地点",
+        "field_values": [
+          {
+            "field_confidence": 0.9999742164362393,
+            "field_value": "中山市横栏镇永兴工业区富庆一路21号蚂蚁照明仓库",
+            "references": [
+              {
+                "page_no": 1,
+                "points": [
+                  {
+                    "x": 29,
+                    "y": 533
+                  },
+                  {
+                    "x": 407,
+                    "y": 533
+                  },
+                  {
+                    "x": 407,
+                    "y": 549
+                  },
+                  {
+                    "x": 29,
+                    "y": 549
+                  }
+                ],
+                "search_text": "交货地点:中山市横栏镇永兴工业区富庆一路21号蚂蚁照明仓库。"
+              }
+            ]
+          }
+        ],
+        "field_verify_detail": {
+          "matched_reason": "",
+          "rule_matched": false,
+          "verification_passed": true
+        },
+        "field_verify_state": 1,
+        "table_values": []
+      },
+      {
+        "field_confidence": 0.9993465900032166,
+        "field_key": "2ba1219ada2811f0961afa59318c0ee6",
+        "field_name": "采购清单",
+        "field_values": [
+          [
+            {
+              "field_key": "2ba122dada2811f0961afa59318c0ee6",
+              "field_name": "物料代码",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470000825222,
+                  "field_value": "C.FL.0003",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "C.FL.0003"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba123fcda2811f0961afa59318c0ee6",
+              "field_name": "物料名称",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470032614193,
+                  "field_value": "有铅锡膏",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "有铅锡膏"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1250ada2811f0961afa59318c0ee6",
+              "field_name": "规格型号",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470032614237,
+                  "field_value": "GW9068C-6",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "GW9068C-6"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1262cda2811f0961afa59318c0ee6",
+              "field_name": "单位",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470668396727,
+                  "field_value": "克",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "克"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1273ada2811f0961afa59318c0ee6",
+              "field_name": "数量",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993468761049715,
+                  "field_value": "100000",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "100000"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12852da2811f0961afa59318c0ee6",
+              "field_name": "单价",
+              "field_values": [
+                {
+                  "field_confidence": 1,
+                  "field_value": "无结果",
+                  "references": []
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12960da2811f0961afa59318c0ee6",
+              "field_name": "金额",
+              "field_values": [
+                {
+                  "field_confidence": 1,
+                  "field_value": "无结果",
+                  "references": []
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12a78da2811f0961afa59318c0ee6",
+              "field_name": "交货日期",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470827342421,
+                  "field_value": "2025-03-04",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "2025-03-04"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12b86da2811f0961afa59318c0ee6",
+              "field_name": "备注",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993468522631341,
+                  "field_value": "50瓶",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "50瓶"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "field_key": "2ba122dada2811f0961afa59318c0ee6",
+              "field_name": "物料代码",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993467998112397,
+                  "field_value": "C.FL.0001",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "C.FL.0001"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba123fcda2811f0961afa59318c0ee6",
+              "field_name": "物料名称",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470668396756,
+                  "field_value": "锡丝",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "锡丝"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1250ada2811f0961afa59318c0ee6",
+              "field_name": "规格型号",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993468474948402,
+                  "field_value": "YF-12 φ1.1mm 55%",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "YF-12 φ1.1mm 55%"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1262cda2811f0961afa59318c0ee6",
+              "field_name": "单位",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993465900032166,
+                  "field_value": "pcs",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "pcs"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1273ada2811f0961afa59318c0ee6",
+              "field_name": "数量",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470668396727,
+                  "field_value": "80",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "80"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12852da2811f0961afa59318c0ee6",
+              "field_name": "单价",
+              "field_values": [
+                {
+                  "field_confidence": 1,
+                  "field_value": "无结果",
+                  "references": []
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12960da2811f0961afa59318c0ee6",
+              "field_name": "金额",
+              "field_values": [
+                {
+                  "field_confidence": 1,
+                  "field_value": "无结果",
+                  "references": []
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12a78da2811f0961afa59318c0ee6",
+              "field_name": "交货日期",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470827342421,
+                  "field_value": "2025-03-04",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "2025-03-04"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12b86da2811f0961afa59318c0ee6",
+              "field_name": "备注",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993468284213324,
+                  "field_value": "80卷",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "80卷"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        ],
+        "field_verify_detail": {
+          "matched_reason": "",
+          "rule_matched": false,
+          "verification_passed": true
+        },
+        "field_verify_state": 1,
+        "references": [],
+        "table_values": [
+          [
+            {
+              "field_key": "2ba122dada2811f0961afa59318c0ee6",
+              "field_name": "物料代码",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470000825222,
+                  "field_value": "C.FL.0003",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "C.FL.0003"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba123fcda2811f0961afa59318c0ee6",
+              "field_name": "物料名称",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470032614193,
+                  "field_value": "有铅锡膏",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "有铅锡膏"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1250ada2811f0961afa59318c0ee6",
+              "field_name": "规格型号",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470032614237,
+                  "field_value": "GW9068C-6",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "GW9068C-6"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1262cda2811f0961afa59318c0ee6",
+              "field_name": "单位",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470668396727,
+                  "field_value": "克",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "克"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1273ada2811f0961afa59318c0ee6",
+              "field_name": "数量",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993468761049715,
+                  "field_value": "100000",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "100000"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12852da2811f0961afa59318c0ee6",
+              "field_name": "单价",
+              "field_values": [
+                {
+                  "field_confidence": 1,
+                  "field_value": "无结果",
+                  "references": []
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12960da2811f0961afa59318c0ee6",
+              "field_name": "金额",
+              "field_values": [
+                {
+                  "field_confidence": 1,
+                  "field_value": "无结果",
+                  "references": []
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12a78da2811f0961afa59318c0ee6",
+              "field_name": "交货日期",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470827342421,
+                  "field_value": "2025-03-04",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "2025-03-04"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12b86da2811f0961afa59318c0ee6",
+              "field_name": "备注",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993468522631341,
+                  "field_value": "50瓶",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "50瓶"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "field_key": "2ba122dada2811f0961afa59318c0ee6",
+              "field_name": "物料代码",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993467998112397,
+                  "field_value": "C.FL.0001",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "C.FL.0001"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba123fcda2811f0961afa59318c0ee6",
+              "field_name": "物料名称",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470668396756,
+                  "field_value": "锡丝",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "锡丝"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1250ada2811f0961afa59318c0ee6",
+              "field_name": "规格型号",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993468474948402,
+                  "field_value": "YF-12 φ1.1mm 55%",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "YF-12 φ1.1mm 55%"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1262cda2811f0961afa59318c0ee6",
+              "field_name": "单位",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993465900032166,
+                  "field_value": "pcs",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "pcs"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba1273ada2811f0961afa59318c0ee6",
+              "field_name": "数量",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470668396727,
+                  "field_value": "80",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "80"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12852da2811f0961afa59318c0ee6",
+              "field_name": "单价",
+              "field_values": [
+                {
+                  "field_confidence": 1,
+                  "field_value": "无结果",
+                  "references": []
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12960da2811f0961afa59318c0ee6",
+              "field_name": "金额",
+              "field_values": [
+                {
+                  "field_confidence": 1,
+                  "field_value": "无结果",
+                  "references": []
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12a78da2811f0961afa59318c0ee6",
+              "field_name": "交货日期",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993470827342421,
+                  "field_value": "2025-03-04",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "2025-03-04"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field_key": "2ba12b86da2811f0961afa59318c0ee6",
+              "field_name": "备注",
+              "field_values": [
+                {
+                  "field_confidence": 0.9993468284213324,
+                  "field_value": "80卷",
+                  "references": [
+                    {
+                      "page_no": 1,
+                      "points": [
+                        {
+                          "x": 27,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 125
+                        },
+                        {
+                          "x": 772,
+                          "y": 393
+                        },
+                        {
+                          "x": 27,
+                          "y": 393
+                        }
+                      ],
+                      "search_text": "80卷"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        ]
+      }
+    ],
+    "status": 4,
+    "task_id": "e57fa8034e7911f183a036834997d505"
+  },
+  "message": "",
+  "tips": null
+}

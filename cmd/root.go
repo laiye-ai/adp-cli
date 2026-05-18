@@ -4,7 +4,13 @@ import (
 	"fmt"
 	"os"
 
+	"sync"
+	"time"
+
+	"github.com/laiye-ai/adp-cli/internal/api"
+	"github.com/laiye-ai/adp-cli/internal/config"
 	"github.com/laiye-ai/adp-cli/internal/i18n"
+	"github.com/laiye-ai/adp-cli/internal/telemetry"
 	"github.com/laiye-ai/adp-cli/internal/updater"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -20,6 +26,7 @@ var (
 	jsonMode   bool
 	quietMode  bool
 	langMode   string
+	sourceMode string
 	versionCmd = &cobra.Command{
 		Use:   "version",
 		Short: i18n.T("version_description"),
@@ -67,8 +74,20 @@ Supports document parsing, content extraction, and async task querying.`,
 
 		// Start async version check (result handled in PersistentPostRun)
 		updateCheckDone = updater.CheckAndNotify(version, quietMode, jsonMode)
+
+		// Start telemetry tracking
+		telemetry.Begin(cmd, args, version, sourceMode)
+
+		// Register exit hook so telemetry flushes even on ExitWithError (which calls os.Exit)
+		formatterOut.SetExitHook(func(message string, code int) {
+			telemetry.SetError(fmt.Errorf("%s", message))
+			flushTelemetry()
+		})
 	},
 	PersistentPostRun: func(cmd *cobra.Command, args []string) {
+		// Flush telemetry before version check
+		flushTelemetry()
+
 		// Wait for version check and print notice after command output
 		if updateCheckDone != nil {
 			if msg := <-updateCheckDone; msg != "" {
@@ -92,6 +111,7 @@ func init() {
 	rootCmd.PersistentFlags().BoolVar(&jsonMode, "json", false, "Output in JSON format")
 	rootCmd.PersistentFlags().BoolVar(&quietMode, "quiet", false, "Suppress all output except errors")
 	rootCmd.PersistentFlags().StringVar(&langMode, "lang", "", "Set language (en or zh)")
+	rootCmd.PersistentFlags().StringVar(&sourceMode, "source", "", "Caller identity (e.g. claude, cursor, chatgpt)")
 
 	// Version command
 	rootCmd.AddCommand(versionCmd)
@@ -298,4 +318,132 @@ func reloadCommandTranslations() {
 	updateFlagHelp(extractBase64Cmd, "timeout", i18n.T("option_timeout"))
 	updateFlagHelp(extractBase64Cmd, "file-name", i18n.T("option_file_name"))
 	updateFlagHelp(extractBase64Cmd, "concurrency", i18n.T("option_concurrency"))
+
+	// humanReviewCmd
+	humanReviewCmd.Short = i18n.T("human_review_description")
+	humanReviewCmd.Long = i18n.T("human_review_description")
+	hrRuleCreateCmd.Short = i18n.T("human_review_rule_create_title")
+	hrRuleCreateCmd.Long = i18n.T("human_review_rule_create_title")
+	hrGetConfigCmd.Short = i18n.T("human_review_get_config_title")
+	hrGetConfigCmd.Long = i18n.T("human_review_get_config_title")
+	hrRuleUpdateCmd.Short = i18n.T("human_review_rule_update_title")
+	hrRuleUpdateCmd.Long = i18n.T("human_review_rule_update_title")
+	hrRuleDeleteCmd.Short = i18n.T("human_review_rule_delete_title")
+	hrRuleDeleteCmd.Long = i18n.T("human_review_rule_delete_title")
+	hrRuleAIGenerateCmd.Short = i18n.T("human_review_ai_generate_title")
+	hrRuleAIGenerateCmd.Long = i18n.T("human_review_ai_generate_title")
+	hrTaskCreateCmd.Short = i18n.T("human_review_task_create_title")
+	hrTaskCreateCmd.Long = i18n.T("human_review_task_create_title")
+	hrTaskQueryCmd.Short = i18n.T("human_review_task_query_title")
+	hrTaskQueryCmd.Long = i18n.T("human_review_task_query_title")
+	hrResultUpdateCmd.Short = i18n.T("human_review_result_update_title")
+	hrResultUpdateCmd.Long = i18n.T("human_review_result_update_title")
+
+	// human-review flag descriptions
+	updateFlagHelp(hrRuleCreateCmd, "app-id", i18n.T("human_review_option_app_id"))
+	updateFlagHelp(hrRuleCreateCmd, "rule-name", i18n.T("human_review_option_rule_name"))
+	updateFlagHelp(hrRuleCreateCmd, "rule-status", i18n.T("human_review_option_rule_status"))
+	updateFlagHelp(hrRuleCreateCmd, "rule", i18n.T("human_review_option_rule"))
+	updateFlagHelp(hrRuleCreateCmd, "rule-logic", i18n.T("human_review_option_rule_logic"))
+	updateFlagHelp(hrGetConfigCmd, "app-id", i18n.T("human_review_option_app_id"))
+	updateFlagHelp(hrRuleUpdateCmd, "app-id", i18n.T("human_review_option_app_id"))
+	updateFlagHelp(hrRuleUpdateCmd, "rule-name", i18n.T("human_review_option_rule_name"))
+	updateFlagHelp(hrRuleUpdateCmd, "rule-status", i18n.T("human_review_option_rule_status"))
+	updateFlagHelp(hrRuleUpdateCmd, "rule", i18n.T("human_review_option_rule"))
+	updateFlagHelp(hrRuleUpdateCmd, "rule-logic", i18n.T("human_review_option_rule_logic"))
+	updateFlagHelp(hrRuleDeleteCmd, "app-id", i18n.T("human_review_option_app_id"))
+	updateFlagHelp(hrRuleAIGenerateCmd, "app-id", i18n.T("human_review_option_app_id"))
+	updateFlagHelp(hrRuleAIGenerateCmd, "fields", i18n.T("human_review_option_fields"))
+	updateFlagHelp(hrRuleAIGenerateCmd, "timeout", i18n.T("option_timeout"))
+	updateFlagHelp(hrTaskCreateCmd, "app-id", i18n.T("human_review_option_app_id"))
+	updateFlagHelp(hrTaskCreateCmd, "local", i18n.T("human_review_option_local"))
+	updateFlagHelp(hrTaskCreateCmd, "url", i18n.T("human_review_option_url"))
+	updateFlagHelp(hrTaskCreateCmd, "async", i18n.T("option_async"))
+	updateFlagHelp(hrTaskCreateCmd, "no-wait", i18n.T("option_no_wait"))
+	updateFlagHelp(hrTaskCreateCmd, "export", i18n.T("option_export"))
+	updateFlagHelp(hrTaskCreateCmd, "timeout", i18n.T("option_timeout"))
+	updateFlagHelp(hrTaskCreateCmd, "concurrency", i18n.T("option_concurrency"))
+	updateFlagHelp(hrTaskCreateCmd, "retry", i18n.T("option_retry"))
+	updateFlagHelp(hrTaskQueryCmd, "watch", i18n.T("option_watch"))
+	updateFlagHelp(hrTaskQueryCmd, "file", i18n.T("option_task_file"))
+	updateFlagHelp(hrTaskQueryCmd, "export", i18n.T("option_export"))
+	updateFlagHelp(hrTaskQueryCmd, "timeout", i18n.T("option_watch_timeout"))
+	updateFlagHelp(hrTaskQueryCmd, "concurrency", i18n.T("option_concurrency"))
+	updateFlagHelp(hrResultUpdateCmd, "file-task-id", i18n.T("human_review_option_file_task_id"))
+	updateFlagHelp(hrResultUpdateCmd, "collaboration-result", i18n.T("human_review_option_collaboration_result"))
+
+	// webhookCmd
+	webhookCmd.Short = i18n.T("webhook_description")
+	webhookCmd.Long = i18n.T("webhook_description")
+	webhookCreateCmd.Short = i18n.T("webhook_create_title")
+	webhookCreateCmd.Long = i18n.T("webhook_create_title")
+	webhookGetConfigCmd.Short = i18n.T("webhook_get_config_title")
+	webhookGetConfigCmd.Long = i18n.T("webhook_get_config_title")
+	webhookUpdateCmd.Short = i18n.T("webhook_update_title")
+	webhookUpdateCmd.Long = i18n.T("webhook_update_title")
+	webhookDeleteCmd.Short = i18n.T("webhook_delete_title")
+	webhookDeleteCmd.Long = i18n.T("webhook_delete_title")
+	webhookLogCmd.Short = i18n.T("webhook_log_title")
+	webhookLogCmd.Long = i18n.T("webhook_log_title")
+
+	// webhook flag descriptions
+	updateFlagHelp(webhookCreateCmd, "webhook-url", i18n.T("webhook_option_webhook_url"))
+	updateFlagHelp(webhookCreateCmd, "event-types", i18n.T("webhook_option_event_types"))
+	updateFlagHelp(webhookCreateCmd, "app-id", i18n.T("webhook_option_app_id"))
+	updateFlagHelp(webhookGetConfigCmd, "app-id", i18n.T("webhook_option_app_id"))
+	updateFlagHelp(webhookUpdateCmd, "webhook-id", i18n.T("webhook_option_webhook_id"))
+	updateFlagHelp(webhookUpdateCmd, "webhook-url", i18n.T("webhook_option_webhook_url"))
+	updateFlagHelp(webhookUpdateCmd, "event-types", i18n.T("webhook_option_event_types"))
+	updateFlagHelp(webhookUpdateCmd, "app-id", i18n.T("webhook_option_app_id"))
+	updateFlagHelp(webhookDeleteCmd, "webhook-id", i18n.T("webhook_option_webhook_id"))
+	updateFlagHelp(webhookLogCmd, "webhook-id", i18n.T("webhook_option_webhook_id_optional"))
+	updateFlagHelp(webhookLogCmd, "start-time", i18n.T("webhook_option_start_time"))
+	updateFlagHelp(webhookLogCmd, "end-time", i18n.T("webhook_option_end_time"))
+}
+
+// telemetryOnce ensures flushTelemetry runs at most once per command.
+var telemetryOnce sync.Once
+
+// flushTelemetry finalises the telemetry event and sends it to the server.
+// Safe to call multiple times; only the first call has effect.
+// Uses async HTTP with a short timeout so it never blocks the process exit noticeably.
+func flushTelemetry() {
+	telemetryOnce.Do(func() {
+		event := telemetry.End()
+		if event == nil {
+			return
+		}
+
+		cfg, err := config.Load()
+		if err != nil || cfg.APIKey == "" {
+			return
+		}
+
+		client, err := api.NewClient(cfg)
+		if err != nil {
+			return
+		}
+
+		done := make(chan struct{})
+		go func() {
+			defer close(done)
+			if err := client.ReportStatistics(*event); err != nil {
+				log.Debug().Err(err).Msg("telemetry report failed")
+			}
+		}()
+
+		select {
+		case <-done:
+		case <-time.After(3 * time.Second):
+			log.Debug().Msg("telemetry report timeout, skipping")
+		}
+	})
+}
+
+// FlushTelemetryAndExit sends pending telemetry then exits with the given code.
+// Use this instead of os.Exit in business commands to ensure telemetry is captured
+// even when ExitWithError bypasses PersistentPostRun.
+func FlushTelemetryAndExit(code int) {
+	flushTelemetry()
+	os.Exit(code)
 }

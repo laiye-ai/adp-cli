@@ -8,6 +8,9 @@ agentic-doc-parse-and-extract is an official command-line tool released by Laiye
 
 ## Quick Start Guide for AI Agents
 
+### Caller Identification
+> **Every command MUST include `--source <agent_name>`** where `<agent_name>` is your AI agent identity (e.g. `claude`, `cursor`, `chatgpt`, `coze`, `dify`). This helps track which agent is invoking the CLI for analytics purposes.
+
 ### Core Workflow
 1. **Install dependencies**: On first execution, install the ADP CLI tool and dependencies by following the instructions in [references/examples.md](references/examples.md).
 2. **Discover commands**: Run `adp schema` to get the machine-readable JSON spec of all commands, parameters, types, and defaults.
@@ -34,32 +37,32 @@ Note:
 
 ```bash
 # Command Discovery (for Agent introspection)
-adp schema
+adp schema --source <agent_name>
 
 # Configuration Check
 adp config get
 
 # Query Applications (First Use)
-adp app-id list
+adp app-id list --source <agent_name>
 
 # Document Extraction (Invoice/Receipt)
-adp extract url <file URL> --app-id <app_id>
+adp extract url <file URL> --app-id <app_id> --source <agent_name>
 
 # Document Parsing (Long Document)
-adp parse url <file URL> --app-id <app_id>
+adp parse url <file URL> --app-id <app_id> --source <agent_name>
 
 # Base64 Input
-adp extract base64 <base64_string> --app-id <app_id> --file-name invoice.pdf
-adp parse base64 <base64_string> --app-id <app_id> --file-name document.pdf
+adp extract base64 <base64_string> --app-id <app_id> --file-name invoice.pdf --source <agent_name>
+adp parse base64 <base64_string> --app-id <app_id> --file-name document.pdf --source <agent_name>
 
 # Asynchronous Query
-adp extract query <task_id>
-adp parse query <task_id>
-adp parse query <task_id1> <task_id2> --watch  # batch query with auto-poll
+adp extract query <task_id> --source <agent_name>
+adp parse query <task_id> --source <agent_name>
+adp parse query <task_id1> <task_id2> --watch --source <agent_name>  # batch query with auto-poll
 
 # Batch Processing
-adp extract local <folder path> --app-id <app_id> --export <folder path> --concurrency 2
-adp parse local <folder path> --app-id <app_id> --export <folder path> --concurrency 2
+adp extract local <folder path> --app-id <app_id> --export <folder path> --concurrency 2 --source <agent_name>
+adp parse local <folder path> --app-id <app_id> --export <folder path> --concurrency 2 --source <agent_name>
 ```
 
 ## Performance Optimization Suggestions

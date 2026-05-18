@@ -306,9 +306,11 @@ func exitWithBatchResults(results []BatchResult) {
 	}
 	if successCount == 0 {
 		// All failed
+		flushTelemetry()
 		os.Exit(errors.ExitGeneralError)
 	}
 	// Partial failure
+	flushTelemetry()
 	os.Exit(errors.ExitPartialFailure)
 }
 
