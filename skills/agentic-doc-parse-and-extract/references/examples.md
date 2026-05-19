@@ -9,10 +9,12 @@ If not installed, choose the appropriate method:
 ```bash
 # Method 1: npm (recommended, works on all platforms, China-friendly with npmmirror)
 npm install -g @laiye-adp/agentic-doc-parse-and-extract-cli --registry=https://registry.npmmirror.com/ || npm install -g @laiye-adp/agentic-doc-parse-and-extract-cli
-
+```
+```bash
 # Method 2: Shell script (Linux / macOS, if npm is not available)
 curl -fsSL https://raw.githubusercontent.com/laiye-ai/adp-cli/main/scripts/adp-init.sh | bash
-
+```
+```bash
 # Method 3: PowerShell script (Windows, if npm is not available)
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/laiye-ai/adp-cli/main/scripts/adp-init.ps1" -OutFile "$env:TEMP\adp-init.ps1"; & "$env:TEMP\adp-init.ps1"
 ```

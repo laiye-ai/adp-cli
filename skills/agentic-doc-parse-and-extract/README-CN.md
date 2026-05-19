@@ -75,10 +75,12 @@ agentic-doc-parse-and-extract/
   ```bash
   # 方法 1: npm（推荐，全平台通用，国内可通过 npmmirror 镜像加速）
   npm install -g @laiye-adp/agentic-doc-parse-and-extract-cli --registry=https://registry.npmmirror.com/ || npm install -g @laiye-adp/agentic-doc-parse-and-extract-cli
-
+  ```
+  ```bash
   # 方法 2: Shell 脚本（Linux / macOS，无 npm 环境时使用）
   curl -fsSL https://raw.githubusercontent.com/laiye-ai/adp-cli/main/scripts/adp-init.sh | bash
-
+  ```
+  ```bash
   # 方法 3: PowerShell 脚本（Windows，无 npm 环境时使用）
   Invoke-WebRequest -Uri "https://raw.githubusercontent.com/laiye-ai/adp-cli/main/scripts/adp-init.ps1" -OutFile "$env:TEMP\adp-init.ps1"; & "$env:TEMP\adp-init.ps1"
   ```
