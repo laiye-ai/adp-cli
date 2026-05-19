@@ -13,11 +13,6 @@ import (
 	"github.com/laiye-ai/adp-cli/internal/telemetry"
 )
 
-const (
-	freeLimit = 1
-	paidLimit = 2
-)
-
 // checkAPIResponse inspects the response body for a non-success "code" field
 func checkAPIResponse(result map[string]interface{}, context string) {
 	if result == nil {
@@ -40,30 +35,9 @@ func checkAPIResponse(result map[string]interface{}, context string) {
 	formatterOut.ExitWithError(cliErr)
 }
 
-// validateConcurrency checks and adjusts concurrency based on user payment status.
+// validateConcurrency returns the concurrency value without any validation.
 func validateConcurrency(client *api.Client, concurrency int) int {
-	if concurrency <= freeLimit {
-		return freeLimit
-	}
-
-	isPaid, err := client.IsPaidUser()
-	if err != nil {
-		formatterOut.PrintWarning(i18n.T("error_invalid_concurrency"))
-		return freeLimit
-	}
-
-	if isPaid {
-		if concurrency > paidLimit {
-			formatterOut.PrintWarning(i18n.T("error_invalid_concurrency"))
-			return paidLimit
-		}
-		return concurrency
-	}
-
-	if concurrency > freeLimit {
-		formatterOut.PrintWarning(i18n.T("error_not_paid_user"))
-	}
-	return freeLimit
+	return concurrency
 }
 
 // initClientWithConfig loads config and creates an API client, exiting on error

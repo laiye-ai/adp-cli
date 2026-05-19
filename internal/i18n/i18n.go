@@ -44,7 +44,7 @@ var Translations = map[string]map[string]string{
 		"option_async":             "Process asynchronously",
 		"option_export":            "Export results to JSON file",
 		"option_timeout":           "Timeout for sync mode (seconds)",
-		"option_concurrency":       "Concurrency for batch processing. Default: 1. Free users max=1, paid users max=2. Other values will not take effect.",
+		"option_concurrency":       "Concurrent workers, can process multiple documents concurrently.",
 		"option_file_name":        "Display name with extension (used by server to detect file type; does not read from disk). Default: document",
 		"option_retry":             "Number of retries for retryable errors (default: 0)",
 		"option_watch":             "Watch task until completion",
@@ -143,8 +143,6 @@ var Translations = map[string]map[string]string{
 		"failed_to_process_url":     "Failed to process URL: %s - %s",
 		"task_completed":            "Task completed",
 		"submitting_tasks":         "Submitting %d task(s)",
-		"error_invalid_concurrency": "Free users: 1, paid users: 2",
-		"error_not_paid_user":       "You are a free user, maximum concurrency is 1",
 
 		// Human Review command
 		"human_review_description":           "Human-review collaboration management.",
@@ -221,7 +219,7 @@ var Translations = map[string]map[string]string{
 		"option_async":             "异步处理",
 		"option_export":            "导出结果到 JSON 文件",
 		"option_timeout":           "同步模式超时时间（秒）",
-		"option_concurrency":       "批量处理时的并发数。默认：1。免费用户最大为1，付费用户最大为2。输入其他数值，并发将不生效，请等待处理。",
+		"option_concurrency":       "并发数，可并发处理文档数",
 		"option_file_name":        "文件显示名（含扩展名，用于服务端识别文件类型，不会从磁盘读取）。默认: document",
 		"option_retry":             "可重试错误的重试次数（默认：0）",
 		"option_watch":             "监视任务直到完成",
@@ -320,8 +318,6 @@ var Translations = map[string]map[string]string{
 		"failed_to_process_url":     "处理 URL 失败: %s - %s",
 		"task_completed":            "任务完成",
 		"submitting_tasks":         "正在提交 %d 个任务",
-		"error_invalid_concurrency": "免费用户：1，付费用户：2",
-		"error_not_paid_user":       "您是免费用户，最大并发数为1",
 
 		// Human Review command
 		"human_review_description":           "人机协同管理。",

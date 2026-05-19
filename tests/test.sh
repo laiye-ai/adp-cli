@@ -296,7 +296,7 @@ TESTS_RUN=$((TESTS_RUN + 1))
 HR_CREATE_OUTPUT=$("$ADP" human-review rule-create \
     --app-id "$APP_ID" \
     --rule-name "E2E-Test-Rule-$(date +%s)" \
-    --rule-status \
+    --rule-status "true" \
     --rule '[{"rule_dimension":"整体文档","rule_setting":"字段不为空"}]' \
     --rule-logic 1 2>&1) || true
 
