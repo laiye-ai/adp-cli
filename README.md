@@ -33,10 +33,14 @@ The skills package will guide you through CLI installation, authentication, and 
 ```bash
 # npm (recommended)
 npm install -g @laiye-adp/agentic-doc-parse-and-extract-cli
+```
 
+```bash
 # Linux / macOS
 curl -fsSL https://raw.githubusercontent.com/laiye-ai/adp-cli/main/scripts/adp-init.sh | bash
+```
 
+```bash
 # Windows (PowerShell)
 irm https://raw.githubusercontent.com/laiye-ai/adp-cli/main/scripts/adp-init.ps1 | iex
 ```

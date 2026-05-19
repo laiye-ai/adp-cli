@@ -156,39 +156,6 @@ func init() {
 	parseQueryCmd.Flags().Int("concurrency", 1, i18n.T("option_concurrency"))
 }
 
-const (
-	freeLimit = 1
-	paidLimit = 2
-)
-
-// validateConcurrency checks and adjusts concurrency based on user payment status.
-// Free users max=1, paid users max=2. Warns on invalid values and degrades gracefully.
-func validateConcurrency(client *api.Client, concurrency int) int {
-	if concurrency <= freeLimit {
-		return freeLimit
-	}
-
-	isPaid, err := client.IsPaidUser()
-	if err != nil {
-		formatterOut.PrintWarning(i18n.T("error_invalid_concurrency"))
-		return freeLimit
-	}
-
-	if isPaid {
-		if concurrency > paidLimit {
-			formatterOut.PrintWarning(i18n.T("error_invalid_concurrency"))
-			return paidLimit
-		}
-		return concurrency
-	}
-
-	// Free user trying to use > 1
-	if concurrency > freeLimit {
-		formatterOut.PrintWarning(i18n.T("error_not_paid_user"))
-	}
-	return freeLimit
-}
-
 // initClientWithConfig loads config and creates an API client, exiting on error
 func initClientWithConfig(mode string) (*api.Client, *config.Config) {
 	cfg, err := config.Load()
@@ -220,9 +187,7 @@ func initClientWithConfig(mode string) (*api.Client, *config.Config) {
 
 func processLocalFiles(pathStr, appID string, asyncMode, noWait bool, exportPath string, timeout, concurrency, maxRetry int, mode string) {
 	client, _ := initClientWithConfig(mode + " local")
-	concurrency = validateConcurrency(client, concurrency)
-
-	fileHandler := file.New()
+		fileHandler := file.New()
 	files, err := fileHandler.GetFilesFromPath(pathStr)
 	if err != nil {
 		cliErr := errors.ClassifyException(err, mode+" local")
@@ -294,9 +259,7 @@ func processLocalFiles(pathStr, appID string, asyncMode, noWait bool, exportPath
 
 func processURLs(urls []string, appID string, asyncMode, noWait bool, exportPath string, timeout, concurrency, maxRetry int, mode string) {
 	client, _ := initClientWithConfig(mode + " url")
-	concurrency = validateConcurrency(client, concurrency)
-
-	var validURLs []string
+		var validURLs []string
 	for _, url := range urls {
 		if !file.IsValidURL(url) {
 			formatterOut.PrintWarning(fmt.Sprintf(i18n.T("invalid_url_format"), url))
@@ -367,9 +330,7 @@ func processURLs(urls []string, appID string, asyncMode, noWait bool, exportPath
 
 func processBase64(b64Strings []string, appID, fileName string, asyncMode, noWait bool, exportPath string, timeout, concurrency, maxRetry int, mode string) {
 	client, _ := initClientWithConfig(mode + " base64")
-	concurrency = validateConcurrency(client, concurrency)
-
-	// Build batch jobs
+		// Build batch jobs
 	jobs := make([]BatchJob, len(b64Strings))
 	for i := range b64Strings {
 		name := fileName
@@ -448,9 +409,7 @@ func queryTasks(taskIDs []string, watch bool, taskFile, exportPath string, timeo
 	}
 
 	// Multi task query: use batch processing
-	concurrency = validateConcurrency(client, concurrency)
-
-	var queryFunc func(string) (map[string]interface{}, error)
+		var queryFunc func(string) (map[string]interface{}, error)
 	if mode == "parse" {
 		queryFunc = client.QueryParseTask
 	} else {

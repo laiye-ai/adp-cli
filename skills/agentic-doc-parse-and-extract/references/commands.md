@@ -82,7 +82,7 @@ Parse local file or folder (batch mode when path is a folder).
 | `--no-wait` | boolean | No | false | Submit async task and return immediately (use with `--async`) |
 | `--export` | string | No | — | Export results to specified path |
 | `--timeout` | integer | No | 900 | Timeout in seconds |
-| `--concurrency` | integer | No | 1 | Concurrent processing count (max 1 free, max 2 paid) |
+| `--concurrency` | integer | No | 1 | Concurrent workers, can process multiple documents concurrently |
 | `--retry` | integer | No | 0 | Number of retries on failure (exponential backoff) |
 
 ### `adp parse url <url>`
