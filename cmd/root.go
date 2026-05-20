@@ -264,38 +264,32 @@ func reloadCommandTranslations() {
 	updateFlagHelp(parseLocalCmd, "async", i18n.T("option_async"))
 	updateFlagHelp(parseLocalCmd, "export", i18n.T("option_export"))
 	updateFlagHelp(parseLocalCmd, "timeout", i18n.T("option_timeout"))
-	updateFlagHelp(parseLocalCmd, "concurrency", i18n.T("option_concurrency"))
 
 	updateFlagHelp(parseURLCmd, "app-id", i18n.T("option_app_id_parse"))
 	updateFlagHelp(parseURLCmd, "async", i18n.T("option_async"))
 	updateFlagHelp(parseURLCmd, "export", i18n.T("option_export"))
 	updateFlagHelp(parseURLCmd, "timeout", i18n.T("option_timeout"))
-	updateFlagHelp(parseURLCmd, "concurrency", i18n.T("option_concurrency"))
 
 	updateFlagHelp(parseBase64Cmd, "app-id", i18n.T("option_app_id_parse"))
 	updateFlagHelp(parseBase64Cmd, "async", i18n.T("option_async"))
 	updateFlagHelp(parseBase64Cmd, "export", i18n.T("option_export"))
 	updateFlagHelp(parseBase64Cmd, "timeout", i18n.T("option_timeout"))
 	updateFlagHelp(parseBase64Cmd, "file-name", i18n.T("option_file_name"))
-	updateFlagHelp(parseBase64Cmd, "concurrency", i18n.T("option_concurrency"))
 
 	// Update all flag descriptions for extract commands
 	updateFlagHelp(extractLocalCmd, "app-id", i18n.T("option_app_id_extract"))
 	updateFlagHelp(extractLocalCmd, "async", i18n.T("option_async"))
 	updateFlagHelp(extractLocalCmd, "export", i18n.T("option_export"))
 	updateFlagHelp(extractLocalCmd, "timeout", i18n.T("option_timeout"))
-	updateFlagHelp(extractLocalCmd, "concurrency", i18n.T("option_concurrency"))
 
 	updateFlagHelp(extractURLCmd, "app-id", i18n.T("option_app_id_extract"))
 	updateFlagHelp(extractURLCmd, "async", i18n.T("option_async"))
 	updateFlagHelp(extractURLCmd, "export", i18n.T("option_export"))
 	updateFlagHelp(extractURLCmd, "timeout", i18n.T("option_timeout"))
-	updateFlagHelp(extractURLCmd, "concurrency", i18n.T("option_concurrency"))
 
 	updateFlagHelp(extractBase64Cmd, "app-id", i18n.T("option_app_id_extract"))
 	updateFlagHelp(extractBase64Cmd, "async", i18n.T("option_async"))
 	updateFlagHelp(extractBase64Cmd, "export", i18n.T("option_export"))
 	updateFlagHelp(extractBase64Cmd, "timeout", i18n.T("option_timeout"))
 	updateFlagHelp(extractBase64Cmd, "file-name", i18n.T("option_file_name"))
-	updateFlagHelp(extractBase64Cmd, "concurrency", i18n.T("option_concurrency"))
 }

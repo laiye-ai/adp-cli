@@ -58,14 +58,14 @@ adp parse query <task_id>
 adp parse query <task_id1> <task_id2> --watch  # batch query with auto-poll
 
 # Batch Processing
-adp extract local <folder path> --app-id <app_id> --export <folder path> --concurrency 2
-adp parse local <folder path> --app-id <app_id> --export <folder path> --concurrency 2
+adp extract local <folder path> --app-id <app_id> --export <folder path>
+adp parse local <folder path> --app-id <app_id> --export <folder path>
 ```
 
 ## Performance Optimization Suggestions
 - **Reuse APP_ID**: Cache it in the context after one query to avoid calling `app-id list` every time.
 - **Sync First**: For small files (<20MB), prioritize using synchronous calls to avoid asynchronous polling.
-- **Batch Processing**: Processes multiple documents via `url <URL list file path>` or `local <folder path>` in a single run, without looped invocations. Default `--concurrency 2`.
+- **Batch Processing**: Processes multiple documents via `url <URL list file path>` or `local <folder path>` in a single run, without looped invocations. Concurrency is automatically determined by your API key's quota.
 - **Local Cache**: Store commonly used APP_IDs in environment variables or configuration files.
 - **Priority Extraction**: If only key information needs to be extracted, use `extract` instead of `parse` (faster).
 - **Use --retry for batch**: Set `--retry 2` for batch processing to auto-recover from transient failures.

@@ -33,10 +33,12 @@ The skills package will guide you through CLI installation, authentication, and 
 ```bash
 # npm (recommended)
 npm install -g @laiye-adp/agentic-doc-parse-and-extract-cli
-
+```
+```bash
 # Linux / macOS
 curl -fsSL https://raw.githubusercontent.com/laiye-ai/adp-cli/main/scripts/adp-init.sh | bash
-
+```
+```bash
 # Windows (PowerShell)
 irm https://raw.githubusercontent.com/laiye-ai/adp-cli/main/scripts/adp-init.ps1 | iex
 ```
@@ -126,7 +128,6 @@ adp credit
 | `--no-wait` | Submit tasks only, do not wait for results (use with `--async`) |
 | `--export <path>` | Export result to file (single file) or directory (batch) |
 | `--timeout <seconds>` | Timeout (default 900s) |
-| `--concurrency <n>` | Concurrent workers (free: max 1, paid: max 2) |
 | `--retry <n>` | Retries for retryable errors (default 0) |
 | `--file <path>` | Read task IDs from JSON file (output of `--no-wait`, query only) |
 

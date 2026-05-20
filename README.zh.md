@@ -33,10 +33,12 @@ Skills 会自动引导 CLI 安装、认证配置和使用。
 ```bash
 # npm（推荐）
 npm install -g @laiye-adp/agentic-doc-parse-and-extract-cli
-
+```
+```bash
 # Linux / macOS
 curl -fsSL https://raw.githubusercontent.com/laiye-ai/adp-cli/main/scripts/adp-init.sh | bash
-
+```
+```bash
 # Windows（PowerShell）
 irm https://raw.githubusercontent.com/laiye-ai/adp-cli/main/scripts/adp-init.ps1 | iex
 ```
@@ -126,7 +128,6 @@ adp credit
 | `--no-wait` | 仅提交任务，不等待结果（与 `--async` 配合使用） |
 | `--export <path>` | 导出结果到文件（单文件）或目录（批量） |
 | `--timeout <seconds>` | 超时时间（默认 900 秒） |
-| `--concurrency <n>` | 并发数（免费用户最大 1，付费用户最大 2） |
 | `--retry <n>` | 可重试错误的重试次数（默认 0） |
 | `--file <path>` | 从 JSON 文件读取任务 ID（`--no-wait` 的输出文件，仅 query 可用） |
 

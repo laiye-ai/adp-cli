@@ -26,10 +26,9 @@ var extractLocalCmd = &cobra.Command{
 		noWait, _ := cmd.Flags().GetBool("no-wait")
 		export, _ := cmd.Flags().GetString("export")
 		timeout, _ := cmd.Flags().GetInt("timeout")
-		concurrency, _ := cmd.Flags().GetInt("concurrency")
 		retry, _ := cmd.Flags().GetInt("retry")
 
-		processLocalFiles(path, appID, asyncMode, noWait, export, timeout, concurrency, retry, "extract")
+		processLocalFiles(path, appID, asyncMode, noWait, export, timeout, retry, "extract")
 	},
 }
 
@@ -46,11 +45,10 @@ var extractURLCmd = &cobra.Command{
 		noWait, _ := cmd.Flags().GetBool("no-wait")
 		export, _ := cmd.Flags().GetString("export")
 		timeout, _ := cmd.Flags().GetInt("timeout")
-		concurrency, _ := cmd.Flags().GetInt("concurrency")
 		retry, _ := cmd.Flags().GetInt("retry")
 
 		urls := resolveURLInput(urlArg)
-		processURLs(urls, appID, asyncMode, noWait, export, timeout, concurrency, retry, "extract")
+		processURLs(urls, appID, asyncMode, noWait, export, timeout, retry, "extract")
 	},
 }
 
@@ -67,10 +65,9 @@ var extractBase64Cmd = &cobra.Command{
 		export, _ := cmd.Flags().GetString("export")
 		timeout, _ := cmd.Flags().GetInt("timeout")
 		fileName, _ := cmd.Flags().GetString("file-name")
-		concurrency, _ := cmd.Flags().GetInt("concurrency")
 		retry, _ := cmd.Flags().GetInt("retry")
 
-		processBase64(args, appID, fileName, asyncMode, noWait, export, timeout, concurrency, retry, "extract")
+		processBase64(args, appID, fileName, asyncMode, noWait, export, timeout, retry, "extract")
 	},
 }
 
@@ -85,7 +82,6 @@ var extractQueryCmd = &cobra.Command{
 		taskFile, _ := cmd.Flags().GetString("file")
 		export, _ := cmd.Flags().GetString("export")
 		timeout, _ := cmd.Flags().GetInt("timeout")
-		concurrency, _ := cmd.Flags().GetInt("concurrency")
 
 		if taskFile == "" && len(args) == 0 {
 			formatterOut.ExitWithError(errors.NewCLIError(
@@ -98,7 +94,7 @@ var extractQueryCmd = &cobra.Command{
 			))
 		}
 
-		queryTasks(args, watch, taskFile, export, timeout, concurrency, "extract")
+		queryTasks(args, watch, taskFile, export, timeout, "extract")
 	},
 }
 
@@ -116,7 +112,6 @@ func init() {
 	extractLocalCmd.Flags().Bool("no-wait", false, i18n.T("option_no_wait"))
 	extractLocalCmd.Flags().String("export", "", i18n.T("option_export"))
 	extractLocalCmd.Flags().Int("timeout", 900, i18n.T("option_timeout"))
-	extractLocalCmd.Flags().Int("concurrency", 1, i18n.T("option_concurrency"))
 	extractLocalCmd.Flags().Int("retry", 0, i18n.T("option_retry"))
 	extractLocalCmd.MarkFlagRequired("app-id")
 
@@ -126,7 +121,6 @@ func init() {
 	extractURLCmd.Flags().Bool("no-wait", false, i18n.T("option_no_wait"))
 	extractURLCmd.Flags().String("export", "", i18n.T("option_export"))
 	extractURLCmd.Flags().Int("timeout", 900, i18n.T("option_timeout"))
-	extractURLCmd.Flags().Int("concurrency", 1, i18n.T("option_concurrency"))
 	extractURLCmd.Flags().Int("retry", 0, i18n.T("option_retry"))
 	extractURLCmd.MarkFlagRequired("app-id")
 
@@ -137,7 +131,6 @@ func init() {
 	extractBase64Cmd.Flags().String("export", "", i18n.T("option_export"))
 	extractBase64Cmd.Flags().Int("timeout", 900, i18n.T("option_timeout"))
 	extractBase64Cmd.Flags().String("file-name", "document", i18n.T("option_file_name"))
-	extractBase64Cmd.Flags().Int("concurrency", 1, i18n.T("option_concurrency"))
 	extractBase64Cmd.Flags().Int("retry", 0, i18n.T("option_retry"))
 	extractBase64Cmd.MarkFlagRequired("app-id")
 
@@ -146,5 +139,4 @@ func init() {
 	extractQueryCmd.Flags().String("file", "", i18n.T("option_task_file"))
 	extractQueryCmd.Flags().String("export", "", i18n.T("option_export"))
 	extractQueryCmd.Flags().Int("timeout", 900, i18n.T("option_watch_timeout"))
-	extractQueryCmd.Flags().Int("concurrency", 1, i18n.T("option_concurrency"))
 }

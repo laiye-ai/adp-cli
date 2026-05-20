@@ -10,8 +10,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/rs/zerolog/log"
 	"github.com/laiye-ai/adp-cli/internal/config"
+	"github.com/rs/zerolog/log"
 )
 
 const (
@@ -183,7 +183,7 @@ func (c *Client) QueryParseTask(taskID string) (map[string]interface{}, error) {
 func (c *Client) ExtractSync(fileURL, appID string, filePath, fileBase64, fileName string, extractConfig map[string]interface{}) (map[string]interface{}, error) {
 	data := map[string]interface{}{
 		"app_id":          appID,
-		"file_name":        fileName,
+		"file_name":       fileName,
 		"with_rec_result": false,
 	}
 
@@ -210,7 +210,7 @@ func (c *Client) ExtractSync(fileURL, appID string, filePath, fileBase64, fileNa
 func (c *Client) ExtractAsync(fileURL, appID string, filePath, fileBase64, fileName string, extractConfig map[string]interface{}) (string, error) {
 	data := map[string]interface{}{
 		"app_id":          appID,
-		"file_name":        fileName,
+		"file_name":       fileName,
 		"with_rec_result": false,
 	}
 
@@ -314,9 +314,9 @@ func (c *Client) ListApps(appType *int, limit int) ([]map[string]interface{}, er
 // CreateCustomApp creates a custom extraction app
 func (c *Client) CreateCustomApp(appName string, extractFields []map[string]interface{}, parseMode string, enableLongDoc *bool, longDocConfig []map[string]interface{}, appLabel []string) (map[string]interface{}, error) {
 	data := map[string]interface{}{
-		"app_name":      appName,
+		"app_name":       appName,
 		"extract_fields": extractFields,
-		"parse_mode":    parseMode,
+		"parse_mode":     parseMode,
 	}
 
 	if appLabel != nil {
@@ -336,9 +336,9 @@ func (c *Client) CreateCustomApp(appName string, extractFields []map[string]inte
 // UpdateCustomApp updates a custom extraction app
 func (c *Client) UpdateCustomApp(appID string, extractFields []map[string]interface{}, parseMode string, enableLongDoc *bool, appName *string, appLabel []string, longDocConfig []map[string]interface{}) (map[string]interface{}, error) {
 	data := map[string]interface{}{
-		"app_id":          appID,
-		"extract_fields":   extractFields,
-		"parse_mode":      parseMode,
+		"app_id":         appID,
+		"extract_fields": extractFields,
+		"parse_mode":     parseMode,
 	}
 
 	if appName != nil {
@@ -380,7 +380,7 @@ func (c *Client) DeleteCustomApp(appID string) (map[string]interface{}, error) {
 // DeleteCustomAppVersion deletes a specific config version
 func (c *Client) DeleteCustomAppVersion(appID, configVersion string) (map[string]interface{}, error) {
 	data := map[string]interface{}{
-		"app_id":          appID,
+		"app_id":         appID,
 		"config_version": configVersion,
 	}
 	return c.request("POST", fmt.Sprintf("/open/agentic_doc_processor/%s/v1/app-manage/version/delete", c.tenantName), data)
@@ -407,21 +407,21 @@ func (c *Client) AIGenerateFields(appID string, fileURL, fileLocal, fileBase64 s
 	return c.request("POST", fmt.Sprintf("/open/agentic_doc_processor/%s/v1/app-manage/ai-recommend", c.tenantName), data)
 }
 
-// GetUserPaymentStatus gets user payment status
-func (c *Client) GetUserPaymentStatus() (map[string]interface{}, error) {
-	return c.request("GET", fmt.Sprintf("/open/agentic_doc_processor/%s/user/payment", c.tenantName), nil)
+// GetAccountInfo gets user account info including credit and concurrency
+func (c *Client) GetAccountInfo() (map[string]interface{}, error) {
+	return c.request("GET", fmt.Sprintf("/open/agentic_doc_processor/%s/v1/user/payment", c.tenantName), nil)
 }
 
-// IsPaidUser checks if the current user is a paid user based on payment_type
-func (c *Client) IsPaidUser() (bool, error) {
-	resp, err := c.GetUserPaymentStatus()
+// GetUserConcurrencyLimit returns the max concurrency allowed for the current user
+func (c *Client) GetUserConcurrencyLimit() (int, error) {
+	resp, err := c.GetAccountInfo()
 	if err != nil {
-		return false, err
+		return 1, err
 	}
-	if paymentType, ok := resp["payment_type"].(string); ok {
-		return paymentType == "paid", nil
+	if concurrency, ok := resp["concurrency"].(float64); ok {
+		return int(concurrency), nil
 	}
-	return false, nil
+	return 1, nil
 }
 
 // HealthCheck checks API health

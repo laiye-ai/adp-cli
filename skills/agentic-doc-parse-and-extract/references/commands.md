@@ -82,7 +82,6 @@ Parse local file or folder (batch mode when path is a folder).
 | `--no-wait` | boolean | No | false | Submit async task and return immediately (use with `--async`) |
 | `--export` | string | No | — | Export results to specified path |
 | `--timeout` | integer | No | 900 | Timeout in seconds |
-| `--concurrency` | integer | No | 1 | Concurrent processing count (max 1 free, max 2 paid) |
 | `--retry` | integer | No | 0 | Number of retries on failure (exponential backoff) |
 
 ### `adp parse url <url>`
@@ -96,7 +95,6 @@ Parse document from URL. When the URL points to a text file containing a list of
 | `--no-wait` | boolean | No | false | Submit async task and return immediately (use with `--async`) |
 | `--export` | string | No | — | Export results to specified path |
 | `--timeout` | integer | No | 900 | Timeout in seconds |
-| `--concurrency` | integer | No | 1 | Concurrent processing count |
 | `--retry` | integer | No | 0 | Number of retries on failure |
 
 ### `adp parse base64 <base64-strings>`
@@ -111,7 +109,6 @@ Parse base64-encoded document content.
 | `--export` | string | No | — | Export results to specified path |
 | `--timeout` | integer | No | 900 | Timeout in seconds |
 | `--file-name` | string | No | "document" | Display name with extension for the base64 content (used to detect file type; does not read from disk) |
-| `--concurrency` | integer | No | 1 | Concurrent processing count |
 | `--retry` | integer | No | 0 | Number of retries on failure |
 
 ### `adp parse query <task-ids...>`
@@ -124,7 +121,8 @@ Query async parse task status and results. Supports multiple task IDs as argumen
 | `--file` | string | No | — | Read task IDs from a JSON file (produced by `--no-wait`) |
 | `--export` | string | No | — | Export results to specified path |
 | `--timeout` | integer | No | 900 | Watch mode timeout in seconds |
-| `--concurrency` | integer | No | 1 | Concurrent query count |
+| `--export` | string | No | — | Export results to specified path |
+| `--timeout` | integer | No | 900 | Watch mode timeout in seconds |
 
 ---
 
@@ -143,7 +141,6 @@ Extract from local file or folder (batch mode when path is a folder).
 | `--no-wait` | boolean | No | false | Submit async task and return immediately |
 | `--export` | string | No | — | Export results to specified path |
 | `--timeout` | integer | No | 900 | Timeout in seconds |
-| `--concurrency` | integer | No | 1 | Concurrent processing count |
 | `--retry` | integer | No | 0 | Number of retries on failure |
 
 ### `adp extract url <url>`
@@ -157,7 +154,6 @@ Extract from URL document. Supports URL list file for batch mode.
 | `--no-wait` | boolean | No | false | Submit async task and return immediately |
 | `--export` | string | No | — | Export results to specified path |
 | `--timeout` | integer | No | 900 | Timeout in seconds |
-| `--concurrency` | integer | No | 1 | Concurrent processing count |
 | `--retry` | integer | No | 0 | Number of retries on failure |
 
 ### `adp extract base64 <base64-strings>`
@@ -172,7 +168,6 @@ Extract from base64-encoded document content.
 | `--export` | string | No | — | Export results to specified path |
 | `--timeout` | integer | No | 900 | Timeout in seconds |
 | `--file-name` | string | No | "document" | Display name with extension for the base64 content (used to detect file type; does not read from disk) |
-| `--concurrency` | integer | No | 1 | Concurrent processing count |
 | `--retry` | integer | No | 0 | Number of retries on failure |
 
 ### `adp extract query <task-ids...>`
@@ -185,7 +180,6 @@ Query async extract task status and results. Supports multiple task IDs.
 | `--file` | string | No | — | Read task IDs from a JSON file (produced by `--no-wait`) |
 | `--export` | string | No | — | Export results to specified path |
 | `--timeout` | integer | No | 900 | Watch mode timeout in seconds |
-| `--concurrency` | integer | No | 1 | Concurrent query count |
 
 ---
 

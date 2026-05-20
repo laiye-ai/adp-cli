@@ -9,6 +9,8 @@ import (
 	"runtime"
 	"strings"
 	"time"
+
+	"github.com/rs/zerolog/log"
 )
 
 const (
@@ -36,8 +38,15 @@ func CheckAndNotify(currentVersion string, quiet bool, jsonMode bool) <-chan str
 	}
 
 	go func() {
+		log.Info().Msg("Checking for new version")
 		latest, err := resolveLatestVersion()
-		if err != nil || latest == "" {
+		if err != nil {
+			log.Warn().Err(err).Msg("Failed to check latest version")
+			ch <- ""
+			return
+		}
+		if latest == "" {
+			log.Debug().Msg("No latest version found")
 			ch <- ""
 			return
 		}
@@ -46,9 +55,12 @@ func CheckAndNotify(currentVersion string, quiet bool, jsonMode bool) <-chan str
 		latestClean := strings.TrimPrefix(latest, "v")
 
 		if current == latestClean || !isNewer(latestClean, current) {
+			log.Info().Str("current_version", current).Msg("Already on latest version")
 			ch <- ""
 			return
 		}
+
+		log.Info().Str("current_version", current).Str("latest_version", latestClean).Msg("Update available")
 
 		// "  ║  Update available: v{current} → v{latest}{pad}║"
 		// Fixed content length: "  ║  Update available: v" = 22, " → v" = 4, "{pad}║" at end
