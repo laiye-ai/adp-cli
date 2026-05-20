@@ -205,7 +205,6 @@ run_test "parse local directory" "$ADP" parse local "$SCRIPT_DIR" --app-id "$APP
 run_test "parse local --export" "$ADP" parse local "$SCRIPT_DIR/samples/73.蚂蚁+B类.png" --app-id "$APP_ID" --export "$RESULT_FILE"
 run_test "parse url (single)" "$ADP" parse url https://adp-global.laiye.com/web/agentic_doc_processor/laiye/file/13e18a44228611f1933a00163e122259 --app-id "$APP_ID"
 run_test "parse url (file list)" "$ADP" parse url "$SCRIPT_DIR/samples/url.txt" --app-id "$APP_ID"
-run_test "parse local --concurrency 2" "$ADP" parse local "$SCRIPT_DIR" --app-id "$APP_ID" --concurrency 2
 
 # --no-wait + query --file
 PARSE_TASKS_FILE="$SCRIPT_DIR/parse_tasks.json"
@@ -226,7 +225,6 @@ run_test "extract local directory" "$ADP" extract local "$SCRIPT_DIR" --app-id "
 run_test "extract local --export" "$ADP" extract local "$SCRIPT_DIR/samples/73.蚂蚁+B类.png" --app-id "$APP_ID" --export "$RESULT_FILE"
 run_test "extract url (single)" "$ADP" extract url https://adp-global.laiye.com/web/agentic_doc_processor/laiye/file/13e18a44228611f1933a00163e122259 --app-id "$APP_ID"
 run_test "extract url (file list)" "$ADP" extract url "$SCRIPT_DIR/samples/url.txt" --app-id "$APP_ID"
-run_test "extract local --concurrency 2" "$ADP" extract local "$SCRIPT_DIR" --app-id "$APP_ID" --concurrency 2
 
 # --no-wait + query --file
 EXTRACT_TASKS_FILE="$SCRIPT_DIR/extract_tasks.json"

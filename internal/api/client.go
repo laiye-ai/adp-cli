@@ -427,21 +427,21 @@ func (c *Client) AIGenerateFields(appID string, fileURL, fileLocal, fileBase64 s
 	return c.request("POST", fmt.Sprintf("/open/agentic_doc_processor/%s/v1/app-manage/ai-recommend", c.tenantName), data)
 }
 
-// GetUserPaymentStatus gets user payment status
-func (c *Client) GetUserPaymentStatus() (map[string]interface{}, error) {
-	return c.request("GET", fmt.Sprintf("/open/agentic_doc_processor/%s/user/payment", c.tenantName), nil)
+// GetAccountInfo gets user account info including credit and concurrency
+func (c *Client) GetAccountInfo() (map[string]interface{}, error) {
+	return c.request("GET", fmt.Sprintf("/open/agentic_doc_processor/%s/v1/user/payment", c.tenantName), nil)
 }
 
-// IsPaidUser checks if the current user is a paid user based on payment_type
-func (c *Client) IsPaidUser() (bool, error) {
-	resp, err := c.GetUserPaymentStatus()
+// GetUserConcurrencyLimit returns the max concurrency allowed for the current user
+func (c *Client) GetUserConcurrencyLimit() (int, error) {
+	resp, err := c.GetAccountInfo()
 	if err != nil {
-		return false, err
+		return 1, err
 	}
-	if paymentType, ok := resp["payment_type"].(string); ok {
-		return paymentType == "paid", nil
+	if concurrency, ok := resp["concurrency"].(float64); ok {
+		return int(concurrency), nil
 	}
-	return false, nil
+	return 1, nil
 }
 
 // ReportStatistics sends a telemetry event to the statistics endpoint.

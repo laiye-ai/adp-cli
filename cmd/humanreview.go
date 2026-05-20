@@ -171,7 +171,6 @@ var hrTaskCreateCmd = &cobra.Command{
 		noWait, _ := cmd.Flags().GetBool("no-wait")
 		export, _ := cmd.Flags().GetString("export")
 		timeout, _ := cmd.Flags().GetInt("timeout")
-		concurrency, _ := cmd.Flags().GetInt("concurrency")
 		retry, _ := cmd.Flags().GetInt("retry")
 
 		if localPath == "" && urlInput == "" {
@@ -190,10 +189,10 @@ var hrTaskCreateCmd = &cobra.Command{
 		}
 
 		if localPath != "" {
-			processLocalFiles(localPath, appID, asyncMode, noWait, export, timeout, concurrency, retry, "human-review")
+			processLocalFiles(localPath, appID, asyncMode, noWait, export, timeout, retry, "human-review")
 		} else {
 			urls := resolveURLInput(urlInput)
-			processURLs(urls, appID, asyncMode, noWait, export, timeout, concurrency, retry, "human-review")
+			processURLs(urls, appID, asyncMode, noWait, export, timeout, retry, "human-review")
 		}
 	},
 }
@@ -209,7 +208,6 @@ var hrTaskQueryCmd = &cobra.Command{
 		taskFile, _ := cmd.Flags().GetString("file")
 		export, _ := cmd.Flags().GetString("export")
 		timeout, _ := cmd.Flags().GetInt("timeout")
-		concurrency, _ := cmd.Flags().GetInt("concurrency")
 
 		if taskFile == "" && len(args) == 0 {
 			formatterOut.ExitWithError(errors.NewCLIError(
@@ -219,7 +217,7 @@ var hrTaskQueryCmd = &cobra.Command{
 			))
 		}
 
-		queryTasks(args, watch, taskFile, export, timeout, concurrency, "extract")
+		queryTasks(args, watch, taskFile, export, timeout, "human-review")
 	},
 }
 
@@ -308,7 +306,6 @@ func init() {
 	hrTaskCreateCmd.Flags().Bool("no-wait", false, i18n.T("option_no_wait"))
 	hrTaskCreateCmd.Flags().String("export", "", i18n.T("option_export"))
 	hrTaskCreateCmd.Flags().Int("timeout", 900, i18n.T("option_timeout"))
-	hrTaskCreateCmd.Flags().Int("concurrency", 1, i18n.T("option_concurrency"))
 	hrTaskCreateCmd.Flags().Int("retry", 0, i18n.T("option_retry"))
 	hrTaskCreateCmd.MarkFlagRequired("app-id")
 
@@ -317,7 +314,6 @@ func init() {
 	hrTaskQueryCmd.Flags().String("file", "", i18n.T("option_task_file"))
 	hrTaskQueryCmd.Flags().String("export", "", i18n.T("option_export"))
 	hrTaskQueryCmd.Flags().Int("timeout", 900, i18n.T("option_watch_timeout"))
-	hrTaskQueryCmd.Flags().Int("concurrency", 1, i18n.T("option_concurrency"))
 
 	// result-update flags
 	hrResultUpdateCmd.Flags().String("file-task-id", "", i18n.T("human_review_option_file_task_id"))

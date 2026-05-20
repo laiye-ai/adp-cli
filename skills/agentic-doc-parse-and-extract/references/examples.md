@@ -8,7 +8,7 @@ If not installed, choose the appropriate method:
 
 ```bash
 # Method 1: npm (recommended, works on all platforms, China-friendly with npmmirror)
-npm install -g @laiye-adp/agentic-doc-parse-and-extract-cli --registry=https://registry.npmmirror.com/ || npm install -g @laiye-adp/agentic-doc-parse-and-extract-cli
+npm install -g @laiye-adp/agentic-doc-parse-and-extract-cli
 ```
 ```bash
 # Method 2: Shell script (Linux / macOS, if npm is not available)
@@ -419,33 +419,33 @@ adp extract url <file URL> --app-id YOUR_APP_ID
 ]
 ```
 
-## 7. Batch Processing 
+## 7. Batch Processing
 ```bash
 # Batch processing of documents in the local folder
-adp parse local <folder path> --app-id <app_ID> --export <folder path> --concurrency 2
-adp extract local <folder path> --app-id <app_ID> --export <folder path> --concurrency 2 
+adp parse local <folder path> --app-id <app_ID> --export <folder path>
+adp extract local <folder path> --app-id <app_ID> --export <folder path>
 
 # Batch processing of documents within the URL list file
-adp parse url <URL list file path> --app-id <app_ID> --export <folder path> --concurrency 2
-adp extract url <URL list file path> --app-id <app_ID> --export <folder path> --concurrency 2
+adp parse url <URL list file path> --app-id <app_ID> --export <folder path>
+adp extract url <URL list file path> --app-id <app_ID> --export <folder path>
 ```
 
 **Note**: Batch processing requires processing all the files in the folder sequentially, and the output result supports being specified to be saved in the user-defined folder path.
 
-## 8. Asynchronous Processing 
+## 8. Asynchronous Processing
 ```bash
 # Batch processing of documents in the local folder
-adp parse local <file path> --app-id <app_ID> --export <folder path> --concurrency 2 --async
-adp extract local <file path> --app-id <app_ID> --export <folder path> --concurrency 2 --async 
+adp parse local <file path> --app-id <app_ID> --export <folder path> --async
+adp extract local <file path> --app-id <app_ID> --export <folder path> --async
 
 # Batch processing of documents within the URL list file
-adp parse url <file URL> --app-id <app_ID> --export <folder path> --concurrency 2 --async
-adp extract url <file URL> --app-id <app_ID> --export <folder path> --concurrency 2 --async 
+adp parse url <file URL> --app-id <app_ID> --export <folder path> --async
+adp extract url <file URL> --app-id <app_ID> --export <folder path> --async
 
-# Query the status and results of asynchronous parsing processing tasks 
+# Query the status and results of asynchronous parsing processing tasks
 adp parse query <task_id>
 
-# Query the status and results of asynchronous extraction processing tasks 
+# Query the status and results of asynchronous extraction processing tasks
 adp extract query <task_id>
 ```
 
@@ -465,7 +465,7 @@ When processing multiple files, the CLI creates an output directory and writes i
 ### Sync batch output
 
 ```bash
-adp extract local ./invoices/ --app-id YOUR_APP_ID --export ./results --concurrency 2
+adp extract local ./invoices/ --app-id YOUR_APP_ID --export ./results
 ```
 
 **stdout output (summary JSON):**

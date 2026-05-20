@@ -10,6 +10,7 @@ import (
 	"os"
 	"os/user"
 	"path/filepath"
+	"time"
 
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
@@ -45,9 +46,11 @@ var (
 
 // Config holds all configuration
 type Config struct {
-	APIKey      string `json:"api_key,omitempty"`
-	APIBaseURL  string `json:"api_base_url,omitempty"`
-	TenantName  string `json:"tenant_name,omitempty"`
+	APIKey               string `json:"api_key,omitempty"`
+	APIBaseURL           string `json:"api_base_url,omitempty"`
+	TenantName           string `json:"tenant_name,omitempty"`
+	MaxConcurrency       int    `json:"max_concurrency,omitempty"`
+	ConcurrencyUpdatedAt int64  `json:"concurrency_updated_at,omitempty"`
 }
 
 // Load reads configuration from file
@@ -71,6 +74,8 @@ func Load() (*Config, error) {
 	if cfg.TenantName == "" {
 		cfg.TenantName = "laiye"
 	}
+	cfg.MaxConcurrency = viper.GetInt("max_concurrency")
+	cfg.ConcurrencyUpdatedAt = viper.GetInt64("concurrency_updated_at")
 
 	return &cfg, nil
 }
@@ -84,6 +89,35 @@ func Save(cfg *Config) error {
 		return err
 	}
 	return os.WriteFile(configPath, data, 0600)
+}
+
+// ShouldRefreshConcurrency returns true if concurrency should be refreshed (never set or older than 24h)
+func ShouldRefreshConcurrency(cfg *Config) bool {
+	if cfg.MaxConcurrency == 0 {
+		log.Info().Msg("Concurrency not set, will refresh from API")
+		return true
+	}
+	elapsed := time.Now().Unix() - cfg.ConcurrencyUpdatedAt
+	should := elapsed > 86400
+	if should {
+		log.Info().Int("current_concurrency", cfg.MaxConcurrency).Int64("elapsed_seconds", elapsed).Msg("Concurrency exceeded 24h refresh interval, will refresh from API")
+	}
+	return should
+}
+
+// SetMaxConcurrency updates the max concurrency and timestamp
+func SetMaxConcurrency(concurrency int) error {
+	cfg, err := Load()
+	if err != nil {
+		return err
+	}
+	cfg.MaxConcurrency = concurrency
+	cfg.ConcurrencyUpdatedAt = time.Now().Unix()
+	if err := Save(cfg); err != nil {
+		return err
+	}
+	log.Info().Int("max_concurrency", concurrency).Msg("Concurrency updated")
+	return nil
 }
 
 // Clear removes all configuration

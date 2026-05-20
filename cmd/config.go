@@ -3,7 +3,9 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/rs/zerolog/log"
 	"github.com/spf13/cobra"
+	"github.com/laiye-ai/adp-cli/internal/api"
 	"github.com/laiye-ai/adp-cli/internal/config"
 	"github.com/laiye-ai/adp-cli/internal/errors"
 	"github.com/laiye-ai/adp-cli/internal/formatter"
@@ -54,6 +56,19 @@ var configSetCmd = &cobra.Command{
 				formatterOut.ExitWithError(cliErr)
 			}
 			formatterOut.PrintSuccess(i18n.T("api_base_url_configured"))
+		}
+
+		// Fetch and store concurrency limit if config is complete (both API key and URL are set)
+		cfg, err := config.Load()
+		if err == nil && config.IsConfigured(cfg) {
+			client, err := api.NewClient(cfg)
+			if err == nil {
+				concurrency, err := client.GetUserConcurrencyLimit()
+				if err == nil {
+					config.SetMaxConcurrency(concurrency)
+					log.Info().Int("concurrency", concurrency).Msg("Concurrency refreshed from API")
+				}
+			}
 		}
 	},
 }

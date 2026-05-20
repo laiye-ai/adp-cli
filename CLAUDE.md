@@ -106,12 +106,11 @@ New async commands **must** support both phases.
 cmd/                  Cobra commands, one file per group
   root.go             Root command, PersistentPreRun, reloadCommandTranslations
   parse.go            parse + shared helpers (processLocalFiles, processURLs, queryTasks, initClientWithConfig)
-  extract.go          extract (delegates to parse.go helpers with mode="extract")
+  extract.go          extract (delegates to shared.go helpers with mode="extract")
   customapp.go        custom-app + helpers (parseJSONParam, parseStringList, loadConfigWithOverride)
-  humanreview.go      human-review
+  humanreview.go      human-review (delegates to shared.go helpers with mode="human-review")
   webhook.go          webhook
-  helpers.go          Cross-file shared helpers (checkAPIResponse)
-  batch.go            Batch engine (batchProcess, batchSubmit, retryWithBackoff)
+  shared.go           Shared helpers (ensureMaxConcurrency, initClientWithConfig, processLocalFiles, processURLs, processBase64, queryTasks, checkAPIResponse, batchProcess, batchSubmit, retryWithBackoff)
   schema.go           adp schema output (machine-readable command spec)
 internal/api/         HTTP API client (single file client.go)
 internal/config/      Config load/save, AES-256-GCM key encryption

@@ -42,7 +42,7 @@ var creditCmd = &cobra.Command{
 			formatterOut.ExitWithError(cliErr)
 		}
 
-		result, err := client.GetUserPaymentStatus()
+		result, err := client.GetAccountInfo()
 		if err != nil {
 			cliErr := errors.ClassifyException(err, "credit")
 			formatterOut.ExitWithError(cliErr)

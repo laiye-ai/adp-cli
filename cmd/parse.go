@@ -1,9 +1,9 @@
 package cmd
 
 import (
+	"github.com/spf13/cobra"
 	"github.com/laiye-ai/adp-cli/internal/errors"
 	"github.com/laiye-ai/adp-cli/internal/i18n"
-	"github.com/spf13/cobra"
 )
 
 // parseCmd represents the parse command group
@@ -26,10 +26,9 @@ var parseLocalCmd = &cobra.Command{
 		noWait, _ := cmd.Flags().GetBool("no-wait")
 		export, _ := cmd.Flags().GetString("export")
 		timeout, _ := cmd.Flags().GetInt("timeout")
-		concurrency, _ := cmd.Flags().GetInt("concurrency")
 		retry, _ := cmd.Flags().GetInt("retry")
 
-		processLocalFiles(path, appID, asyncMode, noWait, export, timeout, concurrency, retry, "parse")
+		processLocalFiles(path, appID, asyncMode, noWait, export, timeout, retry, "parse")
 	},
 }
 
@@ -46,11 +45,10 @@ var parseURLCmd = &cobra.Command{
 		noWait, _ := cmd.Flags().GetBool("no-wait")
 		export, _ := cmd.Flags().GetString("export")
 		timeout, _ := cmd.Flags().GetInt("timeout")
-		concurrency, _ := cmd.Flags().GetInt("concurrency")
 		retry, _ := cmd.Flags().GetInt("retry")
 
 		urls := resolveURLInput(urlArg)
-		processURLs(urls, appID, asyncMode, noWait, export, timeout, concurrency, retry, "parse")
+		processURLs(urls, appID, asyncMode, noWait, export, timeout, retry, "parse")
 	},
 }
 
@@ -67,10 +65,9 @@ var parseBase64Cmd = &cobra.Command{
 		export, _ := cmd.Flags().GetString("export")
 		timeout, _ := cmd.Flags().GetInt("timeout")
 		fileName, _ := cmd.Flags().GetString("file-name")
-		concurrency, _ := cmd.Flags().GetInt("concurrency")
 		retry, _ := cmd.Flags().GetInt("retry")
 
-		processBase64(args, appID, fileName, asyncMode, noWait, export, timeout, concurrency, retry, "parse")
+		processBase64(args, appID, fileName, asyncMode, noWait, export, timeout, retry, "parse")
 	},
 }
 
@@ -85,7 +82,6 @@ var parseQueryCmd = &cobra.Command{
 		taskFile, _ := cmd.Flags().GetString("file")
 		export, _ := cmd.Flags().GetString("export")
 		timeout, _ := cmd.Flags().GetInt("timeout")
-		concurrency, _ := cmd.Flags().GetInt("concurrency")
 
 		if taskFile == "" && len(args) == 0 {
 			formatterOut.ExitWithError(errors.NewCLIError(
@@ -98,7 +94,7 @@ var parseQueryCmd = &cobra.Command{
 			))
 		}
 
-		queryTasks(args, watch, taskFile, export, timeout, concurrency, "parse")
+		queryTasks(args, watch, taskFile, export, timeout, "parse")
 	},
 }
 
@@ -116,7 +112,6 @@ func init() {
 	parseLocalCmd.Flags().Bool("no-wait", false, i18n.T("option_no_wait"))
 	parseLocalCmd.Flags().String("export", "", i18n.T("option_export"))
 	parseLocalCmd.Flags().Int("timeout", 900, i18n.T("option_timeout"))
-	parseLocalCmd.Flags().Int("concurrency", 1, i18n.T("option_concurrency"))
 	parseLocalCmd.Flags().Int("retry", 0, i18n.T("option_retry"))
 	parseLocalCmd.MarkFlagRequired("app-id")
 
@@ -126,7 +121,6 @@ func init() {
 	parseURLCmd.Flags().Bool("no-wait", false, i18n.T("option_no_wait"))
 	parseURLCmd.Flags().String("export", "", i18n.T("option_export"))
 	parseURLCmd.Flags().Int("timeout", 900, i18n.T("option_timeout"))
-	parseURLCmd.Flags().Int("concurrency", 1, i18n.T("option_concurrency"))
 	parseURLCmd.Flags().Int("retry", 0, i18n.T("option_retry"))
 	parseURLCmd.MarkFlagRequired("app-id")
 
@@ -137,7 +131,6 @@ func init() {
 	parseBase64Cmd.Flags().String("export", "", i18n.T("option_export"))
 	parseBase64Cmd.Flags().Int("timeout", 900, i18n.T("option_timeout"))
 	parseBase64Cmd.Flags().String("file-name", "document", i18n.T("option_file_name"))
-	parseBase64Cmd.Flags().Int("concurrency", 1, i18n.T("option_concurrency"))
 	parseBase64Cmd.Flags().Int("retry", 0, i18n.T("option_retry"))
 	parseBase64Cmd.MarkFlagRequired("app-id")
 
@@ -146,5 +139,4 @@ func init() {
 	parseQueryCmd.Flags().String("file", "", i18n.T("option_task_file"))
 	parseQueryCmd.Flags().String("export", "", i18n.T("option_export"))
 	parseQueryCmd.Flags().Int("timeout", 900, i18n.T("option_watch_timeout"))
-	parseQueryCmd.Flags().Int("concurrency", 1, i18n.T("option_concurrency"))
 }
